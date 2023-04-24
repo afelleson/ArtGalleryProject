@@ -7,28 +7,30 @@ CFLAGS= -std=c++14  -Wno-deprecated-declarations
 
 # RM= /bin/rm -f
 
+CD = cd Backend/
+
 all: testcomment PutHTML  #APIcalls 
 
-commentEntry.o: ./Backend/commentEntry.cpp ./Backend/commentEntry.h
-	$(CC) -c $(CFLAGS) commentEntry.cpp
+commentEntry.o: commentEntry.cpp commentEntry.h
+	$(CD) && $(CC) -c $(CFLAGS) commentEntry.cpp
 
-commentDB.o: ./Backend/commentDB.cpp #commentDB.h
-	$(CC) -c $(CFLAGS) -I/usr/include/cppconn ./Backend/commentDB.cpp
+commentDB.o: commentDB.cpp #commentDB.h
+	$(CD) && $(CC) -c $(CFLAGS) -I/usr/include/cppconn commentDB.cpp
 
-testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h #commentDB.h
-	$(CC) -c $(CFLAGS) ./Backend/testcomment.cpp
+testcomment.o: testcomment.cpp commentEntry.h #commentDB.h
+	$(CD) && $(CC) -c $(CFLAGS) testcomment.cpp
 
 testcomment: testcomment.o commentDB.o commentEntry.o
-	$(CC) testcomment.o commentDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
+	$(CD) && $(CC) testcomment.o commentDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
 
 # # testcomment: testcomment.o commentDB.o commentEntry.o
-# # 	$(CC) testcomment.o commentDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp
+# # 	$(CD) && $(CC) testcomment.o commentDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp
 
 # APIcalls.o: APIcalls.cpp httplib.h
-# 	$(CC) -c $(CFLAGS) APIcalls.cpp
+# 	$(CD) && $(CC) -c $(CFLAGS) APIcalls.cpp
 
 # APIcalls: APIcalls.o commentDB.o commentEntry.o 
-# 	$(CC) APIcalls.o commentDB.o commentEntry.o -o APIcalls -L/usr/local/lib -lmariadbcpp
+# 	$(CD) && $(CC) APIcalls.o commentDB.o commentEntry.o -o APIcalls -L/usr/local/lib -lmariadbcpp
 
 PutHTML:
 	cp APIcalls.html /var/www/html/commentCpp/
