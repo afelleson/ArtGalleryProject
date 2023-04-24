@@ -18,8 +18,8 @@ commentDB.o: ./Backend/commentDB.cpp #commentDB.h
 testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h #commentDB.h
 	$(CC) -c $(CFLAGS) ./Backend/testcomment.cpp
 
-testfile: testfile.o userDB.o userEntry.o
-	$(CC) testfile.o userDB.o userEntry.o -L/usr/lib -o testfile -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
+testfile: testfile.o commentDB.o commentEntry.o
+	$(CC) testfile.o commentDB.o commentEntry.o -L/usr/lib -o testfile -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
 
 # # testcomment: testcomment.o commentDB.o commentEntry.o
 # # 	$(CC) testcomment.o commentDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp
