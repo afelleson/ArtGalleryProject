@@ -18,7 +18,7 @@
 #define COMMENTDB_H
 
 // global variables
-#define DB_URL "jdbc:mariadb://localhost:3306/ChatApp"
+#define DB_URL "jdbc:mariadb://localhost:3306/ArtGalleryProject"
 #define USER "root"
 #define PASS "AKFMariaDB"
 
