@@ -14,13 +14,13 @@ public:
     commentEntry(sql::SQLString id_input, sql::SQLString name_input, sql::SQLString text_input, sql::SQLString rating_input,sql::SQLString isPinned_input);
     // Constructor for comments with a partial-image selection
     commentEntry(sql::SQLString id_input, sql::SQLString name_input, sql::SQLString text_input, sql::SQLString artworkID_input, sql::SQLString x_input,sql::SQLString y_input, sql::SQLString width_input, sql::SQLString rating_input,sql::SQLString isPinned_input);
-    bool containsSelection()
+    bool containsSelection();
     
 private:
     string id;
     string name;
     string text;
-    string artworkID
+    string artworkID;
     string x;
     string y;
     string width;

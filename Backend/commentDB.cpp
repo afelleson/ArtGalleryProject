@@ -32,10 +32,10 @@ public:
     // sortParam can be "Rating" or "ID" (TODO: add random option https://vladmihalcea.com/sql-order-by-random/)
     vector<commentEntry> findByArtworkAndSort(string artworkID, string sortParam);
     commentEntry fetchByCommentID(string commentID);
-    void addComment(string id_input, string name_input, string text_input, string x_input,string y_input, string width_input, string rating_input,string isPinned_input);
-    void changeRating(int commentID, int newRating);
-    void deleteComment(int commentID);
-    void changePinStatus(int commentID);  
+    void addComment(string id_input, string name_input, string text_input, string artworkID, string x_input,string y_input, string width_input, string rating_input,string isPinned_input);
+    void changeRating(string commentID, string newRating);
+    void deleteComment(string commentID);
+    void changePinStatus(string commentID);  
 
 private:
     const string db_url=DB_URL;
@@ -120,10 +120,10 @@ commentEntry commentDB::fetchByCommentID(string commentID){
 
   	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
   	
-    sql::ResultSet *res = stmnt->executeQuery("SELECT * FROM Comments WHERE ID = '" + commentID + "'");
+    sql::ResultSet *queryResults = stmnt->executeQuery("SELECT * FROM Comments WHERE ID = '" + commentID + "'");
     
     // Get first entry
-    if (res->next()) {
+    if (queryResults->next()) {
     	entry = commentEntry(queryResults->getString("ID"),queryResults->getString("Name"),queryResults->getString("CommentText"),
 			queryResults->getString("ArtworkID"), queryResults->getString("SelectionXCoord"), queryResults->getString("SelectionYCoord"), queryResults->getString("SelelectionWidth"), queryResults->getString("Rating"), queryResults->getString("isPinned"));
     }
@@ -145,8 +145,7 @@ void commentDB::addComment(string id_input, string name_input, string text_input
 }
 
 
-void commentDB::changeRating(int commentID, int newRating){
-    rating = rating + vote;
+void commentDB::changeRating(string commentID, string newRating){
 
     // Establish Connection
     std::unique_ptr<sql::Connection> conn(driver->connect(db_url, properties));
@@ -161,7 +160,7 @@ void commentDB::changeRating(int commentID, int newRating){
 }
 
 
-void commentDB::changePinStatus(int commentID){
+void commentDB::changePinStatus(string commentID){
     // Establish Connection
     std::unique_ptr<sql::Connection> conn(driver->connect(db_url, properties));
     if (!conn) {
@@ -174,7 +173,7 @@ void commentDB::changePinStatus(int commentID){
     stmt->execute("UPDATE Comments SET Rating = !Rating WHERE ID='" + commentID + "'");
 }   
 
-void commentDB::deleteComment(int commentID){
+void commentDB::deleteComment(string commentID){
     // Establish Connection
     std::unique_ptr<sql::Connection> conn(driver->connect(db_url, properties));
     if (!conn) {
