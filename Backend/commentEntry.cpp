@@ -83,7 +83,7 @@ bool commentEntry::containsSelection(int commentID){
     }
 }
 
-string userEntry::asText() {
+string userEntry::textify() {
 	string result = id;
 	result += " | ";
 	result += name;
@@ -105,7 +105,7 @@ string userEntry::asText() {
 
 }
 
-string userEntry::asJson() {
+string userEntry::jsonify() {
 	string result = "{\"ID\":\"" + id + "\",";
 	result += "\"name\":\"" + name + "\",";
 	result += "\"commentText\":\"" + text + "\",";

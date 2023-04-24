@@ -46,7 +46,7 @@ int main(){
 
             result = commentdb.fetchByCommentID(commentid);
 
-            cout << result.getText() << endl;
+            cout << result.textify() << endl;
 
 	        // results = commentdb.fetchByCommentID(commentid);
 
