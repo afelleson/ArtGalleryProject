@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <mariadb/conncpp.hpp>
+#include<mariadbcpp/ConnCpp.h>
 
 #include "commentDB.cpp"
 #include "commentEntry.h"
