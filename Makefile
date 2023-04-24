@@ -7,7 +7,7 @@ CFLAGS= -std=c++14  -Wno-deprecated-declarations
 
 # RM= /bin/rm -f
 
-CD = cd Backend/
+CD = cd ./Backend/
 
 all: testcomment PutHTML  #APIcalls 
 
