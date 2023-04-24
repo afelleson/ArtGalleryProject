@@ -44,7 +44,9 @@ int main(){
             string commentid;
             getline(cin,commentid);
 
-            cout << results.text() << endl;
+            result = commentdb.fetchByCommentID(commentid);
+
+            cout << result.text() << endl;
 
 	        // results = commentdb.fetchByCommentID(commentid);
 
