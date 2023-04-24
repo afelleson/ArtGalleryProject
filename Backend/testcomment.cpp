@@ -5,7 +5,7 @@
 #include <vector>
 
 
-#include "commentDB.h"
+#include "commentDB.cpp"
 #include "commentEntry.h"
 
 using namespace std;
