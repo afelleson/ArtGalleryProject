@@ -33,9 +33,9 @@ testcomment: testcomment.o commentDB.o commentEntry.o
 # 	$(CC) APIcalls.o commentDB.o commentEntry.o -o APIcalls -L/usr/local/lib -lmariadbcpp
 
 PutHTML:
-	cp listView.html /var/www/html/ArtworkComments/listView
-	cp listView.js /var/www/html/ArtworkComments/listView
-	cp listView.css /var/www/html/ArtworkComments/listView
+	cp ./Pages/listView/listView.html /var/www/html/ArtworkComments/listView
+	cp ./Pages/listView/listView.js /var/www/html/ArtworkComments/listView
+	cp ./Pages/listView/listView.css /var/www/html/ArtworkComments/listView
 
 
 	echo "Current contents of your HTML directory: "
