@@ -76,7 +76,7 @@ commentEntry::commentEntry(sql::SQLString id_input, sql::SQLString name_input, s
     //   }
 }
 
-bool commentEntry::containsSelection(int commentID){
+bool commentEntry::containsSelection(string commentID){
     if (width == "0") {
         return false;
     } else {
