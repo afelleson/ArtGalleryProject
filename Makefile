@@ -13,7 +13,7 @@ commentEntry.o: ./Backend/commentEntry.cpp ./Backend/commentEntry.h
 	$(CC) -c $(CFLAGS) commentEntry.cpp
 
 commentDB.o: ./Backend/commentDB.cpp #commentDB.h
-	$(CC) -c $(CFLAGS) -I/usr/include/cppconn commentDB.cpp
+	$(CC) -c $(CFLAGS) -I/usr/include/cppconn ./Backend/commentDB.cpp
 
 testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h #commentDB.h
 	$(CC) -c $(CFLAGS) ./Backend/testcomment.cpp
