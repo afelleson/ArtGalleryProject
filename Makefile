@@ -18,6 +18,9 @@ commentDB.o: commentDB.cpp #commentDB.h
 testcomment.o: testcomment.cpp commentEntry.h #commentDB.h
 	$(CC) -c $(CFLAGS) testcomment.cpp
 
+testfile: testfile.o userDB.o userEntry.o
+	$(CC) testfile.o userDB.o userEntry.o -L/usr/lib -o testfile -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
+
 # # testcomment: testcomment.o commentDB.o commentEntry.o
 # # 	$(CC) testcomment.o commentDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp
 
