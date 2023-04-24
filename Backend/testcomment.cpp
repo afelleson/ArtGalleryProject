@@ -29,6 +29,7 @@ vector<string> split(string s, string delimiter) {
 int main(){
     commentDB commentdb;
     vector<commentEntry> results;
+    commentEntry result;
     string o;
 
     cout << "Contacts test program" << endl;
@@ -43,20 +44,22 @@ int main(){
             string commentid;
             getline(cin,commentid);
 
-	        results = commentdb.fetchByCommentID(commentid);
+            cout << results.text() << endl;
 
-            for (int i = 0; i<results.size(); i++) {
-                cout << results[i].text() << endl;
-                cout << typeid(results[i].text()).name() << endl;
+	        // results = commentdb.fetchByCommentID(commentid);
 
-                vector<string> listOfResults;
+            // for (int i = 0; i<results.size(); i++) {
+            //     cout << results[i].text() << endl;
+            //     cout << typeid(results[i].text()).name() << endl;
 
-                listOfResults = split (results[i].text(), " | ");
+            //     vector<string> listOfResults;
 
-                for (int j = 0; j < listOfResults.size(); j++) {
-                    cout << listOfResults[j] << endl;
-                }
-            }
+            //     listOfResults = split (results[i].text(), " | ");
+
+            //     for (int j = 0; j < listOfResults.size(); j++) {
+            //         cout << listOfResults[j] << endl;
+            //     }
+            // }
       } 
     //   else if (o=="2") {
 

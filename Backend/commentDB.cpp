@@ -80,7 +80,7 @@ commentDB::commentDB() {
 }
 
 
-vector<commentEntry> findByArtworkAndSort(string artworkID, string sortParam){
+vector<commentEntry> commentDB::findByArtworkAndSort(string artworkID, string sortParam){
 
     // Make sure the connection is still valid
     if (!conn) {
