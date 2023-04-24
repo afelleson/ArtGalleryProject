@@ -5,8 +5,8 @@
 #include <vector>
 
 
-#include "userDB.h"
-#include "userEntry.h"
+#include "commentDB.h"
+#include "commentEntry.h"
 
 using namespace std;
 
@@ -27,13 +27,13 @@ vector<string> split(string s, string delimiter) {
 
 
 int main(){
-    userDB userdb;
-    vector<userEntry> results;
+    commentDB commentdb;
+    vector<commentEntry> results;
     string o;
 
     cout << "Contacts test program" << endl;
 
-    cout << "Select an option (1-search by username, 2-search last, 3-search type, 4-add, 5-edit, 6-delete, 7-end): ";
+    cout << "Select an option (1-search by id): "; // , 2-search last, 3-search type, 4-add, 5-edit, 6-delete, 7-end): ";
     cin >> o;
 
     while (o!="7") {
@@ -43,7 +43,7 @@ int main(){
             string commentid;
             getline(cin,commentid);
 
-	        results = userdb.fetchByCommentID(commentid);
+	        results = commentdb.fetchByCommentID(commentid);
 
             for (int i = 0; i<results.size(); i++) {
                 cout << results[i].text() << endl;
@@ -64,7 +64,7 @@ int main(){
     //     string lastMatch;
     //     getline(cin,lastMatch);
 
-    //     results = userdb.findByLast(lastMatch);
+    //     results = commentdb.findByLast(lastMatch);
 
     //     for (int i = 0; i<results.size(); i++) {
 	// 		cout << results[i].text() << endl;
@@ -73,7 +73,7 @@ int main(){
     //     cout << "Enter type to find:";
     //     string typeMatch;
     //     getline(cin,typeMatch);
-    //     results = userdb.findByType(typeMatch);
+    //     results = commentdb.findByType(typeMatch);
 
     //     for (int i = 0; i<results.size(); i++) {
 	// 		cout << results[i].text() << endl;
@@ -94,7 +94,7 @@ int main(){
     //     cout << "Enter a linkedin url: ";
     //     getline(cin,linkedin);
 
-    //     userdb.addEntry(first,last,phone,type,email,linkedin);
+    //     commentdb.addEntry(first,last,phone,type,email,linkedin);
     //     cout << "Entry added" << endl;
 
     //   } else if (o=="5") {
@@ -102,7 +102,7 @@ int main(){
     //     cout << "Leave blank to keep same."  << endl;
     //     cout << "Enter an ID number to edit: ";
     //     getline(cin,IDnum);
-    //     contactEntry entry=userdb.fetchEntry(IDnum);
+    //     contactEntry entry=commentdb.fetchEntry(IDnum);
     //     cout  << IDnum << endl;
     //     if (entry.ID.empty()) {
     //     	cout << "Entry with ID = " << IDnum << " not found!" << endl;
@@ -133,7 +133,7 @@ int main(){
     //     	getline(cin,linkedin);
     //     	if (linkedin.size()>0) entry.linkedin = linkedin;
         	
-    //     	userdb.editEntry(entry.ID,entry.first,entry.last,entry.phone,entry.type,entry.email,entry.linkedin);
+    //     	commentdb.editEntry(entry.ID,entry.first,entry.last,entry.phone,entry.type,entry.email,entry.linkedin);
     //     	cout << "Done!" << endl;
     //     }
     //   } else if (o=="6") {
@@ -141,7 +141,7 @@ int main(){
     //     string IDnum;
     //     cout << "Enter an ID number to delete: ";
     //     getline(cin,IDnum);
-    //     userdb.deleteEntry(IDnum);
+    //     commentdb.deleteEntry(IDnum);
     //     cout << "Deleted!" << endl;
     //   }
       cout << "Select an option (1-search first, 2-search last, 3-search type, 4-add, 5-edit, 6-delete, 7-end): ";
