@@ -57,7 +57,7 @@ vector<commentEntry> commentDB::findByArtworkAndSort(string artworkID, string so
     // Loop through results and push commentEntry object to a vector
     while (queryResults->next()) {
     	commentEntry entry(queryResults->getString("ID"),queryResults->getString("Name"),queryResults->getString("CommentText"),
-			queryResults->getString("ArtworkID"), queryResults->getString("SelectionXCoord"), queryResults->getString("SelectionYCoord"), queryResults->getString("SelelectionWidth"), queryResults->getString("Rating"), queryResults->getString("isPinned"));
+			queryResults->getString("ArtworkID"), queryResults->getString("SelectionXCoord"), queryResults->getString("SelectionYCoord"), queryResults->getString("SelectionWidth"), queryResults->getString("Rating"), queryResults->getString("isPinned"));
 	    	
 	    resultsVec.push_back(entry);
 
@@ -83,7 +83,7 @@ commentEntry commentDB::fetchByCommentID(string commentID){
     // Get first entry
     if (queryResults->next()) {
     	entry = commentEntry(queryResults->getString("ID"),queryResults->getString("Name"),queryResults->getString("CommentText"),
-			queryResults->getString("ArtworkID"), queryResults->getString("SelectionXCoord"), queryResults->getString("SelectionYCoord"), queryResults->getString("SelelectionWidth"), queryResults->getString("Rating"), queryResults->getString("isPinned"));
+			queryResults->getString("ArtworkID"), queryResults->getString("SelectionXCoord"), queryResults->getString("SelectionYCoord"), queryResults->getString("SelectionWidth"), queryResults->getString("Rating"), queryResults->getString("isPinned"));
     }
     return entry;
 }
