@@ -7,16 +7,16 @@ CFLAGS= -std=c++14  -Wno-deprecated-declarations
 
 # RM= /bin/rm -f
 
-all: testcomment APIcalls PutHTML 
+all: testcomment PutHTML  #APIcalls 
 
-commentEntry.o: commentEntry.cpp commentEntry.h
+commentEntry.o: ./Backend/commentEntry.cpp ./Backend/commentEntry.h
 	$(CC) -c $(CFLAGS) commentEntry.cpp
 
-commentDB.o: commentDB.cpp #commentDB.h
+commentDB.o: ./Backend/commentDB.cpp #commentDB.h
 	$(CC) -c $(CFLAGS) -I/usr/include/cppconn commentDB.cpp
 
-testcomment.o: testcomment.cpp commentEntry.h #commentDB.h
-	$(CC) -c $(CFLAGS) testcomment.cpp
+testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h #commentDB.h
+	$(CC) -c $(CFLAGS) ./Backend/testcomment.cpp
 
 testfile: testfile.o userDB.o userEntry.o
 	$(CC) testfile.o userDB.o userEntry.o -L/usr/lib -o testfile -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
