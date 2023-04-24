@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include "commentEntry.h"
+#include "commentDB.h"
 
 commentEntry::commentEntry(){
     id = ""; // Q: what to do here?
