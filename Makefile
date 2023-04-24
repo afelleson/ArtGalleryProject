@@ -39,7 +39,7 @@ PutHTML:
 
 
 	echo "Current contents of your HTML directory: "
-	ls -l /var/www/html/commentCpp
+	ls -l /var/www/html/ArtworkComments
 
 clean:
 	rm -f *.o  APIcalls testcomment
