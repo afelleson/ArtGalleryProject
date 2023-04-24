@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "commentEntry.h"
+#include "commentDB.h"
 
 
 commentDB::commentDB() {
