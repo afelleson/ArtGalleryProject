@@ -6,8 +6,7 @@
 
 #include <mariadb/conncpp.hpp>
 
-#include "commentDB.cpp"
-#include "commentEntry.h"
+#include "commentDB.h"
 
 using namespace std;
 

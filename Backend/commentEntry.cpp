@@ -12,6 +12,7 @@
 
 // commentEntryList.jsonify()
 
+#include <iostream>
 #include "commentEntry.h"
 
 commentEntry::commentEntry(){
@@ -34,9 +35,9 @@ commentEntry::commentEntry(sql::SQLString id_input, sql::SQLString name_input, s
         cerr << "Warning: no comment text provided" << endl;
     }
     artworkID = artworkID_input;
-    x = 0;
-    y = 0;
-    width = 0;
+    x = "0";
+    y = "0";
+    width = "0";
     rating = rating_input; // potential default to add later: 0
     isPinned = isPinned_input;  // potential default to add later: 0
 }
@@ -75,7 +76,7 @@ commentEntry::commentEntry(sql::SQLString id_input, sql::SQLString name_input, s
     //   }
 }
 
-bool commentEntry::containsSelection(int commentID){
+bool commentEntry::containsSelection(string commentID){
     if (width == "0") {
         return false;
     } else {
@@ -83,7 +84,7 @@ bool commentEntry::containsSelection(int commentID){
     }
 }
 
-string userEntry::textify() {
+string commentEntry::textify() {
 	string result = id;
 	result += " | ";
 	result += name;
@@ -105,7 +106,7 @@ string userEntry::textify() {
 
 }
 
-string userEntry::jsonify() {
+string commentEntry::jsonify() {
 	string result = "{\"ID\":\"" + id + "\",";
 	result += "\"name\":\"" + name + "\",";
 	result += "\"commentText\":\"" + text + "\",";
