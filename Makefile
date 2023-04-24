@@ -1,43 +1,45 @@
-# # Contacts App
-# # James Skon, Kenyon College 2022
+CC= g++
 
-# CC= g++
-
-# #For Optimization
-# #CFLAGS= -O2
-# #For debugging
-# CFLAGS= -std=c++14  -Wno-deprecated-declarations
+#For Optimization
+#CFLAGS= -O2
+#For debugging
+CFLAGS= -std=c++14  -Wno-deprecated-declarations
 
 # RM= /bin/rm -f
 
-# all: testcontact contactApp PutHTML 
+# CD = cd subfolder/ # doesn't work
 
-# contactEntry.o: contactEntry.cpp contactEntry.h
-# 	$(CC) -c $(CFLAGS) contactEntry.cpp
+all: testcomment PutHTML  #APIcalls 
 
-# contactDB.o: contactDB.cpp contactDB.h
-# 	$(CC) -c $(CFLAGS) -I/usr/include/cppconn contactDB.cpp
+commentEntry.o: ./Backend/commentEntry.cpp ./Backend/commentEntry.h
+	$(CC) -c $(CFLAGS) ./Backend/commentEntry.cpp
 
-# testcontact.o: testcontact.cpp contactEntry.h	contactDB.h
-# 	$(CC) -c $(CFLAGS) testcontact.cpp
+commentDB.o: ./Backend/commentDB.cpp #commentDB.h
+	$(CC) -c $(CFLAGS) -I/usr/include/cppconn ./Backend/commentDB.cpp
 
-# testcontact: testcontact.o contactDB.o contactEntry.o
-# 	$(CC) testcontact.o contactDB.o contactEntry.o -L/usr/lib -o testcontact -L/usr/local/lib -lmariadbcpp
+testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h #commentDB.h
+	$(CC) -c $(CFLAGS) ./Backend/testcomment.cpp
 
-# contactApp.o: contactApp.cpp httplib.h
-# 	$(CC) -c $(CFLAGS) contactApp.cpp
+testcomment: testcomment.o commentDB.o commentEntry.o
+	$(CC) testcomment.o commentDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
 
-# contactApp: contactApp.o contactDB.o contactEntry.o 
-# 	$(CC) contactApp.o contactDB.o contactEntry.o -o contactApp -L/usr/local/lib -lmariadbcpp
+# # testcomment: testcomment.o commentDB.o commentEntry.o
+# # 	$(CC) testcomment.o commentDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp
 
-# PutHTML:
-# 	cp contactApp.html /var/www/html/contactCpp/
-# 	cp contactApp.js /var/www/html/contactCpp/
-# 	cp contactApp.css /var/www/html/contactCpp/
+# APIcalls.o: APIcalls.cpp httplib.h
+# 	$(CC) -c $(CFLAGS) APIcalls.cpp
+
+# APIcalls: APIcalls.o commentDB.o commentEntry.o 
+# 	$(CC) APIcalls.o commentDB.o commentEntry.o -o APIcalls -L/usr/local/lib -lmariadbcpp
+
+PutHTML:
+	cp APIcalls.html /var/www/html/commentCpp/
+	cp APIcalls.js /var/www/html/commentCpp/
+	cp APIcalls.css /var/www/html/commentCpp/
 
 
-# 	echo "Current contents of your HTML directory: "
-# 	ls -l /var/www/html/contactCpp
+	echo "Current contents of your HTML directory: "
+	ls -l /var/www/html/commentCpp
 
-# clean:
-# 	rm -f *.o  contactApp testcontact
+clean:
+	rm -f *.o  APIcalls testcomment

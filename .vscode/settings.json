@@ -1,6 +1,13 @@
 {
     "files.associations": {
         "typeinfo": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "string": "cpp",
+        "iosfwd": "cpp",
+        "algorithm": "cpp",
+        "filesystem": "cpp",
+        "__locale": "cpp",
+        "locale": "cpp",
+        "vector": "cpp"
     }
 }
