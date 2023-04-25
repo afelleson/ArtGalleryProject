@@ -2,6 +2,14 @@ var commentList = [];
 // const baseUrl = 'C:\Users\4dyla\Programming\ArtGalleryProject\Pages\listView';
 var baseUrl = 'http://18.218.64.106:5005';
 
+fetchRegularly=setInterval(fetchCommentsForArtwork,500);
+
+window.addEventListener('beforeunload', function (event) {
+    clearInterval(fetchRegularly); // stop updating member list
+    // event.preventDefault() // these two lines cause a pop-up asking the user if they really want to close the tab
+    // event.returnValue = '' // these two lines cause a pop-up asking the user if they really want to close the tab
+  });
+
 /* Set up events */
 // $(document).ready(function() {
 	// Add a click event for the filter button
@@ -40,7 +48,7 @@ function formatComments(json) {
     return result;
 }
 
-function displayMatches(results) {
+function displayComments(results) {
 
     commentList = results["results"];
     console.log("Results:"+JSON.stringify(commentList));
@@ -61,7 +69,7 @@ function fetchCommentsForArtwork() {
             method: 'get'
         })
         .then(response => response.json())
-        .then(json => displayMatches(json))
+        .then(json => displayComments(json))
         .catch(error => {
             {
                 alert("Fetch Error: Something went wrong:" + error);
@@ -79,7 +87,7 @@ function processAdd(results) {
 
 }
 
-function sendComment() {
+function addComment() {
 	// Temp Values
 	x = 0
 	y = 0
