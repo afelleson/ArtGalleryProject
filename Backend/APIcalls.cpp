@@ -97,7 +97,7 @@ int main() {
 		cout << "here2\n"; 
 		// string rating = req.matches[7];
 		// string isPinned = req.matches[8];
-    	cdb.addComment(name,body,artworkID,x,y,width,0,0); // 0 for initial rating and isPinned status
+    	cdb.addComment(name,body,artworkID,x,y,width,"0","0"); // 0 for initial rating and isPinned status
 
     	res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
