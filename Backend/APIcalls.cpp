@@ -86,6 +86,7 @@ int main() {
   	
   	svr.Get(R"(/comment/add/(.*)/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
+		cout << "here1\n"; 
 
     	string name = req.matches[1];
     	string body = req.matches[2];
@@ -93,6 +94,7 @@ int main() {
     	string x = req.matches[4];
     	string y = req.matches[5];
 		string width = req.matches[6];
+		cout << "here2\n"; 
 		// string rating = req.matches[7];
 		// string isPinned = req.matches[8];
     	cdb.addComment(name,body,artworkID,x,y,width,0,0); // 0 for initial rating and isPinned status
