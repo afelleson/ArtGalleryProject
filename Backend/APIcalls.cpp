@@ -95,7 +95,11 @@ int main() {
 		string width = req.matches[6];
 		// string rating = req.matches[7];
 		// string isPinned = req.matches[8];
-    	cdb.addComment(name,body,artworkID,x,y,width,0,0); // 0 for initial rating and isPinned status
+		if (width=="0"){
+			cdb.addComment(name,body,artworkID,0,0); // 0 for initial rating and isPinned status
+		} else { 
+    		cdb.addComment(name,body,artworkID,x,y,width,0,0); // 0 for initial rating and isPinned status
+		}
 
     	res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
