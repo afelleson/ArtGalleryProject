@@ -97,7 +97,7 @@ void commentDB::addComment(string name_input, string text_input, string artworkI
 
   	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
-  	
+  	cout << typeid(stmnt).name << endl;
   	stmnt->executeQuery("INSERT INTO Comments (ID, Name, CommentText, ArtworkID, SelectionXCoord, SelectionYCoord, SelectionWidth, Rating, isPinned) VALUES (NUll, '"+name_input+"','"+artworkID+"','"+x_input+"','"+y_input+"','"+width_input+"','"+rating_input+"','"+isPinned_input+"')");
 }
 
