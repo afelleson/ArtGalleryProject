@@ -10,6 +10,11 @@ window.addEventListener('beforeunload', function (event) {
     // event.returnValue = '' // these two lines cause a pop-up asking the user if they really want to close the tab
   });
 
+document.getElementById('submit-comment').addEventListener("click", (e)=> {
+    event.preventDefault(); // prevent the enter key from actually inputting a new line in the input box
+	addComment();
+});
+
 /* Set up events */
 // $(document).ready(function() {
 	// Add a click event for the filter button
