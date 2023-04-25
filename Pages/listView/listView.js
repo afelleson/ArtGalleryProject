@@ -89,9 +89,9 @@ function processAdd(results) {
 
 function addComment() {
 	// Temp Values
-	x = 0
-	y = 0
-	width = 100
+	x = "1"
+	y = "1"
+	width = "100"
 	
     console.log("Attempting to add an entry");
     console.log("Name:" + $('#addname').val());
