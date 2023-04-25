@@ -22,7 +22,7 @@ public:
     // sortParam can be "Rating" or "ID" (TODO: add random option https://vladmihalcea.com/sql-order-by-random/)
     vector<commentEntry> findByArtworkAndSort(string artworkID, string sortParam);
     commentEntry fetchByCommentID(string commentID);
-    void addComment(string id_input, string name_input, string text_input, string artworkID, string x_input,string y_input, string width_input, string rating_input,string isPinned_input);
+    void addComment(string name_input, string text_input, string artworkID, string x_input,string y_input, string width_input, string rating_input,string isPinned_input);
     void changeRating(string commentID, string newRating);
     void deleteComment(string commentID);
     void changePinStatus(string commentID);  

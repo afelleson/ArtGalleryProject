@@ -88,8 +88,7 @@ commentEntry commentDB::fetchByCommentID(string commentID){
     return entry;
 }
 
-
-void commentDB::addComment(string id_input, string name_input, string text_input, string artworkID, string x_input,string y_input, string width_input, string rating_input,string isPinned_input){
+void commentDB::addComment(string name_input, string text_input, string artworkID, string x_input,string y_input, string width_input, string rating_input,string isPinned_input){
 
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -99,7 +98,7 @@ void commentDB::addComment(string id_input, string name_input, string text_input
   	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
   	
-  	stmnt->executeQuery("INSERT INTO Comments(ID, Name, CommentText, ArtworkID, SelectionXCoord, SelectionYCoor, SelectionWidth, Rating, isPinned) VALUES ('"+id_input+"','"+name_input+"','"+artworkID+"','"+x_input+"','"+y_input+"','"+width_input+"','"+rating_input+"','"+isPinned_input+"')");
+  	stmnt->executeQuery("INSERT INTO Comments(Name, CommentText, ArtworkID, SelectionXCoord, SelectionYCoor, SelectionWidth, Rating, isPinned) VALUES ('"+id_input+"','"+name_input+"','"+artworkID+"','"+x_input+"','"+y_input+"','"+width_input+"','"+rating_input+"','"+isPinned_input+"')");
 }
 
 
