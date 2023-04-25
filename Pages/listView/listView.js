@@ -1,6 +1,6 @@
 var commentList = [];
 // const baseUrl = 'C:\Users\4dyla\Programming\ArtGalleryProject\Pages\listView';
-var baseUrl = 'http://18.218.64.106:5005';
+var baseUrl = 'http://18.218.64.106:5001';
 
 fetchRegularly=setInterval(fetchCommentsForArtwork,500);
 
