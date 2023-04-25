@@ -8,7 +8,8 @@
         "filesystem": "cpp",
         "__locale": "cpp",
         "locale": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "iostream": "cpp"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }
