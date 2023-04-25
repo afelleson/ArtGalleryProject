@@ -83,48 +83,6 @@ int main() {
     	res.status = 200;
   	});
   	  	
-  	// svr.Get(R"(/comment/find/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    // 	res.set_header("Access-Control-Allow-Origin","*");
-
-    // 	string last = req.matches[1];
-    // 	results = ctdb.find(last);
-    // 	string json = jsonResults(results);
-    // 	res.set_content(json, "text/json");
-    // 	res.status = 200;
-  	// });
-  	
-  	// svr.Get(R"(/comment/last/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    // 	res.set_header("Access-Control-Allow-Origin","*");
-
-    // 	string last = req.matches[1];
-    // 	results = ctdb.findByLast(last);
-    // 	string json = jsonResults(results);
-    // 	cout << "Last: " << json << endl;
-    // 	res.set_content(json, "text/json");
-    // 	res.status = 200;
-  	// });
-  	
-  	// svr.Get(R"(/comment/first/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    // 	res.set_header("Access-Control-Allow-Origin","*");
-
-    // 	string first = req.matches[1];
-    // 	results = ctdb.findByFirst(first);
-    // 	string json = jsonResults(results);
-    // 	cout << "first: " << json << endl;
-    // 	res.set_content(json, "text/json");
-    // 	res.status = 200;
-  	// });  	
-
-  	// svr.Get(R"(/comment/type/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    // 	res.set_header("Access-Control-Allow-Origin","*");
-
-    // 	string type = req.matches[1];
-    // 	results = ctdb.findByType(type);
-    // 	string json = jsonResults(results);
-    // 	cout << "type: " << json << endl;
-    // 	res.set_content(json, "text/json");
-    // 	res.status = 200;
-  	// });  
   	
   	svr.Get(R"(/comment/add/(.*)/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
@@ -137,7 +95,7 @@ int main() {
 		string width = req.matches[6];
 		// string rating = req.matches[7];
 		// string isPinned = req.matches[8];
-    	cdb.addEntry(name,body,artworkID,x,y,width,0,0); // 0 for initial rating and isPinned status
+    	cdb.addComment(name,body,artworkID,x,y,width,0,0); // 0 for initial rating and isPinned status
 
     	res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
