@@ -26,7 +26,7 @@ commentDB.o: ./Backend/commentDB.cpp #commentDB.h
 # # testcomment: testcomment.o commentDB.o commentEntry.o
 # # 	$(CC) testcomment.o commentDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp
 
-APIcalls.o: ./Backend/APIcalls.cpp httplib.h
+APIcalls.o: ./Backend/APIcalls.cpp ./Backend/httplib.h
 	$(CC) -c $(CFLAGS) ./Backend/APIcalls.cpp
 
 APIcalls: APIcalls.o commentDB.o commentEntry.o 
