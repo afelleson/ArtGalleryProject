@@ -34,8 +34,8 @@ function formatComments(json) {
 
     var result = '<table class="table table-success table-striped"><tr><th>Username</th><th>Body</th><th>Image Coords</th><th>Rating</th><tr>';
     json.forEach(function(entry, i) {
-        result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['body'];
-        result += "</td><td class='imgloc'>" + entry['imgloc'] + "</td><td class='rating'>" + entry['rating'] + "</td>";
+        result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['commentText'];
+        result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " entry['width']+ "</td><td class='rating'>" + entry['rating'] + "</td>";
         result += "<button type='button' class='btn btn-primary btn-sm' ";
 		// FIX THIS
         result += "onclick=\"upvote(" + "COMMENT" + ")\">↑</button>";
