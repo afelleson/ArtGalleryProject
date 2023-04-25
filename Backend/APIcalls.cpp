@@ -17,7 +17,7 @@
 string jsonCommentList(vector<commentEntry> pbList) { // produces something that looks like this: {"results":[{"username":"alex","pw":"123"},{"username":"alex2","pw":"1234"}]}
 	string res = "{\"comments\":[";
 	for (int i = 0; i<pbList.size(); i++) {
-		res += pbList[i].json();
+		res += pbList[i].jsonify();
 		if (i < pbList.size()-1) {
 			res +=",";
 		}
@@ -62,7 +62,7 @@ string jsonCommentList(vector<commentEntry> pbList) { // produces something that
 #include "httplib.h"
 #include "commentDB.h"
 #include "commentEntry.h"
-const int port = 5004;
+const int port = 5001;
 
 using namespace std;
 
@@ -71,7 +71,7 @@ ofstream logfile;
 string jsonResults(vector<commentEntry> pbList) {
 	string res = "{\"results\":[";
 	for (int i = 0; i<pbList.size(); i++) {
-		res += pbList[i].json();
+		res += pbList[i].jsonify();
 		if (i < pbList.size()-1) {
 			res +=",";
 		}
@@ -150,15 +150,17 @@ int main() {
 
     	string name = req.matches[1];
     	string body = req.matches[2];
-    	string x = req.matches[3];
-    	string y = req.matches[4];
-		string width = req.matches[5];
-		string rating = req.matches[6];
-    	cdb.addEntry(name,body,x,y,zoom,score);
+		string artworkID = req.matches[3];
+    	string x = req.matches[4];
+    	string y = req.matches[5];
+		string width = req.matches[6];
+		// string rating = req.matches[7];
+		// string isPinned = req.matches[8];
+    	cdb.addEntry(name,body,artworkID,x,y,width,0,0); // 0 for initial rating and isPinned status
 
     	res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
-  	}); 	
+  	});
  
    	// svr.Get(R"(/comment/update/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     // 	res.set_header("Access-Control-Allow-Origin","*");

@@ -1,5 +1,6 @@
 var commentList = [];
-const baseUrl = 'C:\Users\4dyla\Programming\ArtGalleryProject\Pages\listView';
+// const baseUrl = 'C:\Users\4dyla\Programming\ArtGalleryProject\Pages\listView';
+var baseUrl = 'http://18.218.64.106:5005';
 
 /* Set up events */
 // $(document).ready(function() {
@@ -47,23 +48,26 @@ function displayMatches(results) {
     
 }
 
-// function findMatches(search) {
-	// only include / after find if search not empty
-	// search = search.trim();
-    // if (search != "") search = "/" + search;
-
-	// console.log("Search:" + search);
-    // fetch(baseUrl + '/contact/find' + search, {
-            // method: 'get'
-        // })
-        // .then(response => response.json())
-        // .then(json => displayMatches(json))
-        // .catch(error => {
-            // {
-                // alert("Find Error: Something went wrong:" + error);
-            // }
-        // })
-// }
+function fetchCommentsForArtwork() {
+    // artworkID = $('#artworkID').val();
+    // sortParam = $('#sortparam').val()
+	// Temp Values
+    var artworkID = "0";
+    var sortParam = "ID";
+	
+    console.log("Attempting to fetch artwork comments");
+    console.log("artworkID: " + artworkID + ", sort param: " + sortParam);
+    fetch(baseUrl + '/comment/fetchforwork/' + artworkID + "/" + sortParam, {
+            method: 'get'
+        })
+        .then(response => response.json())
+        .then(json => displayMatches(json))
+        .catch(error => {
+            {
+                alert("Fetch Error: Something went wrong:" + error);
+            }
+        })
+}
 
 /* Add contact functions */
 function processAdd(results) {
@@ -86,6 +90,7 @@ function sendComment() {
     $('#searchresults').empty();
     fetch(baseUrl + '/comment/add/' + $('#addname').val() + "/" + $('#addbody').val() + "/" + '0' + "/" + x +"/" + y + "/" + width, {
             method: 'get'
+            // to do: put artwork id in the place of '0' above
         })
         .then(response => response.json())
         .then(json => processAdd(json))
