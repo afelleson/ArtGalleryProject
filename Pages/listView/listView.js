@@ -38,10 +38,10 @@ function formatComments(json) {
         result += "</td><td class='imgloc'>" + entry['imgloc'] + "</td><td class='rating'>" + entry['rating'] + "</td>";
         result += "<button type='button' class='btn btn-primary btn-sm' ";
 		// FIX THIS
-        result += "onclick=\"upvote(" + COMMENT + ")\">↑</button>";
+        result += "onclick=\"upvote(" + "COMMENT" + ")\">↑</button>";
         result += "<button type='button' class='btn btn-primary btn-sm' ";
 		// FIX THIS
-        result += "onclick=\"downvote(" + COMMENT + ")\">↓</button>";
+        result += "onclick=\"downvote(" + "COMMENT" + ")\">↓</button>";
     });
     result += "</table>";
 
@@ -72,7 +72,7 @@ function fetchCommentsForArtwork() {
         .then(json => displayComments(json))
         .catch(error => {
             {
-                alert("Fetch Error: Something went wrong:" + error);
+                alert("Fetch Error: Something went wrong: " + error);
             }
         })
 }
