@@ -53,11 +53,11 @@ function formatComments(json) {
     return result;
 }
 
-// function completeUpvote(commentID){
-//     if (results["status"]=="success"){
-
-//     };
-// }
+function completeUpvote(commentID){
+    if (results["status"]=="success"){
+        console.log("success in upvote")
+    };
+}
 
 function upvote(commentID){
     console.log("upvoting comment with ID = " + commentID);
@@ -65,7 +65,7 @@ function upvote(commentID){
             method: 'get'
         })
         .then(response => response.json())
-        .then(json => displayComments(json))
+        .then(json => completeUpvote(json))
         .catch(error => {
             {
                 alert("Upvote Error: Something went wrong: " + error);
