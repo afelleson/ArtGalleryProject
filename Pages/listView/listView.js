@@ -43,10 +43,10 @@ function formatComments(json) {
         result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td class='rating'>" + entry['rating'];
         result += "<button type='button' class='btn btn-primary btn-sm' ";
 		// FIX THIS
-        result += "onclick=\"upvote(" + "COMMENT" + ")\">↑</button>";
+        result += "onclick=\"upvote(" + entry['ID'] + ")\">↑</button>";
         result += "<button type='button' class='btn btn-primary btn-sm' ";
 		// FIX THIS
-        result += "onclick=\"downvote(" + "COMMENT" + ")\">↓</button></td>";
+        result += "onclick=\"downvote(" + entry['ID'] + ")\">↓</button></td>";
     });
     result += "</table>";
 
