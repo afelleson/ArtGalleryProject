@@ -146,7 +146,7 @@ function upvote(buttonPressed, commentID){
     // turn button green or gray, whichever one it wasn't before
     toggleUpButton(buttonPressed);
     // reset downvote button, which has an element id based on the ID of the comment these buttons apply to
-    resetVoteButton(getElementById("downvote-" + commentID));
+    resetVoteButton(document.getElementById("downvote-" + commentID));
     
 
     // start timer for this comment (write over old timer)
@@ -160,7 +160,7 @@ function downvote(buttonPressed, commentID){
     // turn button green or gray, whichever one it wasn't before
     toggleDownButton(buttonPressed);
     // reset downvote button, which has an element id based on the ID of the comment these buttons apply to
-    resetVoteButton(getElementById("upvote-" + commentID));
+    resetVoteButton(document.getElementById("upvote-" + commentID));
     
 
     // start timer for this comment (write over old timer)
