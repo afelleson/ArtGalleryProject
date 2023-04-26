@@ -53,6 +53,26 @@ function formatComments(json) {
     return result;
 }
 
+// function completeUpvote(commentID){
+//     if (results["status"]=="success"){
+
+//     };
+// }
+
+function upvote(commentID){
+    console.log("upvoting comment with ID = " + commentID);
+    fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
+            method: 'get'
+        })
+        .then(response => response.json())
+        .then(json => displayComments(json))
+        .catch(error => {
+            {
+                alert("Upvote Error: Something went wrong: " + error);
+            }
+        })
+}
+
 function displayComments(results) {
 
     commentList = results["results"];

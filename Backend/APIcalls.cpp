@@ -103,25 +103,23 @@ int main() {
     	res.status = 200;
   	});
  
-   	// svr.Get(R"(/comment/update/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    // 	res.set_header("Access-Control-Allow-Origin","*");
+   	svr.Get(R"(/comment/changerating/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
 
-    // 	string ID = req.matches[1];
-    // 	string first = req.matches[2];
-    // 	string last = req.matches[3];
-    // 	string phone = req.matches[4];
-    // 	string type = req.matches[5];
-    // 	ctdb.editEntry(ID,first,last,phone,type);
+    	string commentID = req.matches[1];
+    	string vote = req.matches[2];
+    
+    	cdb.changeRating(commentID, vote);
 
-    // 	res.set_content("{\"status\":\"success\"}", "text/json");
-    // 	res.status = 200;
-  	// }); 
+    	res.set_content("{\"status\":\"success\"}", "text/json");
+    	res.status = 200;
+  	}); 
 
   	// svr.Get(R"(/comment/delete/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     // 	res.set_header("Access-Control-Allow-Origin","*");
 
     // 	string ID = req.matches[1];
-	// 	ctdb.deleteEntry(ID);
+	// 	cdb.deleteEntry(ID);
     // 	res.set_content("{\"status\":\"success\"}", "text/json");
     // 	res.status = 200;
   	// });  

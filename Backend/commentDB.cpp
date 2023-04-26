@@ -102,7 +102,7 @@ void commentDB::addComment(string name_input, string text_input, string artworkI
 }
 
 
-void commentDB::changeRating(string commentID, string newRating){
+void commentDB::changeRating(string commentID, string vote){
 
     // Establish Connection
     std::unique_ptr<sql::Connection> conn(driver->connect(db_url, properties));
@@ -113,7 +113,7 @@ void commentDB::changeRating(string commentID, string newRating){
 
     std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
-    stmt->execute("UPDATE Comments SET Rating = '" + newRating + "' WHERE ID='" + commentID + "'");
+    stmt->execute("UPDATE Comments SET Rating = Rating + " + vote + " WHERE ID='" + commentID + "'");
 }
 
 
