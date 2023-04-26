@@ -53,7 +53,7 @@ function formatComments(json) {
     return result;
 }
 
-function completeUpvote(commentID){
+function completeUpvote(results){
     if (results["status"]=="success"){
         console.log("success in upvote")
     };
