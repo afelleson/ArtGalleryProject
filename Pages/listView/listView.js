@@ -76,7 +76,7 @@ function upvote(commentID){
 function displayComments(results) {
 
     commentList = results["results"];
-    console.log("Results:"+JSON.stringify(commentList));
+    // console.log("Results:"+JSON.stringify(commentList));
     document.getElementById("searchresults").innerHTML = formatComments(commentList);
     
 }
@@ -88,8 +88,8 @@ function fetchCommentsForArtwork() {
     var artworkID = "0";
     var sortParam = "ID";
 	
-    console.log("Attempting to fetch artwork comments");
-    console.log("artworkID: " + artworkID + ", sort param: " + sortParam);
+    // console.log("Attempting to fetch artwork comments");
+    // console.log("artworkID: " + artworkID + ", sort param: " + sortParam);
     fetch(baseUrl + '/comment/fetchforwork/' + artworkID + "/" + sortParam, {
             method: 'get'
         })
