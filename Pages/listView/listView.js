@@ -41,12 +41,12 @@ function formatComments(json) {
     json.forEach(function(entry, i) {
         result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['commentText'];
         result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td class='rating'>" + entry['rating'];
-        result += "<button type='button' class='btn btn-primary btn-sm' ";
-		// FIX THIS
-        result += "onclick=\"upvote(" + entry['ID'] + ")\">↑</button>";
-        result += "<button type='button' class='btn btn-primary btn-sm' ";
-		// FIX THIS
-        result += "onclick=\"downvote(" + entry['ID'] + ")\">↓</button></td>";
+        // upvote button
+        result += "<button type='button' id='upvote-" + entry['ID'] + "' class='btn btn-primary btn-sm' ";
+        result += "onclick=\"upvote(this," + entry['ID'] + ")\">↑</button>";
+        // downvote button
+        result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-primary btn-sm' ";
+        result += "onclick=\"downvote(this," + entry['ID'] + ")\">↓</button></td>";
     });
     result += "</table>";
 
@@ -59,9 +59,17 @@ function completeUpvote(results){
     };
 }
 
-function upvote(commentID){
-    console.log("upvoting comment with ID = " + commentID);
-    fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
+upvoteColor = "green";
+downvoteColor = "red";
+noVoteColor = "gray";
+
+function toggleUpButton(buttonPressed){
+    // if green, turn gray (could do by running reset on the upvote button)
+    if (buttonPressed.style.color == upvoteColor) {
+        buttonPressed.style.color = noVoteColor;
+        
+        // decrement vote
+        fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
             method: 'get'
         })
         .then(response => response.json())
@@ -71,6 +79,93 @@ function upvote(commentID){
                 alert("Upvote Error: Something went wrong: " + error);
             }
         })
+    }
+    // if gray, turn green
+    else if (buttonPressed.style.color == noVoteColor) {
+        buttonPressed.style.color = upvoteColor;
+
+        // increment vote
+        fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
+            method: 'get'
+        })
+        .then(response => response.json())
+        .then(json => completeUpvote(json))
+        .catch(error => {
+            {
+                alert("Upvote Error: Something went wrong: " + error);
+            }
+        })
+    } else {
+        console.log("Unexpected upvote button color; no vote cast.");
+    }
+}
+
+function resetVoteButton(buttonToActOn){
+    // turn it gray
+    buttonToActOn.style.color = noVoteColor;
+}
+
+function toggleDownButton(buttonPressed){
+    // if red, turn gray (could do by running reset on the upvote button)
+    if (buttonPressed.style.color == downvoteColor) {
+        buttonPressed.style.color = noVoteColor;
+
+        // increment vote
+        fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
+            method: 'get'
+        })
+        .then(response => response.json())
+        .then(json => completeUpvote(json))
+        .catch(error => {
+            {
+                alert("Upvote Error: Something went wrong: " + error);
+            }
+        })
+    }
+    // if gray, turn red
+    else if (buttonPressed.style.color == noVoteColor) {
+        buttonPressed.style.color = downvoteColor;
+
+        // decrement vote
+        fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
+            method: 'get'
+        })
+        .then(response => response.json())
+        .then(json => completeUpvote(json))
+        .catch(error => {
+            {
+                alert("Upvote Error: Something went wrong: " + error);
+            }
+        })
+    }
+}
+
+function upvote(buttonPressed, commentID){
+    console.log("upvoting comment with ID = " + commentID);
+
+    // turn button green or gray, whichever one it wasn't before
+    toggleUpButton(buttonPressed);
+    // reset downvote button, which has an element id based on the ID of the comment these buttons apply to
+    resetVoteButton(getElementById("downvote-" + commentID));
+    
+
+    // start timer for this comment (write over old timer)
+
+    
+}
+
+function downvote(buttonPressed, commentID){
+    console.log("upvoting comment with ID = " + commentID);
+
+    // turn button green or gray, whichever one it wasn't before
+    toggleDownButton(buttonPressed);
+    // reset downvote button, which has an element id based on the ID of the comment these buttons apply to
+    resetVoteButton(getElementById("upvote-" + commentID));
+    
+
+    // start timer for this comment (write over old timer)
+
+    
 }
 
 function displayComments(results) {
