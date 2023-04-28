@@ -3,7 +3,7 @@
 #include "commentEntry.h"
 
 
-// This is what would normally go in a commentDB.h file
+// This is what would normally go in a galleryDB.h file
 #ifndef COMMENTDB_H // if not defined, define
 #define COMMENTDB_H
 
@@ -15,9 +15,9 @@
 using namespace std;
 
 
-class commentDB {
+class galleryDB {
 public:
-    commentDB();
+    galleryDB();
     
     // sortParam can be "Rating" or "ID" (TODO: add random option https://vladmihalcea.com/sql-order-by-random/)
     vector<commentEntry> findByArtworkAndSort(string artworkID, string sortParam);
@@ -26,6 +26,15 @@ public:
     void changeRating(string commentID, string vote); // vote must be an integer
     void deleteComment(string commentID);
     void changePinStatus(string commentID);  
+
+    vector<artworkEntry> findArtworkByID(string artworkID);
+    void addArtwork(string title_input, string artist_input, string year_input);
+    void editArtwork(string artworkID, string title_input, string artist_input, string year_input);
+    void deleteArtwork(string artworkID);
+    // void deactivateArtwork(string artworkID); // would be nice, but we won't have time to build a nice interface for this (a list of all the info from all the artworks in the database and checkboxes)
+    // void activateArtwork(string artworkID);
+    void getAllArtworkTitlesAndIDs();
+
 
 private:
     const string db_url=DB_URL;
@@ -37,4 +46,4 @@ private:
 
 };
 
-#endif /* commentDB_H */
+#endif /* galleryDB_H */

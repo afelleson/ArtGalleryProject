@@ -8,7 +8,7 @@
 #include <map>
 
 #include "../httplib.h"
-#include "commentDB.h"
+#include "galleryDB.h"
 #include "commentEntry.h"
 
 
@@ -64,7 +64,7 @@ string jsonResults(vector<commentEntry> pbList) {
 int main() {
 	httplib::Server svr;
 
-  	commentDB cdb; // Comment List SQL Interface Object
+  	galleryDB cdb; // Comment List SQL Interface Object
   
   	vector<commentEntry> results;
 

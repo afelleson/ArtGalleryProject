@@ -14,23 +14,23 @@ all: APIcalls PutHTML  #testcomment
 commentEntry.o: ./Backend/commentEntry.cpp ./Backend/commentEntry.h
 	$(CC) -c $(CFLAGS) ./Backend/commentEntry.cpp
 
-commentDB.o: ./Backend/commentDB.cpp #commentDB.h
-	$(CC) -c $(CFLAGS) -I/usr/include/cppconn ./Backend/commentDB.cpp
+galleryDB.o: ./Backend/galleryDB.cpp #galleryDB.h
+	$(CC) -c $(CFLAGS) -I/usr/include/cppconn ./Backend/galleryDB.cpp
 
-# testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h #commentDB.h
+# testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h #galleryDB.h
 # 	$(CC) -c $(CFLAGS) ./Backend/testcomment.cpp
 
-# testcomment: testcomment.o commentDB.o commentEntry.o
-# 	$(CC) testcomment.o commentDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
+# testcomment: testcomment.o galleryDB.o commentEntry.o
+# 	$(CC) testcomment.o galleryDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
 
-# # testcomment: testcomment.o commentDB.o commentEntry.o
-# # 	$(CC) testcomment.o commentDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp
+# # testcomment: testcomment.o galleryDB.o commentEntry.o
+# # 	$(CC) testcomment.o galleryDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp
 
 APIcalls.o: ./Backend/APIcalls.cpp httplib.h
 	$(CC) -c $(CFLAGS) ./Backend/APIcalls.cpp
 
-APIcalls: APIcalls.o commentDB.o commentEntry.o 
-	$(CC) APIcalls.o commentDB.o commentEntry.o -o APIcalls -L/usr/local/lib -lmariadbcpp
+APIcalls: APIcalls.o galleryDB.o commentEntry.o 
+	$(CC) APIcalls.o galleryDB.o commentEntry.o -o APIcalls -L/usr/local/lib -lmariadbcpp
 
 restChat.o: restChat.cpp httplib.h
 	$(CC) -c $(CFLAGS) restChat.cpp

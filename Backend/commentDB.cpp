@@ -6,10 +6,10 @@
 #include <vector>
 
 #include "commentEntry.h"
-#include "commentDB.h"
+#include "galleryDB.h"
 
 
-commentDB::commentDB() {
+galleryDB::galleryDB() {
   	// Instantiate Driver
   	driver = sql::mariadb::get_driver_instance();
   	
@@ -38,7 +38,7 @@ commentDB::commentDB() {
 }
 
 
-vector<commentEntry> commentDB::findByArtworkAndSort(string artworkID, string sortParam){
+vector<commentEntry> galleryDB::findByArtworkAndSort(string artworkID, string sortParam){
 
     // Make sure the connection is still valid
     if (!conn) {
@@ -67,7 +67,7 @@ vector<commentEntry> commentDB::findByArtworkAndSort(string artworkID, string so
 }
 
 
-commentEntry commentDB::fetchByCommentID(string commentID){
+commentEntry galleryDB::fetchByCommentID(string commentID){
 
 	commentEntry entry;	
 	
@@ -88,7 +88,7 @@ commentEntry commentDB::fetchByCommentID(string commentID){
     return entry;
 }
 
-void commentDB::addComment(string name_input, string text_input, string artworkID, string x_input,string y_input, string width_input, string rating_input,string isPinned_input){
+void galleryDB::addComment(string name_input, string text_input, string artworkID, string x_input,string y_input, string width_input, string rating_input,string isPinned_input){
 
 	if (!conn) {
    		cerr << "Invalid database connection" << endl;
@@ -102,7 +102,7 @@ void commentDB::addComment(string name_input, string text_input, string artworkI
 }
 
 
-void commentDB::changeRating(string commentID, string vote){
+void galleryDB::changeRating(string commentID, string vote){
 
     // Establish Connection
     std::unique_ptr<sql::Connection> conn(driver->connect(db_url, properties));
@@ -117,7 +117,7 @@ void commentDB::changeRating(string commentID, string vote){
 }
 
 
-void commentDB::changePinStatus(string commentID){
+void galleryDB::changePinStatus(string commentID){
     // Establish Connection
     std::unique_ptr<sql::Connection> conn(driver->connect(db_url, properties));
     if (!conn) {
@@ -130,7 +130,7 @@ void commentDB::changePinStatus(string commentID){
     stmt->execute("UPDATE Comments SET Rating = !Rating WHERE ID='" + commentID + "'");
 }   
 
-void commentDB::deleteComment(string commentID){
+void galleryDB::deleteComment(string commentID){
     // Establish Connection
     std::unique_ptr<sql::Connection> conn(driver->connect(db_url, properties));
     if (!conn) {
@@ -141,4 +141,88 @@ void commentDB::deleteComment(string commentID){
     std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
     stmt->execute("DELETE FROM ChatAppUsers WHERE ID='"+commentID+"'");    
+}
+
+
+
+
+vector<artworkEntry> galleryDB::findArtworkByID(string artworkID){
+    artworkEntry entry;	
+	
+	if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+  	}
+
+  	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+  	
+    sql::ResultSet *queryResults = stmnt->executeQuery("SELECT * FROM Artworks WHERE ID = '" + artworkID + "'");
+    
+    // Get first entry
+    if (queryResults->next()) {
+    	entry = artworkEntry(queryResults->getString("Title"),queryResults->getString("Artist"),queryResults->getString("Year"),
+			queryResults->getString("ArtworkID"));
+    }
+    return entry;
+}
+
+void galleryDB::addArtwork(string title_input, string artist_input, string year_input){
+    if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+  	}
+
+  	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+
+  	cout << typeid(stmnt).name() << endl;
+  	stmnt->executeQuery("INSERT INTO Artworks (ArtworkID, Title, Artist, Year) VALUES (NULL,'"+title_input+"','"+artist_input+"','"+year_input+"')");
+}
+
+void galleryDB::editArtwork(string artworkID, string title_input, string artist_input, string year_input){
+    if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+  	}
+
+  	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
+	
+    stmt->execute("UPDATE Artworks SET Title = " + title_input + ", Artist = " +  artist_input + ", Year = " +  year_input + " WHERE ID='" + artworkID + "'");
+}
+
+void galleryDB::deleteArtwork(string artworkID){
+    // Establish Connection
+    std::unique_ptr<sql::Connection> conn(driver->connect(db_url, properties));
+    if (!conn) {
+        cerr << "Invalid database connection" << endl;
+        exit (EXIT_FAILURE);
+    }
+
+    std::unique_ptr<sql::Statement> stmt(conn->createStatement());
+
+    stmt->execute("DELETE FROM Artworks WHERE ID='"+artworkID+"'"); 
+}
+
+vector<artworkEntry> galleryDB::getAllArtworks(){
+    // Make sure the connection is still valid
+    if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+   	}
+    // Create a new Statement
+	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+
+    vector<artworkEntry> resultsVec;
+    // Execute query
+    sql::ResultSet *queryResults = stmnt->executeQuery("SELECT * FROM Artworks");
+    
+    // Loop through results and push artworkEntry object to a vector
+    while (queryResults->next()) {
+    	artworkEntry entry(queryResults->getString("ArtworkID"),queryResults->getString("Title"),queryResults->getString("Artist"),
+			queryResults->getString("Year"));
+	    	
+	    resultsVec.push_back(entry);
+
+    }
+    return resultsVec;
+
 }

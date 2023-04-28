@@ -6,7 +6,7 @@
 
 #include <mariadb/conncpp.hpp>
 
-#include "commentDB.h"
+#include "galleryDB.h"
 
 using namespace std;
 
@@ -27,7 +27,7 @@ vector<string> split(string s, string delimiter) {
 
 
 int main(){
-    commentDB commentdb;
+    galleryDB commentdb;
     vector<commentEntry> results;
     commentEntry result;
     string o;
