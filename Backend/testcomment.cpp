@@ -49,15 +49,18 @@ int main(){
 
             // cout << result.textify() << endl;
 
-            // cout << "Enter ID of the artwork to find:";
             string artworkid = "1";
-            // getline(cin,artworkid);
 
             artresult = commentdb.findArtworkByID(artworkid);
             commentdb.addArtwork("title", "artist", "00", "path");
             commentdb.editArtwork("1","newtitle", "newartist", "2005", "path");
 
             cout << artresult.textify() << endl;
+
+
+
+
+
 
 	        // results = commentdb.fetchByCommentID(commentid);
 
