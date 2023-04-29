@@ -49,9 +49,9 @@ int main(){
 
             // cout << result.textify() << endl;
 
-            cout << "Enter ID of the artwork to find:";
-            string artworkid;
-            getline(cin,artworkid);
+            // cout << "Enter ID of the artwork to find:";
+            string artworkid = 0;
+            // getline(cin,artworkid);
 
             artresult = commentdb.findArtworkByID(artworkid);
 
