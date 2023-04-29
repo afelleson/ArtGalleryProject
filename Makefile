@@ -9,8 +9,8 @@ CFLAGS= -std=c++14  -Wno-deprecated-declarations
 
 # CD = cd subfolder/ # doesn't work
 
-# all: APIcalls PutHTML
-all:  testcomment PutHTML # testing
+all: APIcalls PutHTML
+# all:  testcomment PutHTML # for testing
 
 commentEntry.o: ./Backend/commentEntry.cpp ./Backend/commentEntry.h
 	$(CC) -c $(CFLAGS) ./Backend/commentEntry.cpp
@@ -21,20 +21,17 @@ artworkEntry.o: ./Backend/artworkEntry.cpp ./Backend/artworkEntry.h
 galleryDB.o: ./Backend/galleryDB.cpp #galleryDB.h
 	$(CC) -c $(CFLAGS) -I/usr/include/cppconn ./Backend/galleryDB.cpp
 
-testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h ./Backend/artworkEntry.h #galleryDB.h
-	$(CC) -c $(CFLAGS) ./Backend/testcomment.cpp
+# testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h ./Backend/artworkEntry.h #galleryDB.h # for testing
+# 	$(CC) -c $(CFLAGS) ./Backend/testcomment.cpp
 
-testcomment: testcomment.o galleryDB.o commentEntry.o artworkEntry.o
-	$(CC) testcomment.o galleryDB.o commentEntry.o artworkEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
+# testcomment: testcomment.o galleryDB.o commentEntry.o artworkEntry.o # for testing
+# 	$(CC) testcomment.o galleryDB.o commentEntry.o artworkEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
 
-# # testcomment: testcomment.o galleryDB.o commentEntry.o
-# # 	$(CC) testcomment.o galleryDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp
+APIcalls.o: ./Backend/APIcalls.cpp httplib.h
+	$(CC) -c $(CFLAGS) ./Backend/APIcalls.cpp
 
-# APIcalls.o: ./Backend/APIcalls.cpp httplib.h
-# 	$(CC) -c $(CFLAGS) ./Backend/APIcalls.cpp
-
-# APIcalls: APIcalls.o galleryDB.o commentEntry.o 
-# 	$(CC) APIcalls.o galleryDB.o commentEntry.o -o APIcalls -L/usr/local/lib -lmariadbcpp
+APIcalls: APIcalls.o galleryDB.o commentEntry.o 
+	$(CC) APIcalls.o galleryDB.o commentEntry.o -o APIcalls -L/usr/local/lib -lmariadbcpp
 
 restChat.o: restChat.cpp httplib.h
 	$(CC) -c $(CFLAGS) restChat.cpp
