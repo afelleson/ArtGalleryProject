@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "commentEntry.h"
+#include "artworkEntry.h"
 #include "galleryDB.h"
 
 
