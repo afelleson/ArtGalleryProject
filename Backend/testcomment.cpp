@@ -54,6 +54,8 @@ int main(){
             // getline(cin,artworkid);
 
             artresult = commentdb.findArtworkByID(artworkid);
+            commentdb.addArtwork("title", "artist", "year", "path");
+            commentdb.editArtwork("1","newtitle", "newartist", "newyear", "path");
 
             cout << artresult.textify() << endl;
 
