@@ -146,7 +146,7 @@ void galleryDB::deleteComment(string commentID){
 
 
 
-vector<artworkEntry> galleryDB::findArtworkByID(string artworkID){
+artworkEntry galleryDB::findArtworkByID(string artworkID){
     artworkEntry entry;	
 	
 	if (!conn) {

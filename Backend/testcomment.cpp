@@ -30,6 +30,7 @@ int main(){
     galleryDB commentdb;
     vector<commentEntry> results;
     commentEntry result;
+    artworkEntry artresult;
     string o;
 
     cout << "Contacts test program" << endl;
@@ -52,7 +53,7 @@ int main(){
             string artworkid;
             getline(cin,artworkid);
 
-            result = commentdb.findArtworkByID(artworkid);
+            artresult = commentdb.findArtworkByID(artworkid);
 
             cout << result.textify() << endl;
 
