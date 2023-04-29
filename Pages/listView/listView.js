@@ -2,7 +2,7 @@ var commentList = [];
 // const baseUrl = 'C:\Users\4dyla\Programming\ArtGalleryProject\Pages\listView';
 var baseUrl = 'http://18.218.64.106:5001';
 
-oldJson = "";
+var oldJson = "";
 
 
 fetchRegularly=setInterval(fetchCommentsForArtwork,500);
@@ -181,7 +181,7 @@ function displayComments(isJsonDiff, results) {
 }
 
 function isJsonDifferent(newJson){
-    if (oldJson==newJson){
+    if (oldJson===newJson){
         console.log("json not different");
         return false;
     } else {
