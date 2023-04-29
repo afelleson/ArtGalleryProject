@@ -10,7 +10,7 @@
 #include "../httplib.h"
 #include "galleryDB.h"
 #include "commentEntry.h"
-
+#include "artworkEntry.h"
 
 // Call functions from the other C++ files to carry out
 // GET requests and return results in JSON format
