@@ -140,7 +140,7 @@ void galleryDB::deleteComment(string commentID){
 
     std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
-    stmt->execute("DELETE FROM ChatAppUsers WHERE ID='"+commentID+"'");    
+    stmt->execute("DELETE FROM Comments WHERE ID='"+commentID+"'");    
 }
 
 
@@ -156,7 +156,7 @@ vector<artworkEntry> galleryDB::findArtworkByID(string artworkID){
 
   	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
   	
-    sql::ResultSet *queryResults = stmnt->executeQuery("SELECT * FROM Artworks WHERE ID = '" + artworkID + "'");
+    sql::ResultSet *queryResults = stmnt->executeQuery("SELECT * FROM Artworks WHEREA = '" + artworkID + "'");
     
     // Get first entry
     if (queryResults->next()) {
@@ -186,7 +186,7 @@ void galleryDB::editArtwork(string artworkID, string title_input, string artist_
 
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
 	
-    stmt->execute("UPDATE Artworks SET Title = " + title_input + ", Artist = " +  artist_input + ", Year = " +  year_input + " WHERE ID='" + artworkID + "'");
+    stmt->execute("UPDATE Artworks SET Title = " + title_input + ", Artist = " +  artist_input + ", Year = " +  year_input + " WHERE ArtworkID='" + artworkID + "'");
 }
 
 void galleryDB::deleteArtwork(string artworkID){
@@ -199,7 +199,7 @@ void galleryDB::deleteArtwork(string artworkID){
 
     std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
-    stmt->execute("DELETE FROM Artworks WHERE ID='"+artworkID+"'"); 
+    stmt->execute("DELETE FROM Artworks WHERE ArtworkID='"+artworkID+"'"); 
 }
 
 vector<artworkEntry> galleryDB::getAllArtworks(){
