@@ -55,7 +55,7 @@ int main(){
 
             artresult = commentdb.findArtworkByID(artworkid);
 
-            cout << result.textify() << endl;
+            cout << artresult.textify() << endl;
 
 	        // results = commentdb.fetchByCommentID(commentid);
 
