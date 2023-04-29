@@ -1,7 +1,7 @@
 #include <mariadb/conncpp.hpp>
 
 #include "commentEntry.h"
-
+#include "artworkEntry.h"
 
 // This is what would normally go in a galleryDB.h file
 #ifndef COMMENTDB_H // if not defined, define
