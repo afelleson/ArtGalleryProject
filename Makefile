@@ -24,8 +24,8 @@ galleryDB.o: ./Backend/galleryDB.cpp #galleryDB.h
 testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h ./Backend/artworkEntry.h #galleryDB.h
 	$(CC) -c $(CFLAGS) ./Backend/testcomment.cpp
 
-testcomment: testcomment.o galleryDB.o commentEntry.o
-	$(CC) testcomment.o galleryDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
+testcomment: testcomment.o galleryDB.o commentEntry.o artworkEntry.o
+	$(CC) testcomment.o galleryDB.o commentEntry.o artworkEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp $(CXXFLAGS)
 
 # # testcomment: testcomment.o galleryDB.o commentEntry.o
 # # 	$(CC) testcomment.o galleryDB.o commentEntry.o -L/usr/lib -o testcomment -L/usr/local/lib -lmariadbcpp

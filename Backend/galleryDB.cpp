@@ -161,8 +161,8 @@ artworkEntry galleryDB::findArtworkByID(string artworkID){
     
     // Get first entry (technically, if there are multiple matches this will return the last one)
     if (queryResults->next()) {
-    	entry = artworkEntry(queryResults->getString("Title"),queryResults->getString("Artist"),queryResults->getString("Year"),
-			queryResults->getString("ArtworkID"), queryResults->getString("Path"));
+    	entry = artworkEntry(queryResults->getString("ArtworkID"), queryResults->getString("Title"),queryResults->getString("Artist"),
+        queryResults->getString("Year"), queryResults->getString("Path"));
     }
     return entry;
 }
