@@ -161,12 +161,12 @@ artworkEntry galleryDB::findArtworkByID(string artworkID){
     // Get first entry (technically, if there are multiple matches this will return the last one)
     if (queryResults->next()) {
     	entry = artworkEntry(queryResults->getString("Title"),queryResults->getString("Artist"),queryResults->getString("Year"),
-			queryResults->getString("ArtworkID"));
+			queryResults->getString("ArtworkID"), queryResults->getString("Path"));
     }
     return entry;
 }
 
-void galleryDB::addArtwork(string title_input, string artist_input, string year_input){
+void galleryDB::addArtwork(string title_input, string artist_input, string year_input, string path_input){
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
@@ -175,10 +175,10 @@ void galleryDB::addArtwork(string title_input, string artist_input, string year_
   	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
 
   	cout << typeid(stmnt).name() << endl;
-  	stmnt->executeQuery("INSERT INTO Artworks (ArtworkID, Title, Artist, Year) VALUES (NULL,'"+title_input+"','"+artist_input+"','"+year_input+"')");
+  	stmnt->executeQuery("INSERT INTO Artworks (ArtworkID, Title, Artist, Year, Path) VALUES (NULL,'"+title_input+"','"+artist_input+"','"+year_input+"','"+path_input+"')");
 }
 
-void galleryDB::editArtwork(string artworkID, string title_input, string artist_input, string year_input){
+void galleryDB::editArtwork(string artworkID, string title_input, string artist_input, string year_input, string path_input){
     if (!conn) {
    		cerr << "Invalid database connection" << endl;
    		exit (EXIT_FAILURE);
@@ -186,7 +186,7 @@ void galleryDB::editArtwork(string artworkID, string title_input, string artist_
 
   	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
 	
-    stmt->execute("UPDATE Artworks SET Title = " + title_input + ", Artist = " +  artist_input + ", Year = " +  year_input + " WHERE ArtworkID='" + artworkID + "'");
+    stmt->execute("UPDATE Artworks SET Title = " + title_input + ", Artist = " +  artist_input + ", Year = " +  year_input + ", Path = " +  path_input  + " WHERE ArtworkID='" + artworkID + "'");
 }
 
 void galleryDB::deleteArtwork(string artworkID){
@@ -218,7 +218,7 @@ vector<artworkEntry> galleryDB::getAllArtworks(){
     // Loop through results and push artworkEntry object to a vector
     while (queryResults->next()) {
     	artworkEntry entry(queryResults->getString("ArtworkID"),queryResults->getString("Title"),queryResults->getString("Artist"),
-			queryResults->getString("Year"));
+			queryResults->getString("Year"), queryResults->getString("Path"));
 	    	
 	    resultsVec.push_back(entry);
 

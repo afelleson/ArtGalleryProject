@@ -12,6 +12,7 @@ artworkEntry::artworkEntry(){
     title = "";
     artist = "";
     year = "";
+    path = "";
 };
 
 artworkEntry::artworkEntry(sql::SQLString id_input, sql::SQLString title_input, sql::SQLString artist_input, sql::SQLString year_input, sql::SQLString path_input){
