@@ -175,15 +175,18 @@ function displayComments(isJsonDiff, results) {
     if (isJsonDiff){
         commentList = results["results"];
         // console.log("Results:"+JSON.stringify(commentList));
+        console.log("remaking table of comments");
         document.getElementById("searchresults").innerHTML = formatComments(commentList);
     }
 }
 
 function isJsonDifferent(newJson){
     if (oldJson==newJson){
+        console.log("json not different");
         return false;
     } else {
         oldJson = newJson; // update saved json
+        console.log("json is different");
         return true;
     }
 }
