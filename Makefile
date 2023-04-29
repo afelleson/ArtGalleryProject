@@ -30,8 +30,8 @@ galleryDB.o: ./Backend/galleryDB.cpp #galleryDB.h
 APIcalls.o: ./Backend/APIcalls.cpp httplib.h
 	$(CC) -c $(CFLAGS) ./Backend/APIcalls.cpp
 
-APIcalls: APIcalls.o galleryDB.o commentEntry.o 
-	$(CC) APIcalls.o galleryDB.o commentEntry.o -o APIcalls -L/usr/local/lib -lmariadbcpp
+APIcalls: APIcalls.o galleryDB.o commentEntry.o artworkEntry.o
+	$(CC) APIcalls.o galleryDB.o commentEntry.o artworkEntry.o -o APIcalls -L/usr/local/lib -lmariadbcpp
 
 restChat.o: restChat.cpp httplib.h
 	$(CC) -c $(CFLAGS) restChat.cpp
