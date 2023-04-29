@@ -157,7 +157,7 @@ artworkEntry galleryDB::findArtworkByID(string artworkID){
 
   	std::unique_ptr<sql::Statement> stmt(conn->createStatement());
   	
-    sql::ResultSet *queryResults = stmt->executeQuery("SELECT * FROM Artworks WHEREA = '" + artworkID + "'");
+    sql::ResultSet *queryResults = stmt->executeQuery("SELECT * FROM Artworks WHERE = '" + artworkID + "'");
     
     // Get first entry (technically, if there are multiple matches this will return the last one)
     if (queryResults->next()) {
