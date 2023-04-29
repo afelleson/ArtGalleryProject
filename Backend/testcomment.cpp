@@ -40,11 +40,19 @@ int main(){
     while (o!="7") {
 
         if (o=="1") {
-            cout << "Enter ID of the comment to find:";
-            string commentid;
-            getline(cin,commentid);
+            // cout << "Enter ID of the comment to find:";
+            // string commentid;
+            // getline(cin,commentid);
 
-            result = commentdb.fetchByCommentID(commentid);
+            // result = commentdb.fetchByCommentID(commentid);
+
+            // cout << result.textify() << endl;
+
+            cout << "Enter ID of the artwork to find:";
+            string artworkid;
+            getline(cin,artworkid);
+
+            result = commentdb.findArtworkByID(artworkid);
 
             cout << result.textify() << endl;
 
