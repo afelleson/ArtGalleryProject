@@ -15,10 +15,13 @@ all:  testcomment PutHTML # testing
 commentEntry.o: ./Backend/commentEntry.cpp ./Backend/commentEntry.h
 	$(CC) -c $(CFLAGS) ./Backend/commentEntry.cpp
 
+artworkEntry.o: ./Backend/artworkEntry.cpp ./Backend/artworkEntry.h
+	$(CC) -c $(CFLAGS) ./Backend/artworkEntry.cpp
+
 galleryDB.o: ./Backend/galleryDB.cpp #galleryDB.h
 	$(CC) -c $(CFLAGS) -I/usr/include/cppconn ./Backend/galleryDB.cpp
 
-testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h #galleryDB.h
+testcomment.o: ./Backend/testcomment.cpp ./Backend/commentEntry.h ./Backend/artworkEntry.h #galleryDB.h
 	$(CC) -c $(CFLAGS) ./Backend/testcomment.cpp
 
 testcomment: testcomment.o galleryDB.o commentEntry.o
