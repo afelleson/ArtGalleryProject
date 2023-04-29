@@ -27,7 +27,7 @@ public:
     void deleteComment(string commentID);
     void changePinStatus(string commentID);  
 
-    vector<artworkEntry> findArtworkByID(string artworkID);
+    artworkEntry findArtworkByID(string artworkID);
     void addArtwork(string title_input, string artist_input, string year_input);
     void editArtwork(string artworkID, string title_input, string artist_input, string year_input);
     void deleteArtwork(string artworkID);
