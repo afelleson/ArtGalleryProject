@@ -33,7 +33,7 @@ public:
     void deleteArtwork(string artworkID);
     // void deactivateArtwork(string artworkID); // would be nice, but we won't have time to build a nice interface for this (a list of all the info from all the artworks in the database and checkboxes)
     // void activateArtwork(string artworkID);
-    void getAllArtworkTitlesAndIDs();
+    vector<artworkEntry> getAllArtworks();
 
 
 private:
