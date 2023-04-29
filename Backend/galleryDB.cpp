@@ -46,11 +46,11 @@ vector<commentEntry> galleryDB::findByArtworkAndSort(string artworkID, string so
    		exit (EXIT_FAILURE);
    	}
     // Create a new Statement
-	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+	std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
     vector<commentEntry> resultsVec;
     // Execute query
-    sql::ResultSet *queryResults = stmnt->executeQuery(
+    sql::ResultSet *queryResults = stmt->executeQuery(
 			"SELECT * FROM Comments WHERE ArtworkID = '" + artworkID + "' " +
             "ORDER BY " + sortParam + " DESC");
     
@@ -76,9 +76,9 @@ commentEntry galleryDB::fetchByCommentID(string commentID){
    		exit (EXIT_FAILURE);
   	}
 
-  	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+  	std::unique_ptr<sql::Statement> stmt(conn->createStatement());
   	
-    sql::ResultSet *queryResults = stmnt->executeQuery("SELECT * FROM Comments WHERE ID = '" + commentID + "'");
+    sql::ResultSet *queryResults = stmt->executeQuery("SELECT * FROM Comments WHERE ID = '" + commentID + "'");
     
     // Get first entry
     if (queryResults->next()) {
@@ -95,10 +95,10 @@ void galleryDB::addComment(string name_input, string text_input, string artworkI
    		exit (EXIT_FAILURE);
   	}
 
-  	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+  	std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
-  	cout << typeid(stmnt).name() << endl;
-  	stmnt->executeQuery("INSERT INTO Comments (ID, Name, CommentText, ArtworkID, SelectionXCoord, SelectionYCoord, SelectionWidth, Rating, isPinned) VALUES (NUll,'"+name_input+"','"+text_input+"','"+artworkID+"','"+x_input+"','"+y_input+"','"+width_input+"','"+rating_input+"','"+isPinned_input+"')");
+  	cout << typeid(stmt).name() << endl;
+  	stmt->executeQuery("INSERT INTO Comments (ID, Name, CommentText, ArtworkID, SelectionXCoord, SelectionYCoord, SelectionWidth, Rating, isPinned) VALUES (NUll,'"+name_input+"','"+text_input+"','"+artworkID+"','"+x_input+"','"+y_input+"','"+width_input+"','"+rating_input+"','"+isPinned_input+"')");
 }
 
 
@@ -154,9 +154,9 @@ artworkEntry galleryDB::findArtworkByID(string artworkID){
    		exit (EXIT_FAILURE);
   	}
 
-  	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+  	std::unique_ptr<sql::Statement> stmt(conn->createStatement());
   	
-    sql::ResultSet *queryResults = stmnt->executeQuery("SELECT * FROM Artworks WHEREA = '" + artworkID + "'");
+    sql::ResultSet *queryResults = stmt->executeQuery("SELECT * FROM Artworks WHEREA = '" + artworkID + "'");
     
     // Get first entry (technically, if there are multiple matches this will return the last one)
     if (queryResults->next()) {
@@ -172,10 +172,10 @@ void galleryDB::addArtwork(string title_input, string artist_input, string year_
    		exit (EXIT_FAILURE);
   	}
 
-  	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+  	std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
-  	cout << typeid(stmnt).name() << endl;
-  	stmnt->executeQuery("INSERT INTO Artworks (ArtworkID, Title, Artist, Year, Path) VALUES (NULL,'"+title_input+"','"+artist_input+"','"+year_input+"','"+path_input+"')");
+  	cout << typeid(stmt).name() << endl;
+  	stmt->executeQuery("INSERT INTO Artworks (ArtworkID, Title, Artist, Year, Path) VALUES (NULL,'"+title_input+"','"+artist_input+"','"+year_input+"','"+path_input+"')");
 }
 
 void galleryDB::editArtwork(string artworkID, string title_input, string artist_input, string year_input, string path_input){
@@ -184,7 +184,7 @@ void galleryDB::editArtwork(string artworkID, string title_input, string artist_
    		exit (EXIT_FAILURE);
   	}
 
-  	std::auto_ptr<sql::Statement> stmnt(conn->createStatement());
+  	std::auto_ptr<sql::Statement> stmt(conn->createStatement());
 	
     stmt->execute("UPDATE Artworks SET Title = " + title_input + ", Artist = " +  artist_input + ", Year = " +  year_input + ", Path = " +  path_input  + " WHERE ArtworkID='" + artworkID + "'");
 }
@@ -209,11 +209,11 @@ vector<artworkEntry> galleryDB::getAllArtworks(){
    		exit (EXIT_FAILURE);
    	}
     // Create a new Statement
-	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+	std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
     vector<artworkEntry> resultsVec;
     // Execute query
-    sql::ResultSet *queryResults = stmnt->executeQuery("SELECT * FROM Artworks");
+    sql::ResultSet *queryResults = stmt->executeQuery("SELECT * FROM Artworks");
     
     // Loop through results and push artworkEntry object to a vector
     while (queryResults->next()) {
