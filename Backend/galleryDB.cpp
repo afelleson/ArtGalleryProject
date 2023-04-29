@@ -187,7 +187,7 @@ void galleryDB::editArtwork(string artworkID, string title_input, string artist_
 
   	std::auto_ptr<sql::Statement> stmt(conn->createStatement());
 	
-    stmt->execute("UPDATE Artworks SET Title = " + title_input + ", Artist = " +  artist_input + ", Year = " +  year_input + ", Path = " +  path_input  + " WHERE ArtworkID='" + artworkID + "'");
+    stmt->execute("UPDATE Artworks SET Title = '" + title_input + "', Artist = '" +  artist_input + "', Year = '" +  year_input + "', Path = '" +  path_input  + "' WHERE ArtworkID='" + artworkID + "'");
 }
 
 void galleryDB::deleteArtwork(string artworkID){
