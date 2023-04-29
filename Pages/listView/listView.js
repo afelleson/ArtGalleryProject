@@ -2,6 +2,9 @@ var commentList = [];
 // const baseUrl = 'C:\Users\4dyla\Programming\ArtGalleryProject\Pages\listView';
 var baseUrl = 'http://18.218.64.106:5001';
 
+oldJson = "";
+
+
 fetchRegularly=setInterval(fetchCommentsForArtwork,500);
 
 window.addEventListener('beforeunload', function (event) {
@@ -168,12 +171,21 @@ function downvote(buttonPressed, commentID){
     
 }
 
-function displayComments(results) {
+function displayComments(isJsonDiff, results) {
+    if (isJsonDiff){
+        commentList = results["results"];
+        // console.log("Results:"+JSON.stringify(commentList));
+        document.getElementById("searchresults").innerHTML = formatComments(commentList);
+    }
+}
 
-    commentList = results["results"];
-    // console.log("Results:"+JSON.stringify(commentList));
-    document.getElementById("searchresults").innerHTML = formatComments(commentList);
-    
+function isJsonDifferent(newJson){
+    if (oldJson==newJson){
+        return false;
+    } else {
+        oldJson = newJson; // update saved json
+        return true;
+    }
 }
 
 function fetchCommentsForArtwork() {
@@ -189,7 +201,7 @@ function fetchCommentsForArtwork() {
             method: 'get'
         })
         .then(response => response.json())
-        .then(json => displayComments(json))
+        .then(json => displayComments(isJsonDifferent(json),json))
         .catch(error => {
             {
                 alert("Fetch Error: Something went wrong: " + error);
