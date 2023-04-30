@@ -181,7 +181,7 @@ function displayComments(isJsonDiff, results) {
 }
 
 function isJsonDifferent(newJson){
-    if (oldJson===newJson){
+    if (JSON.stringify(oldJson)===JSON.stringify(newJson)){
         console.log("json not different");
         return false;
     } else {
