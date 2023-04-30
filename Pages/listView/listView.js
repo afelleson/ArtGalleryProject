@@ -45,10 +45,10 @@ function formatComments(json) {
         result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['commentText'];
         result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td class='rating'>" + entry['rating'];
         // upvote button
-        result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-upvote btn-sm' ";
+        result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-upvote btn-sm' data-bs-toggle='button' area-pressed='false' ";
         result += "onclick=\"upvote(this," + entry['ID'] + ")\">↑</button></td>";
         // downvote button
-        result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-downvote btn-sm' ";
+        result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-downvote btn-sm' data-bs-toggle='button' area-pressed='false'";
         result += "onclick=\"downvote(this," + entry['ID'] + ")\">↓</button></td>";
     });
     result += "</table>";
@@ -68,9 +68,9 @@ function completeDownvote(results){
     };
 }
 
-upvoteColor = "green";
-downvoteColor = "red";
-noVoteColor = "gray";
+// upvoteColor = "green";
+// downvoteColor = "red";
+// noVoteColor = "gray";
 
 function incrementRating(commentID){
     fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
