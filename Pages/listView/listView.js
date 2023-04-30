@@ -66,7 +66,7 @@ upvoteColor = "green";
 downvoteColor = "red";
 noVoteColor = "gray";
 
-function toggleUpButton(buttonPressed){
+function toggleUpButton(buttonPressed, commentID){
     // if green, turn gray (could do by running reset on the upvote button)
     if (buttonPressed.style.backgroundColor == upvoteColor) {
         buttonPressed.style.backgroundColor = noVoteColor;
@@ -108,7 +108,7 @@ function resetVoteButton(buttonToActOn){
     buttonToActOn.style.backgroundColor = noVoteColor;
 }
 
-function toggleDownButton(buttonPressed){
+function toggleDownButton(buttonPressed, commentID){
     // if red, turn gray (could do by running reset on the upvote button)
     if (buttonPressed.style.backgroundColor == downvoteColor) {
         buttonPressed.style.backgroundColor = noVoteColor;
@@ -147,7 +147,7 @@ function upvote(buttonPressed, commentID){
     console.log("upvoting comment with ID = " + commentID);
 
     // turn button green or gray, whichever one it wasn't before
-    toggleUpButton(buttonPressed);
+    toggleUpButton(buttonPressed, commentID);
     // reset downvote button, which has an element id based on the ID of the comment these buttons apply to
     resetVoteButton(document.getElementById("downvote-" + commentID));
     
@@ -161,7 +161,7 @@ function downvote(buttonPressed, commentID){
     console.log("upvoting comment with ID = " + commentID);
 
     // turn button green or gray, whichever one it wasn't before
-    toggleDownButton(buttonPressed);
+    toggleDownButton(buttonPressed, commentID);
     // reset downvote button, which has an element id based on the ID of the comment these buttons apply to
     resetVoteButton(document.getElementById("upvote-" + commentID));
     
