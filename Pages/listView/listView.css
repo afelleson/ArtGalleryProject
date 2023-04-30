@@ -1,7 +1,21 @@
 
-.btn{
+/* .btn{
+    background-color: gray;
+} */
+
+.btn-toggle {
     background-color: gray;
 }
+
+.btn-downvote:active {
+    background-color: red;
+}
+
+.btn-upvote:active {
+    background-color: green;
+}
+
+
 
 
 /* 
