@@ -1,17 +1,18 @@
 
-/* .btn{
+
+/* .btn-downvote {
+    background-color: gray;
+}
+
+.btn-upvote {
     background-color: gray;
 } */
 
-.btn-toggle {
-    background-color: gray;
-}
-
-.btn-downvote:active {
+.btn-downvote.active {
     background-color: red;
 }
 
-.btn-upvote:active {
+.btn-upvote.active {
     background-color: green;
 }
 

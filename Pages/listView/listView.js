@@ -45,10 +45,10 @@ function formatComments(json) {
         result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['commentText'];
         result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td class='rating'>" + entry['rating'];
         // upvote button
-        result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-upvote btn-toggle btn-sm' ";
+        result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-upvote btn-sm' ";
         result += "onclick=\"upvote(this," + entry['ID'] + ")\">↑</button></td>";
         // downvote button
-        result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-downvote btn-toggle btn-sm' ";
+        result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-downvote btn-sm' ";
         result += "onclick=\"downvote(this," + entry['ID'] + ")\">↓</button></td>";
     });
     result += "</table>";
@@ -72,93 +72,125 @@ upvoteColor = "green";
 downvoteColor = "red";
 noVoteColor = "gray";
 
-function toggleUpButton(buttonPressed, commentID){
-    if (buttonPressed.classList.contains("active")) {
-        // annyang.start();
-        console.log("Started");
-      } else {
-        // annyang.abort();
-        console.log("Stopped");
-      }
-
-
-    // if green, turn gray (could do by running reset on the upvote button)
-    if (buttonPressed.style.backgroundColor == upvoteColor) {
-        buttonPressed.style.backgroundColor = noVoteColor;
-        
-        // decrement vote
-        fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
-            method: 'get'
-        })
-        .then(response => response.json())
-        .then(json => completeUpvote(json))
-        .catch(error => {
-            {
-                alert("Upvote Error: Something went wrong: " + error);
-            }
-        })
-    }
-    // if gray, turn green
-    else if (buttonPressed.style.backgroundColor == noVoteColor) {
-        buttonPressed.style.backgroundColor = upvoteColor;
-
-        // increment vote
-        fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
-            method: 'get'
-        })
-        .then(response => response.json())
-        .then(json => completeUpvote(json))
-        .catch(error => {
-            {
-                alert("Upvote Error: Something went wrong: " + error);
-            }
-        })
-    } else {
-        console.log("Unexpected upvote button color (" + buttonPressed.style.backgroundColor + "); no vote cast.");
-    }
+function incrementRating(){
+    fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
+        method: 'get'
+    })
+    .then(response => response.json())
+    .then(json => completeUpvote(json))
+    .catch(error => {
+        {
+            alert("Increment Error: Something went wrong: " + error);
+        }
+    })
 }
+
+function decrementVote(){
+    fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
+        method: 'get'
+    })
+    .then(response => response.json())
+    .then(json => completeDownvote(json))
+    .catch(error => {
+        {
+            alert("Decrement Error: Something went wrong: " + error);
+        }
+    })
+}
+
+function toggleUpButton(buttonPressed, commentID){
+    if (buttonPressed.classList.contains("active")) { // if green after click
+        incrementVote();
+      } else { // if gray after click
+        decrementVote();
+      }
+}
+
+    // OLD TOGGLEUPBUTTON CODE
+    // // if green, turn gray (could do by running reset on the upvote button)
+    // if (buttonPressed.style.backgroundColor == upvoteColor) {
+    //     buttonPressed.style.backgroundColor = noVoteColor;
+        
+    //     // decrement vote
+    //     fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
+    //         method: 'get'
+    //     })
+    //     .then(response => response.json())
+    //     .then(json => completeUpvote(json))
+    //     .catch(error => {
+    //         {
+    //             alert("Upvote Error: Something went wrong: " + error);
+    //         }
+    //     })
+    // }
+    // // if gray, turn green
+    // else if (buttonPressed.style.backgroundColor == noVoteColor) {
+    //     buttonPressed.style.backgroundColor = upvoteColor;
+
+    //     // increment vote
+    //     fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
+    //         method: 'get'
+    //     })
+    //     .then(response => response.json())
+    //     .then(json => completeUpvote(json))
+    //     .catch(error => {
+    //         {
+    //             alert("Upvote Error: Something went wrong: " + error);
+    //         }
+    //     })
+    // } else {
+    //     console.log("Unexpected upvote button color (" + buttonPressed.style.backgroundColor + "); no vote cast.");
+    // }
 
 function resetVoteButton(buttonToActOn){
     // turn it gray
-    buttonToActOn.style.backgroundColor = noVoteColor;
+    buttonToActOn.classList.remove('active');
 }
 
 function toggleDownButton(buttonPressed, commentID){
-    // if red, turn gray (could do by running reset on the upvote button)
-    if (buttonPressed.style.backgroundColor == downvoteColor) {
-        buttonPressed.style.backgroundColor = noVoteColor;
-
-        // increment vote
-        fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
-            method: 'get'
-        })
-        .then(response => response.json())
-        .then(json => completeUpvote(json))
-        .catch(error => {
-            {
-                alert("Downvote Error: Something went wrong: " + error);
-            }
-        })
-    }
-    // if gray, turn red
-    else if (buttonPressed.style.backgroundColor == noVoteColor) {
-        buttonPressed.style.backgroundColor = downvoteColor;
-
-        // decrement vote
-        fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
-            method: 'get'
-        })
-        .then(response => response.json())
-        .then(json => completeDownvote(json))
-        .catch(error => {
-            {
-                alert("Downvote Error: Something went wrong: " + error);
-            }
-        })
-    } else {
-        console.log("Unexpected upvote button color (" + buttonPressed.style.backgroundColor + "); no vote cast.");
-    }
+    if (buttonPressed.classList.contains("active")) { // if red after click
+        decrementVote();
+      } else { // if gray after click
+        incrementVote();
+      }
 }
+
+// function toggleDownButton(buttonPressed, commentID){
+//     // if red, turn gray (could do by running reset on the upvote button)
+//     if (buttonPressed.style.backgroundColor == downvoteColor) {
+//         buttonPressed.style.backgroundColor = noVoteColor;
+
+//         // increment vote
+//         fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
+//             method: 'get'
+//         })
+//         .then(response => response.json())
+//         .then(json => completeUpvote(json))
+//         .catch(error => {
+//             {
+//                 alert("Downvote Error: Something went wrong: " + error);
+//             }
+//         })
+//     }
+//     // if gray, turn red
+//     else if (buttonPressed.style.backgroundColor == noVoteColor) {
+//         buttonPressed.style.backgroundColor = downvoteColor;
+
+//         // decrement vote
+//         fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
+//             method: 'get'
+//         })
+//         .then(response => response.json())
+//         .then(json => completeDownvote(json))
+//         .catch(error => {
+//             {
+//                 alert("Downvote Error: Something went wrong: " + error);
+//             }
+//         })
+//     } else {
+//         console.log("Unexpected upvote button color (" + buttonPressed.style.backgroundColor + "); no vote cast.");
+//     }
+// }
 
 function upvote(buttonPressed, commentID){
     console.log("upvoting comment with ID = " + commentID);
@@ -170,8 +202,6 @@ function upvote(buttonPressed, commentID){
     
 
     // start timer for this comment (write over old timer)
-
-    
 }
 
 function downvote(buttonPressed, commentID){
@@ -184,8 +214,6 @@ function downvote(buttonPressed, commentID){
     
 
     // start timer for this comment (write over old timer)
-
-    
 }
 
 function displayComments(isJsonDiff, results) {
