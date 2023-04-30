@@ -45,7 +45,6 @@ function formatComments(json) {
         result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['commentText'];
         result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td class='rating'>" + entry['rating'];
         // upvote button
-        result += "<button type='button' id='upvote-" + entry['ID'] + "' class='btn btn-primary btn-sm' ";
         result += "onclick=\"upvote(this," + entry['ID'] + ")\">↑</button>";
         // downvote button
         result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-primary btn-sm' ";
@@ -62,11 +61,26 @@ function completeUpvote(results){
     };
 }
 
+function completeDownvote(results){
+    if (results["status"]=="success"){
+        console.log("success in downvote")
+    };
+}
+
 upvoteColor = "green";
 downvoteColor = "red";
 noVoteColor = "gray";
 
 function toggleUpButton(buttonPressed, commentID){
+    if (buttonPressed.classList.contains("active")) {
+        // annyang.start();
+        console.log("Started");
+      } else {
+        // annyang.abort();
+        console.log("Stopped");
+      }
+
+
     // if green, turn gray (could do by running reset on the upvote button)
     if (buttonPressed.style.backgroundColor == upvoteColor) {
         buttonPressed.style.backgroundColor = noVoteColor;
@@ -134,7 +148,7 @@ function toggleDownButton(buttonPressed, commentID){
             method: 'get'
         })
         .then(response => response.json())
-        .then(json => completeUpvote(json))
+        .then(json => completeDownvote(json))
         .catch(error => {
             {
                 alert("Downvote Error: Something went wrong: " + error);
