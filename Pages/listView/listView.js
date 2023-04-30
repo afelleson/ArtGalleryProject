@@ -194,7 +194,7 @@ function toggleDownButton(buttonPressed, commentID){
 // }
 
 function upvote(buttonPressed, commentID){
-    buttonPressed.toggleClass('active');
+    buttonPressed.classList.toggle('active');
     console.log("upvoting comment with ID = " + commentID);
 
     // turn button green or gray, whichever one it wasn't before
@@ -207,7 +207,7 @@ function upvote(buttonPressed, commentID){
 }
 
 function downvote(buttonPressed, commentID){
-    buttonPressed.toggleClass('active');
+    buttonPressed.classList.toggle('active');
     console.log("downvoting comment with ID = " + commentID);
 
     // turn button green or gray, whichever one it wasn't before
