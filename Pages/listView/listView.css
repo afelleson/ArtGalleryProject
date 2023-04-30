@@ -1,3 +1,17 @@
+
+
+[class*="icono"] {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    color: #666;
+    box-sizing: border-box;
+}
+[class*="icono"]:after,
+[class*="icono"]:before {
+content: "";
+box-sizing: border-box;
+}
 [class*="icono-arrow2"] {
     width: 0;
     height: 0;
