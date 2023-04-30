@@ -144,6 +144,7 @@ function toggleUpButton(buttonPressed, commentID){
 
 function resetVoteButton(buttonToActOn){
     // turn it gray
+    console.log("attempting to reset button with id " + buttonToActOn.id)
     buttonToActOn.classList.remove('active');
 }
 
