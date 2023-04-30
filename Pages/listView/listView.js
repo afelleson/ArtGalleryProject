@@ -72,7 +72,7 @@ upvoteColor = "green";
 downvoteColor = "red";
 noVoteColor = "gray";
 
-function incrementRating(){
+function incrementRating(commentID){
     fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
         method: 'get'
     })
@@ -85,7 +85,7 @@ function incrementRating(){
     })
 }
 
-function decrementVote(){
+function decrementRating(commentID){
     fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
         method: 'get'
     })
@@ -100,9 +100,9 @@ function decrementVote(){
 
 function toggleUpButton(buttonPressed, commentID){
     if (buttonPressed.classList.contains("active")) { // if green after click
-        incrementVote();
+        incrementRating(commentID);
       } else { // if gray after click
-        decrementVote();
+        decrementRating(commentID);
       }
 }
 
@@ -149,9 +149,9 @@ function resetVoteButton(buttonToActOn){
 
 function toggleDownButton(buttonPressed, commentID){
     if (buttonPressed.classList.contains("active")) { // if red after click
-        decrementVote();
+        decrementRating(commentID);
       } else { // if gray after click
-        incrementVote();
+        incrementRating(commentID);
       }
 }
 
