@@ -68,8 +68,8 @@ noVoteColor = "gray";
 
 function toggleUpButton(buttonPressed){
     // if green, turn gray (could do by running reset on the upvote button)
-    if (buttonPressed.style.background-color == upvoteColor) {
-        buttonPressed.style.background-color = noVoteColor;
+    if (buttonPressed.style.backgroundColor == upvoteColor) {
+        buttonPressed.style.backgroundColor = noVoteColor;
         
         // decrement vote
         fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
@@ -84,8 +84,8 @@ function toggleUpButton(buttonPressed){
         })
     }
     // if gray, turn green
-    else if (buttonPressed.style.background-color == noVoteColor) {
-        buttonPressed.style.background-color = upvoteColor;
+    else if (buttonPressed.style.backgroundColor == noVoteColor) {
+        buttonPressed.style.backgroundColor = upvoteColor;
 
         // increment vote
         fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
@@ -105,13 +105,13 @@ function toggleUpButton(buttonPressed){
 
 function resetVoteButton(buttonToActOn){
     // turn it gray
-    buttonToActOn.style.background-color = noVoteColor;
+    buttonToActOn.style.backgroundColor = noVoteColor;
 }
 
 function toggleDownButton(buttonPressed){
     // if red, turn gray (could do by running reset on the upvote button)
-    if (buttonPressed.style.background-color == downvoteColor) {
-        buttonPressed.style.background-color = noVoteColor;
+    if (buttonPressed.style.backgroundColor == downvoteColor) {
+        buttonPressed.style.backgroundColor = noVoteColor;
 
         // increment vote
         fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
@@ -126,8 +126,8 @@ function toggleDownButton(buttonPressed){
         })
     }
     // if gray, turn red
-    else if (buttonPressed.style.background-color == noVoteColor) {
-        buttonPressed.style.background-color = downvoteColor;
+    else if (buttonPressed.style.backgroundColor == noVoteColor) {
+        buttonPressed.style.backgroundColor = downvoteColor;
 
         // decrement vote
         fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
