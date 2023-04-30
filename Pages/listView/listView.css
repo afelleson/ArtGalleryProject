@@ -1,0 +1,43 @@
+[class*="icono-arrow2"] {
+    width: 0;
+    height: 0;
+    border-width: 6px;
+    border-style: solid;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    margin: 10px;
+}
+[class*="icono-arrow2"]:before {
+right: 0;
+top: -3px;
+position: absolute;
+height: 4px;
+box-shadow: inset 0 0 0 32px;
+transform: rotate(-45deg);
+width: 15px;
+transform-origin: right top;
+}
+[class*="icono-arrow2"][class*="-left"] {
+transform: rotate(45deg);
+}
+[class*="icono-arrow2"][class*="-left"][class*="-up"] {
+transform: none;
+}
+[class*="icono-arrow2"][class*="-left"][class*="-down"] {
+transform: rotate(90deg);
+}
+[class*="icono-arrow2"][class*="-right"] {
+transform: rotate(-135deg);
+}
+[class*="icono-arrow2"][class*="-right"][class*="-up"] {
+transform: rotate(-90deg);
+}
+[class*="icono-arrow2"][class*="-right"][class*="-down"] {
+transform: rotate(180deg);
+}
+[class*="icono-arrow2"][class*="-up"] {
+transform: rotate(-45deg);
+}
+[class*="icono-arrow2"][class*="-down"] {
+transform: rotate(135deg);
+}
