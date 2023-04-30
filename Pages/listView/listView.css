@@ -1,4 +1,10 @@
 
+#up{
+    color: green;
+}
+
+
+/* 
 
 [class*="icono"] {
     position: relative;
@@ -54,4 +60,4 @@ transform: rotate(-45deg);
 }
 [class*="icono-arrow2"][class*="-down"] {
 transform: rotate(135deg);
-}
+} */
