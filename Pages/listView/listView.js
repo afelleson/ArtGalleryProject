@@ -99,7 +99,7 @@ function toggleUpButton(buttonPressed, commentID){
             }
         })
     } else {
-        console.log("Unexpected upvote button color; no vote cast.");
+        console.log("Unexpected upvote button color (" + buttonPressed.style.backgroundColor + "); no vote cast.");
     }
 }
 
@@ -121,7 +121,7 @@ function toggleDownButton(buttonPressed, commentID){
         .then(json => completeUpvote(json))
         .catch(error => {
             {
-                alert("Upvote Error: Something went wrong: " + error);
+                alert("Downvote Error: Something went wrong: " + error);
             }
         })
     }
@@ -137,9 +137,11 @@ function toggleDownButton(buttonPressed, commentID){
         .then(json => completeUpvote(json))
         .catch(error => {
             {
-                alert("Upvote Error: Something went wrong: " + error);
+                alert("Downvote Error: Something went wrong: " + error);
             }
         })
+    } else {
+        console.log("Unexpected upvote button color (" + buttonPressed.style.backgroundColor + "); no vote cast.");
     }
 }
 
@@ -158,7 +160,7 @@ function upvote(buttonPressed, commentID){
 }
 
 function downvote(buttonPressed, commentID){
-    console.log("upvoting comment with ID = " + commentID);
+    console.log("downvoting comment with ID = " + commentID);
 
     // turn button green or gray, whichever one it wasn't before
     toggleDownButton(buttonPressed, commentID);
@@ -182,7 +184,7 @@ function displayComments(isJsonDiff, results) {
 
 function isJsonDifferent(newJson){
     if (JSON.stringify(oldJson)===JSON.stringify(newJson)){
-        console.log("json not different");
+        // console.log("json not different");
         return false;
     } else {
         console.log("Old JSON:"+JSON.stringify(newJson["results"]));
