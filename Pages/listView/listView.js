@@ -233,10 +233,10 @@ function isJsonDifferent(newJson){
         // console.log("json not different");
         return false;
     } else {
-        console.log("Old JSON:"+JSON.stringify(newJson["results"]));
-        console.log("NEW JSON:"+JSON.stringify(oldJson["results"]));
+        // console.log("Old JSON:"+JSON.stringify(newJson["results"]));
+        // console.log("NEW JSON:"+JSON.stringify(oldJson["results"]));
         oldJson = newJson; // update saved json
-        console.log("json is different");
+        // console.log("json is different");
         return true;
     }
 }
