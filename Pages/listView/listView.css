@@ -16,6 +16,13 @@
     background-color: green;
 }
 
+#artwork-stuff{
+    display: flex; 
+    height: 150px;
+    margin-left: 7%;
+    margin-bottom: 10px;
+}
+
 img #artwork {
     vertical-align: middle;
     margin-left: 12%;
@@ -27,16 +34,14 @@ img #artwork {
 #artwork-info{
     vertical-align: middle;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 13px;
+    font-size: 15px;
     /* width: auto; */
     flex-grow: 1;
     text-align: left;
+    padding-left: 10px;
 }
 
-#artwork-stuff{
-    display: flex; 
-    height: 200px;
-}
+
 
 /* 
 
