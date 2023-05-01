@@ -16,7 +16,18 @@
     background-color: green;
 }
 
+img {
+    vertical-align: middle;
+    margin-left: 12%;
+    margin-bottom: 10px;
+    height: 200px;
+}
 
+.artwork-info{
+    vertical-align: middle;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 13px;
+}
 
 
 /* 
