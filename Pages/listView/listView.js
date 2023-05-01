@@ -35,8 +35,31 @@ document.getElementById('submit-comment').addEventListener("click", (e)=> {
 
 // });
 
-/* Search and display contact functions */
+// Artwork Database functions
+function formatArtInfo(json) {
+    document.getElementById("artwork").src.value = json[path];
+    var result = "";
+    result += json[title] + "<br>" + json[artist] + "<br>" + json[year];
+    return result;
+}
 
+function displayArtInfo(results) {
+    
+    artworkList = results["results"];
+    document.getElementById("artwork-info").innerHTML = formatComments(artworkList);
+}
+function fetchArtwork(artworkID) {
+    fetch(baseUrl + '/artwork/getbyID/' + artworkID, {
+            method: 'get'
+        })
+        .then(response => response.json())
+        .then(json => displayArtwork(json))
+        .catch(error => {
+            {
+                alert("Fetch Error: Something went wrong: " + error);
+            }
+        })
+}
 // Build output table from comma delimited list
 function formatComments(json) {
 
