@@ -122,7 +122,7 @@ int main() {
 
     	string artworkID = req.matches[1];
     
-    	result = cdb.findArtworkByID(artworkID);
+    	string result = cdb.findArtworkByID(artworkID);
     	string json = jsonResults(result);
     	res.set_content(json, "text/json");
     	res.status = 200;
