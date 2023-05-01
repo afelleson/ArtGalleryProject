@@ -16,21 +16,26 @@
     background-color: green;
 }
 
-img {
+img #artwork {
     vertical-align: middle;
     margin-left: 12%;
     margin-bottom: 10px;
     height: 200px;
+    width: 30%;
 }
 
-.artwork-info{
+#artwork-info{
     vertical-align: middle;
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 13px;
+    /* width: auto; */
+    flex-grow: 1;
+    text-align: left;
 }
 
-.artwork-stuff{
-    
+#artwork-stuff{
+    display: flex; 
+    height: 200px;
 }
 
 /* 
