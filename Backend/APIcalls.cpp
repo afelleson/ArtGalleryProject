@@ -115,6 +115,28 @@ int main() {
     	res.status = 200;
   	}); 
 
+
+
+	svr.Get(R"(/artwork/getbyid/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string artworkID = req.matches[1];
+    
+    	result = cdb.findArtworkByID(artworkID);
+    	string json = jsonResults(result);
+    	res.set_content(json, "text/json");
+    	res.status = 200;
+  	});
+
+
+
+    // void addArtwork(string title_input, string artist_input, string year_input, string path_input);
+    // void editArtwork(string artworkID, string title_input, string artist_input, string year_input, string path_input);
+    // void deleteArtwork(string artworkID);
+    // vector<artworkEntry> getAllArtworks();
+
+
+
   	// svr.Get(R"(/comment/delete/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     // 	res.set_header("Access-Control-Allow-Origin","*");
 
