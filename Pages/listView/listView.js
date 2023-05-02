@@ -20,7 +20,7 @@ document.getElementById('submit-comment').addEventListener("click", (e)=> {
 function displayArtInfo(results) {
     artworkList = results["result"];
     document.getElementById("artwork").src.value = artworkList["path"];
-    var artworkInfo = jsartworkListon["title"] + "<br>" + artworkList["artist"] + "<br>" + artworkList["year"];
+    var artworkInfo = artworkList["title"] + "<br>" + artworkList["artist"] + "<br>" + artworkList["year"];
     document.getElementById("artwork-info").innerHTML = artworkInfo;
 }
 
