@@ -27,11 +27,13 @@
                         <button id="sortComments" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         Sort By
                         </button>
-                        <ul class="dropdown-menu">
-                           <li><a class="dropdown-item" href="#">Rating</a></li>
-                           <li><a class="dropdown-item" href="#">Recent</a></li>
-                           <li><a class="dropdown-item" href="#">Random</a></li>
-                        </ul>
+                        <div class="btn-group" role="group" aria-label="Sort method selector">
+                           <input type="radio" class="btn-check" name="btnradio" id="btnsortrating" autocomplete="off" checked>
+                           <label class="btn btn-outline-primary" for="btnrating">Radio 1</label>
+                         
+                           <input type="radio" class="btn-check" name="btnradio" id="btnsortid" autocomplete="off">
+                           <label class="btn btn-outline-primary" for="btnsortid">Radio 2</label>
+                         </div>
                      </div>
                   <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#InputComment">Add</button>
                </form>
