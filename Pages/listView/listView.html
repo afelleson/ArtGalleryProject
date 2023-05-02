@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
-                     <a class="nav-link" href="file:///C:/Users/4dyla/Programming/ArtGalleryProject/Pages/mosaic/mosaic.html">Mosaic View</a>
+                     <a class="nav-link" href="./Pages/mosaic/mosaic.html">Mosaic View</a>
                   </li>
                </ul>
                <form class="d-flex">
@@ -33,7 +33,7 @@
                            <li><a class="dropdown-item" href="#">Random</a></li>
                         </ul>
                      </div>
-                  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#InputContact">Add</button>
+                  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#InputComment">Add</button>
                </form>
             </div>
          </div>
@@ -52,29 +52,28 @@
             <div id="searchresults"></div>
          </div>
       <!-- Add Modal -->
-      <div class="modal fade" id="InputContact" tabindex="-1" aria-labelledby="InputContact" aria-hidden="true">
+      <div class="modal fade" id="InputComment" tabindex="-1" aria-labelledby="InputComment" aria-hidden="true">
          <div class="modal-dialog d-flex justify-content-center">
             <div class="modal-content w-75">
                <div class="modal-header">
-                  <h5 class="modal-title" id="AddContact">Leave a comment</h5>
+                  <h5 class="modal-title" id="AddComment">Leave a comment</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body p-4">
                   <form>
-                     <!-- First input -->
+                     <!-- Name input -->
                      <div class="form-outline mb-1">
                         <input type="text" id="addname" class="form-control">
-                        <label class="form-label" for="addfirst">Name</label>
+                        <label class="form-label" for="addname">Name</label>
                      </div>
-                     <!-- Last input -->
+                     <!-- Comment body input -->
                      <div class="form-outline mb-1">
                         <input type="text" id="addbody" class="form-control">
-                        <label class="form-label" for="addlast">Comment Body</label>
+                        <label class="form-label" for="addbody">Comment Body</label>
                      </div>
-                     <!-- Type dropdown -->
                      <br>
                      <!-- Submit button -->
-                     <button id="submit-comment" type="submit" class="btn btn-primary btn-block" data-bs-dismiss="modal">Save</button>
+                     <button id="submit-comment" type="submit" class="btn btn-primary btn-block" data-bs-dismiss="modal">Submit</button>
                   </form>
                </div>
             </div>
