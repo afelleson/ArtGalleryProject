@@ -50,7 +50,7 @@ function displayArtInfo(results) {
     document.getElementById("artwork-info").innerHTML = formatComments(artworkList);
 }
 function fetchArtwork(artworkID) {
-    fetch(baseUrl + '/artwork/getbyID/' + artworkID, {
+    fetch(baseUrl + '/artwork/getbyid/' + artworkID, {
             method: 'get'
         })
         .then(response => response.json())
