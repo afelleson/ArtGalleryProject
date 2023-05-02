@@ -47,7 +47,7 @@ function formatArtInfo(json) {
 function displayArtInfo(results) {
     
     artworkList = results["result"];
-    document.getElementById("artwork-info").innerHTML = formatComments(artworkList);
+    document.getElementById("artwork-info").innerHTML = formatArtInfo(artworkList);
 }
 function fetchArtwork(artworkID) {
     fetch(baseUrl + '/artwork/getbyid/' + artworkID, {
