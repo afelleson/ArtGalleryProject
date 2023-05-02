@@ -65,13 +65,6 @@ string jsonResult(artworkEntry work) {
 	string res = "{\"result\":";
 	res += work.jsonify();
 	
-	
-	for (int i = 0; i<pbList.size(); i++) {
-		res += pbList[i].jsonify();
-		if (i < pbList.size()-1) {
-			res +=",";
-		}
-	}
 	res += "}";
 	return res;
 }
