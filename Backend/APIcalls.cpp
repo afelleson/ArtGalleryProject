@@ -61,7 +61,7 @@ string jsonResults(vector<commentEntry> pbList) {
 	return res;
 }
 
-string jsonResults(vector<artworkEntry> pbList) {
+string jsonResult(artworkEntry pbList) {
 	string res = "{\"results\":[";
 	for (int i = 0; i<pbList.size(); i++) {
 		res += pbList[i].jsonify();
@@ -135,7 +135,7 @@ int main() {
     	string artworkID = req.matches[1];
     
     	artworkEntry result = cdb.findArtworkByID(artworkID);
-    	string json = jsonResults(result);
+    	string json = jsonResult(result);
     	res.set_content(json, "text/json");
     	res.status = 200;
   	});
