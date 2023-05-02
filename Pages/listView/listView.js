@@ -37,18 +37,14 @@ document.getElementById('submit-comment').addEventListener("click", (e)=> {
 // });
 
 // Artwork Database functions
-function formatArtInfo(json) {
-    document.getElementById("artwork").src.value = json["path"];
-    var result = "";
-    result += json["title"] + "<br>" + json["artist"] + "<br>" + json["year"];
-    return result;
-}
 
 function displayArtInfo(results) {
-    
     artworkList = results["result"];
-    document.getElementById("artwork-info").innerHTML = formatArtInfo(artworkList);
+    document.getElementById("artwork").src.value = artworkList["path"];
+    var artworkInfo = jsartworkListon["title"] + "<br>" + artworkList["artist"] + "<br>" + artworkList["year"];
+    document.getElementById("artwork-info").innerHTML = artworkInfo;
 }
+
 function fetchArtwork(artworkID) {
     fetch(baseUrl + '/artwork/getbyid/' + artworkID, {
             method: 'get'
