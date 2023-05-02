@@ -50,21 +50,7 @@
       <div class="jumbotron">
          <div class="container results">
             <div id="searchresults"></div>
-			
-			<table class="table table-success table-striped">
-				<tr>
-					<th>Username</th>
-					<th>Body</th>
-					<th>Image Coords</th>
-					<th>Rating</th><tr>
-				<tr>
-					<td class='username'>Oonicorn</td>
-					<td class='body'>I love artwork so much! so cool :)</td>
-					<td class='imgloc'>10, 53, 320%</td>
-					<td class='rating'>10  
-					<button type='button' id='up' onclick="upvote('0')">↑</button> 
-					<button type='button' class='btn btn-secondary btn-sm' onclick="downvote('0')">↓</button></td></tr>
-      </div>
+         </div>
       <!-- Add Modal -->
       <div class="modal fade" id="InputContact" tabindex="-1" aria-labelledby="InputContact" aria-hidden="true">
          <div class="modal-dialog d-flex justify-content-center">
@@ -89,51 +75,6 @@
                      <br>
                      <!-- Submit button -->
                      <button id="submit-comment" type="submit" class="btn btn-primary btn-block" data-bs-dismiss="modal">Save</button>
-                  </form>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- Edit Modal -->
-      <div class="modal fade" id="editContact" tabindex="-1" aria-labelledby="editContact" aria-hidden="true">
-         <div class="modal-dialog d-flex justify-content-center">
-            <div class="modal-content w-75">
-               <div class="modal-header">
-                  <h5 class="modal-title" id="EditContact">Edit a contact</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body p-4">
-                  <form>
-                     <!-- First input -->
-                     <div class="form-outline mb-1">
-                        <input type="text" id="editfirst" class="form-control">
-                        <label class="form-label" for="editfirst">First Name</label>
-                     </div>
-                     <!-- Last input -->
-                     <div class="form-outline mb-1">
-                        <input type="text" id="editlast" class="form-control">
-                        <label class="form-label" for="editlast">Last Name</label>
-                     </div>
-                     <!-- Phone input -->
-                     <div class="form-outline mb-1">
-                        <input type="text" id="editphone" class="form-control">
-                        <label class="form-label" for="editphone">Phone Number</label>
-                     </div>
-                     <!-- Type dropdown -->
-                     <div class="btn-group mb-2">
-                        <button id="edittype" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        Contact Type
-                        </button>
-                        <ul class="dropdown-menu">
-                           <li><a class="dropdown-item" href="#">Friend</a></li>
-                           <li><a class="dropdown-item" href="#">Business</a></li>
-                           <li><a class="dropdown-item" href="#">Family</a></li>
-                           <li><a class="dropdown-item"  href="#">Other</a></li>
-                        </ul>
-                     </div>
-                     <br>
-                     <!-- Submit button -->
-                     <button type="submit" class="btn btn-primary btn-block" data-bs-dismiss="modal" onclick="updateContact()">Save</button>
                   </form>
                </div>
             </div>
