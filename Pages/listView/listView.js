@@ -38,9 +38,9 @@ document.getElementById('submit-comment').addEventListener("click", (e)=> {
 
 // Artwork Database functions
 function formatArtInfo(json) {
-    document.getElementById("artwork").src.value = json[path];
+    document.getElementById("artwork").src.value = json["path"];
     var result = "";
-    result += json[title] + "<br>" + json[artist] + "<br>" + json[year];
+    result += json["title"] + "<br>" + json["artist"] + "<br>" + json["year"];
     return result;
 }
 
