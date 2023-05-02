@@ -6,6 +6,7 @@ var oldJson = "";
 
 
 fetchRegularly=setInterval(fetchCommentsForArtwork,500);
+fetchArtwork(6);
 
 window.addEventListener('beforeunload', function (event) {
     clearInterval(fetchRegularly); // stop updating member list
@@ -45,7 +46,7 @@ function formatArtInfo(json) {
 
 function displayArtInfo(results) {
     
-    artworkList = results["results"];
+    artworkList = results["result"];
     document.getElementById("artwork-info").innerHTML = formatComments(artworkList);
 }
 function fetchArtwork(artworkID) {
