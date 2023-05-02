@@ -61,6 +61,18 @@ string jsonResults(vector<commentEntry> pbList) {
 	return res;
 }
 
+string jsonResults(vector<artworkEntry> pbList) {
+	string res = "{\"results\":[";
+	for (int i = 0; i<pbList.size(); i++) {
+		res += pbList[i].jsonify();
+		if (i < pbList.size()-1) {
+			res +=",";
+		}
+	}
+	res += "]}";
+	return res;
+}
+
 int main() {
 	httplib::Server svr;
 
