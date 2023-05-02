@@ -57,7 +57,7 @@ function fetchArtwork(artworkID) {
         .then(json => displayArtInfo(json))
         .catch(error => {
             {
-                alert("Fetch Error: Something went wrong: " + error);
+                alert("Fetch Art Error: Something went wrong: " + error);
             }
         })
 }
@@ -281,7 +281,7 @@ function fetchCommentsForArtwork() {
         .then(json => displayComments(isJsonDifferent(json),json))
         .catch(error => {
             {
-                alert("Fetch Error: Something went wrong: " + error);
+                alert("Fetch Comment Error: Something went wrong: " + error);
             }
         })
 }
