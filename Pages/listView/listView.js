@@ -154,7 +154,8 @@ function isJsonDifferent(newJson){
 function fetchCommentsForArtwork() {
 	// Temp Values
     var artworkID = "0";
-    var sortParam = "ID";
+    var sortParam;
+    sortParam = getSortMethod();
 	
     fetch(baseUrl + '/comment/fetchforwork/' + artworkID + "/" + sortParam, {
             method: 'get'
@@ -166,6 +167,17 @@ function fetchCommentsForArtwork() {
                 alert("Fetch Comment Error: Something went wrong: " + error);
             }
         })
+}
+
+function getSortMethod() {
+    const sortMethods = document.querySelectorAll('input[name="sortbtns"]');
+    var resultMethod = null;
+    sortMethods.forEach((button) => {
+        if (button.checked) {
+            resultMethod = button.value;
+        }
+    });
+    return resultMethod
 }
 
 /* Add contact functions */
