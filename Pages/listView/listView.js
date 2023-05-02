@@ -54,7 +54,7 @@ function fetchArtwork(artworkID) {
             method: 'get'
         })
         .then(response => response.json())
-        .then(json => displayArtwork(json))
+        .then(json => displayArtInfo(json))
         .catch(error => {
             {
                 alert("Fetch Error: Something went wrong: " + error);
