@@ -99,6 +99,7 @@ int main() {
 	httplib::Server svr;
 
   	galleryDB cdb; // Comment List SQL Interface Object
+	CTokenGenerator *tokenGenerator = new CTokenGenerator(rand());
   
   	vector<commentEntry> results;
 
@@ -192,7 +193,7 @@ int main() {
 			cdb.addToken(token); // Add it to the DB
 			jsonToReturn += "\"token\":\"" + token + "\"}"; // append token to json response
 		} else {
-			jsonToReturn = "{\"status\":\"Incorrect password\"}"
+			jsonToReturn = "{\"status\":\"Incorrect password\"}";
 		}
     	
 		res.set_content(jsonToReturn, "text/json");
