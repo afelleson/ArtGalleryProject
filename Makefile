@@ -31,13 +31,13 @@ APIcalls.o: ./Backend/APIcalls.cpp httplib.h
 	$(CC) -c $(CFLAGS) ./Backend/APIcalls.cpp
 
 APIcalls: APIcalls.o galleryDB.o commentEntry.o artworkEntry.o CTokenGenerator.o
-	$(CC) APIcalls.o galleryDB.o commentEntry.o artworkEntry.o CTokenGenerator.cpp CTokenGenerator.h -o APIcalls -L/usr/local/lib -lmariadbcpp
+	$(CC) APIcalls.o galleryDB.o commentEntry.o artworkEntry.o ./Backend/CTokenGenerator.cpp ./Backend/CTokenGenerator.h -o APIcalls -L/usr/local/lib -lmariadbcpp
 
 restChat.o: restChat.cpp httplib.h
 	$(CC) -c $(CFLAGS) restChat.cpp
 
-CTokenGenerator.o: CTokenGenerator.cpp CTokenGenerator.h
-	$(CC) -c $(CFLAGS) CTokenGenerator.cpp
+CTokenGenerator.o: ./Backend/CTokenGenerator.cpp ./Backend/CTokenGenerator.h
+	$(CC) -c $(CFLAGS) ./Backend/CTokenGenerator.cpp
 
 PutHTML:
 	cp ./Pages/listView/listView.html /var/www/html/ArtworkComments/listView
