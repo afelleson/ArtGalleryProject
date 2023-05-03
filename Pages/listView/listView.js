@@ -284,16 +284,29 @@ function loginStaff(){
     })
 }
 
+function processLogout(results){
+    console.log("processLogout() called")
+    if (results["status"]=="success"){
+        console.log("logout successful")
+
+        staffInterfaceInvisible();
+    } else {
+        alert(results["status"]);
+    }
+}
+
 function logoutStaff(){
     console.log("logoutStaff() called");
     fetch(baseUrl + '/stafflogout/' + mytoken, {
         method: 'get'
     })
+    .then(response => response.json())
+    .then(json => processLogout(json))
     .catch(error => {
         {
             alert("Logout Error: Something went wrong in logoutStaff(): " + error);
         }
     })
-    staffInterfaceInvisible();
+    // staffInterfaceInvisible()
 }
 
