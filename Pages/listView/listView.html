@@ -50,6 +50,11 @@
          <div class="container results">
             <div id="searchresults"></div>
          </div>
+      </div>
+      <button type="button" id="login-button" class="btn btn-outline-success login-stuff" data-bs-toggle="modal" data-bs-target="#loginModal">Staff</button>
+      <div id="loggedin" class="login-stuff staff-stuff">
+         Logged in as staff
+      </div>
       <!-- Add Modal -->
       <div class="modal fade" id="InputComment" tabindex="-1" aria-labelledby="InputComment" aria-hidden="true">
          <div class="modal-dialog d-flex justify-content-center">
@@ -78,6 +83,28 @@
             </div>
          </div>
       </div>
+      <!-- Admin login model -->
+      <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Admin Login</h5>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body mx-3">
+               <div class="md-form mb-5">
+                 <i class="fas fa-user prefix grey-text"></i>
+                 <input type="text" id="StaffPW" class="form-control validate">
+                 <label data-error="wrong" data-success="right" for="StaffPW">Password</label>
+               </div>
+             </div>
+             <div class="modal-footer">
+               <button type="button" id="login-close" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-primary" id="login-go">Login</button>
+             </div>
+           </div>
+         </div>
+       </div>
       <!-- jQuery first, then sweetalert2, then Bootstrap JS, then our js -->
       <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>

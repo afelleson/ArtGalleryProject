@@ -2,7 +2,7 @@ var commentList = [];
 var baseUrl = 'http://18.218.64.106:5001';
 
 var oldJson = "";
-
+var mytoken = "";
 
 fetchRegularly=setInterval(fetchCommentsForArtwork,500);
 fetchArtwork(6);
@@ -209,6 +209,65 @@ function addComment() {
         })
 }
 
+// Staff login event listeners
+document.getElementById('login-go').addEventListener("click", loginStaff());
+document.getElementById('StaffPW').addEventListener("keydown", (e)=> {
+    if (e.code == "Enter") {
+        event.preventDefault(); // prevent the enter key from actually inputting a new line in the input box
+	    loginStaff();
+    }
+});
+
+function staffInterfaceInvisible(){
+    document.getElementById('login-button').style.display = 'block';
+    
+    var staffStuff = document.getElementsByClassName('staff-stuff');
+    for (var i = 0; i < staffStuff.length; i ++) {
+        staffStuff[i].style.display = 'none';
+    }
+
+
+
+}
+
+function staffInterfaceVisible(){
+    document.getElementById('login-button').style.display = 'none';
+
+    var staffStuff = document.getElementsByClassName('staff-stuff');
+    for (var i = 0; i < staffStuff.length; i ++) {
+        staffStuff[i].style.display = 'block';
+    }
+
+
+}
+
+
+function processLogin(results){
+    if (results[status]=="success"){
+        // close login modal
+        const clickEvent = new MouseEvent('click');
+        document.getElementById('login-close').dispatchEvent(clickEvent);
+
+        mytoken = results['token'];
+
+        staffInterfaceVisible();
+    } else {
+        alert(status);
+    }
+}
+
+function loginStaff(){
+    fetch(baseUrl + '/stafflogin/' + $('#StaffPW').val(), {
+        method: 'get'
+    })
+    .then(response => response.json())
+    .then(json => processLogin(json))
+    .catch(error => {
+        {
+            alert("Login Error: Something went wrong in loginStaff(): " + error);
+        }
+    })
+}
 
 
 

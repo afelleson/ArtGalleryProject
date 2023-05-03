@@ -49,6 +49,8 @@ const int port = 5001;
 
 ofstream logfile; 
 
+const string staffPassword = "GGstaff000K"
+
 string jsonResults(vector<commentEntry> pbList) {
 	string res = "{\"results\":[";
 	for (int i = 0; i<pbList.size(); i++) {
@@ -136,15 +138,13 @@ int main() {
     	res.status = 200;
   	});
 
-
-
+	// to add:
     // void addArtwork(string title_input, string artist_input, string year_input, string path_input);
     // void editArtwork(string artworkID, string title_input, string artist_input, string year_input, string path_input);
     // void deleteArtwork(string artworkID);
     // vector<artworkEntry> getAllArtworks();
 
-
-
+	// probably use this as basis for deleteArtwork
   	// svr.Get(R"(/comment/delete/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     // 	res.set_header("Access-Control-Allow-Origin","*");
 
@@ -153,6 +153,56 @@ int main() {
     // 	res.set_content("{\"status\":\"success\"}", "text/json");
     // 	res.status = 200;
   	// });  
+
+
+	// should ideally be added to CTokenGenerator.cpp, but we'd have to mess with the header to get the right stuff included, so this is easier rn
+	string generateToken(CTokenGenerator* tokenGenerator){
+		int tokenLength = tokenGenerator->GetTokenLength();
+		cout << "Token length: " << tokenLength << "\n";
+		char* pToken = new char[tokenLength+1];
+		pToken[tokenLength] = 0; // add null terminator
+		bool goOn = false;
+		int safetyCounter = 0;
+		string token;
+		while (goOn==false && safetyCounter < 20){
+		if (tokenGenerator->GetNextToken(pToken)) { // attempt to generate new token
+			string tokenTemp = pToken; // on success, convert char array to string (via string constructor)
+			token = tokenTemp; // store token in string variable declared outside the if loop
+			goOn = true;
+		} else {
+			cout << "Error in token generation. Trying again.\n";
+			token = "***";
+		}
+		safetyCounter++;
+		}
+		return token;
+	}
+
+	svr.Get(R"(/stafflogin/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string inputPassword = req.matches[1];
+    
+		if (inputPassword==staffPassword){
+			jsonToReturn = "{\"status\":\"success\",";
+
+			string token = generateToken(tokenGenerator);  // Generate new token for this user's current session
+			cdb.addToken(token); // Add it to the DB
+			jsonToReturn += "\"token\":\"" + token + "\"}"; // append token to json response
+		} else {
+			jsonToReturn = "{\"status\":\"Incorrect password\"}"
+		}
+    	
+		res.set_content(jsonToReturn, "text/json");
+    	res.status = 200;
+  	});
+
+	// to be used in API calls implementing things only staff can do:
+	// string token = req.matches[1];
+    // bool tokenExists = cdb.checkForToken(token);
+
+
+
   	 
   	cout << "Server listening on port " << port << endl;
   	svr.listen("0.0.0.0", port);
