@@ -128,7 +128,7 @@ void galleryDB::togglePinStatus(string commentID){
 
     std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
-    stmt->execute("UPDATE Comments SET Rating = !Rating WHERE ID='" + commentID + "'");
+    stmt->execute("UPDATE Comments SET isPinned = !isPinned WHERE ID='" + commentID + "'");
 }   
 
 void galleryDB::deleteComment(string commentID){
