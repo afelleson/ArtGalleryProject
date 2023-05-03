@@ -9,7 +9,6 @@
 #artwork-stuff{
     display: flex; 
     height: 150px;
-    margin-left: 7%;
     margin-bottom: 10px;
     align-items: center; 
     /* vertically center items? */
