@@ -228,6 +228,7 @@ document.getElementById('StaffPW').addEventListener("keydown", (e)=> {
         loginStaff();
     }
 });
+document.getElementById('logout-button').addEventListener("click", logoutStaff);
 
 function staffInterfaceInvisible(){
     console.log("staffInterfaceInvisible() called");
@@ -283,26 +284,26 @@ function loginStaff(){
     })
 }
 
-// function processLogout(){
-//     if (results[status]=="success"){
-//         console.log("logout successful")
+function processLogout(){
+    if (results["status"]=="success"){
+        console.log("logout successful")
 
-//         staffInterfaceInvisible();
-//     } else {
-//         alert(results[status]);
-//     }
-// }
+        staffInterfaceInvisible();
+    } else {
+        alert(results["status"]);
+    }
+}
 
-// function logoutStaff(){
-//     fetch(baseUrl + '/stafflogout/' + $('#StaffPW').val(), {
-//         method: 'get'
-//     })
-//     .then(response => response.json())
-//     .then(json => processLogout(json))
-//     .catch(error => {
-//         {
-//             alert("Login Error: Something went wrong in loginStaff(): " + error);
-//         }
-//     })
-// }
+function logoutStaff(){
+    fetch(baseUrl + '/stafflogout/' + mytoken, {
+        method: 'get'
+    })
+    .then(response => response.json())
+    .then(json => processLogout(json))
+    .catch(error => {
+        {
+            alert("Logout Error: Something went wrong in logoutStaff(): " + error);
+        }
+    })
+}
 

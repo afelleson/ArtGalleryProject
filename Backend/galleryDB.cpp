@@ -238,7 +238,6 @@ void galleryDB::addToken(string token){
 
   	std::unique_ptr<sql::Statement> stmt(conn->createStatement());
   	stmt->executeQuery("INSERT INTO Tokens (ID, Token) VALUES (NULL, '" + token + "')");
-  	
 }
 
 bool galleryDB::checkForToken(string token){
@@ -256,5 +255,14 @@ bool galleryDB::checkForToken(string token){
     } else {
         return false;
     }
-  	
+}
+
+void galleryDB::removeToken(string token){
+	if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+  	}
+
+    std::unique_ptr<sql::Statement> stmt(conn->createStatement());
+    stmt->execute("DELETE FROM Tokens WHERE Token='"+token+"'");  
 }

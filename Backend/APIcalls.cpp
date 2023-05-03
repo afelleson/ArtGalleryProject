@@ -204,10 +204,28 @@ int main() {
 	// string token = req.matches[1];
     // bool tokenExists = cdb.checkForToken(token);
 
-	// to add: /stafflogout/(.*) (and corresponding DB function)
+	// to add: /stafflogout/(.*)
+
+	// cdb.removeToken(string token){
+
+	svr.Get(R"(/stafflogout/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string token = req.matches[1];
+    
+		if (inputPassword==staffPassword){
+			removeToken(token);
+			res.set_content("{\"status\":\"success\"}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Failed to remove token\"}");
+		}
+    	res.status = 200;
+  	});
 
   	 
   	cout << "Server listening on port " << port << endl;
   	svr.listen("0.0.0.0", port);
 
 }
+
+

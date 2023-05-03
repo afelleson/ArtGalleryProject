@@ -37,6 +37,7 @@ public:
 
     void addToken(string token);
     bool checkForToken(string token);
+    void removeToken(string token);
 
 private:
     const string db_url=DB_URL;
