@@ -227,3 +227,33 @@ vector<artworkEntry> galleryDB::getAllArtworks(){
     return resultsVec;
 
 }
+
+
+
+void galleryDB::addToken(string token){
+	if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+  	}
+
+  	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+  	stmt->executeQuery("INSERT INTO Tokens (ID, Token) VALUES (NULL, '" + token + "')");
+  	
+}
+
+bool galleryDB::checkForToken(string token){
+	if (!conn) {
+   		cerr << "Invalid database connection" << endl;
+   		exit (EXIT_FAILURE);
+  	}
+
+    sql::ResultSet *queryResults = stmt->executeQuery("SELECT * FROM Tokens WHERE Token = '" + token + "'");
+
+  	// Get first entry (technically, if there are multiple matches this will return the last one)
+    if (queryResults->next()) {
+    	return true;
+    } else {
+        return false;
+    }
+  	
+}

@@ -35,6 +35,8 @@ public:
     // void activateArtwork(string artworkID);
     vector<artworkEntry> getAllArtworks();
 
+    void addToken(string token);
+    bool checkForToken(string token);
 
 private:
     const string db_url=DB_URL;
