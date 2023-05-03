@@ -198,6 +198,9 @@ function displayComments(isJsonDiff, results) {
         commentList = results["results"];
         console.log("remaking table of comments");
         document.getElementById("searchresults").innerHTML = formatComments(commentList);
+        if (mytoken!=""){ // more secure way would be to do an API call to see if mytoken is in the database
+            staffInterfaceVisible();
+        }
     }
 }
 
@@ -356,6 +359,7 @@ function logoutStaff(){
             alert("Logout Error: Something went wrong in logoutStaff(): " + error);
         }
     })
+    mytoken = "";
     staffInterfaceInvisible();
 }
 
