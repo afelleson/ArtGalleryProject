@@ -49,7 +49,7 @@ const int port = 5001;
 
 ofstream logfile; 
 
-const string staffPassword = "GGstaff000K"
+const string staffPassword = "GGstaff000K";
 
 string jsonResults(vector<commentEntry> pbList) {
 	string res = "{\"results\":[";
