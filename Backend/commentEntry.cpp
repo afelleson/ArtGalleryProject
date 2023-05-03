@@ -53,9 +53,9 @@ commentEntry::commentEntry(sql::SQLString id_input, sql::SQLString name_input, s
     x = x_input;
     y = y_input;
     width = width_input;
-    if (width=="0"){
-        cerr << "Warning: zero-width selection given" << endl;
-    }
+    // if (width=="0"){
+        // cerr << "Warning: zero-width selection given" << endl;
+    // }
     rating = rating_input;
     isPinned = isPinned_input;
 

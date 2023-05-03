@@ -10,6 +10,9 @@ fetchArtwork(6);
 // Call functions on page exit
 window.addEventListener('beforeunload', function (event) {
     logoutStaff();
+    setTimeout(function(){ // close registration model after half a second
+        console.log("waiting .5 sec");
+    }, 500);
     clearInterval(fetchRegularly); // stop updating comment list
 
     // event.preventDefault() // these two lines cause a pop-up asking the user if they really want to close the tab
