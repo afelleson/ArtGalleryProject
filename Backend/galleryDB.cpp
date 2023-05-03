@@ -247,6 +247,7 @@ bool galleryDB::checkForToken(string token){
    		exit (EXIT_FAILURE);
   	}
 
+    std::unique_ptr<sql::Statement> stmt(conn->createStatement());
     sql::ResultSet *queryResults = stmt->executeQuery("SELECT * FROM Tokens WHERE Token = '" + token + "'");
 
   	// Get first entry (technically, if there are multiple matches this will return the last one)
