@@ -67,7 +67,7 @@ function formatComments(json) {
             var pinColor = "secondary";
             var pinAct = "Unpin"
         }
-        result += "<button type='button' id='pin-" + entry['ID'] + "' class='btn staff-stuff btn-" + pinColor + "btn-sm' ";
+        result += "<button type='button' id='pin-" + entry['ID'] + "' class='btn staff-stuff btn-" + pinColor + " btn-sm' ";
         result += "onclick=\"pinComment(" + entry['ID'] + ")\">" + pinAct + "</button></td>";
     });
     result += "</table>";
