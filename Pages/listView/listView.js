@@ -56,7 +56,13 @@ function formatComments(json) {
         result += "onclick=\"upvote(this," + entry['ID'] + ")\">↑</button>";
         // downvote button
         result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-downvote btn-sm' data-bs-toggle='button' aria-pressed='false' ";
-        result += "onclick=\"downvote(this," + entry['ID'] + ")\">↓</button></td>";
+        result += "onclick=\"downvote(this," + entry['ID'] + ")\">↓</button>";
+        // delete comment button
+        result += "<button type='button' id='delete-" + entry['ID'] +"'class='btn btn-failure btn-sm' "
+        result += "onclick='deleteComment(" + entry['ID'] + "," + mytoken + ")'>Delete</button></td>" 
+        // pin comment button
+        result += "<button type='button' id='pin-" + entry['ID'] + "' class='btn btn-warning btn-sm' ";
+        result += "onclick=\"pinComment(" + entry['ID'] + "," + mytoken + ")\">Pin/Unpin</button>";
     });
     result += "</table>";
 
@@ -72,6 +78,18 @@ function completeUpvote(results){
 function completeDownvote(results){
     if (results["status"]=="success"){
         console.log("success in downvote")
+    };
+}
+
+function completeDelete(results){
+    if (results["status"]=="success"){
+        console.log("success in deletion")
+    };
+}
+
+function completePin(results){
+    if (results["status"]=="success"){
+        console.log("success in pin")
     };
 }
 
@@ -101,6 +119,33 @@ function decrementRating(commentID){
         }
     })
 }
+
+function deleteComment(commentID, token){
+    fetch(baseUrl + '/comment/delete/' + commentID + "/" + token, {
+        method: 'get'
+    })
+    .then(response => response.json())
+    .then(json => completeDelete(json))
+    .catch(error => {
+        {
+            alert("Deletion Error: Something went wrong: " + error);
+        }
+    })
+}
+
+function pinComment(commentID, token){
+    fetch(baseUrl + '/comment/togglepin/' + commentID + "/" + token, {
+        method: 'get'
+    })
+    .then(response => response.json())
+    .then(json => completePin(json))
+    .catch(error => {
+        {
+            alert("Pin Error: Something went wrong: " + error);
+        }
+    })
+}
+
 
 function toggleUpButton(buttonPressed, commentID){
     if (buttonPressed.classList.contains("active")) { // if green after click
