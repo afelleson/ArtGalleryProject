@@ -58,11 +58,11 @@ function formatComments(json) {
         result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-downvote btn-sm' data-bs-toggle='button' aria-pressed='false' ";
         result += "onclick=\"downvote(this," + entry['ID'] + ")\">↓</button>";
         // delete comment button
-        result += "<button type='button' id='delete-" + entry['ID'] +"'class='btn btn-failure btn-sm' "
-        result += "onclick='deleteComment(" + entry['ID'] + "," + mytoken + ")'>Delete</button></td>" 
+        result += "<button type='button' id='delete-" + entry['ID'] +"'class='btn staff-stuff btn-danger btn-sm' "
+        result += "onclick='deleteComment(" + entry['ID'] + ")'>Delete</button>" 
         // pin comment button
-        result += "<button type='button' id='pin-" + entry['ID'] + "' class='btn btn-warning btn-sm' ";
-        result += "onclick=\"pinComment(" + entry['ID'] + "," + mytoken + ")\">Pin/Unpin</button>";
+        result += "<button type='button' id='pin-" + entry['ID'] + "' class='btn staff-stuff btn-warning btn-sm' ";
+        result += "onclick=\"pinComment(" + entry['ID'] + ")\">Pin/Unpin</button></td>";
     });
     result += "</table>";
 
@@ -120,8 +120,8 @@ function decrementRating(commentID){
     })
 }
 
-function deleteComment(commentID, token){
-    fetch(baseUrl + '/comment/delete/' + commentID + "/" + token, {
+function deleteComment(commentID) {
+    fetch(baseUrl + '/comment/delete/' + commentID + "/" + mytoken, {
         method: 'get'
     })
     .then(response => response.json())
@@ -133,8 +133,8 @@ function deleteComment(commentID, token){
     })
 }
 
-function pinComment(commentID, token){
-    fetch(baseUrl + '/comment/togglepin/' + commentID + "/" + token, {
+function pinComment(commentID) {
+    fetch(baseUrl + '/comment/togglepin/' + commentID + "/" + mytoken, {
         method: 'get'
     })
     .then(response => response.json())
