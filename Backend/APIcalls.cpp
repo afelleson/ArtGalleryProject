@@ -204,7 +204,7 @@ int main() {
 	// string token = req.matches[1];
     // bool tokenExists = cdb.checkForToken(token);
 
-
+	// to add: /stafflogout/(.*) (and corresponding DB function)
 
   	 
   	cout << "Server listening on port " << port << endl;
