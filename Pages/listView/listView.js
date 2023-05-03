@@ -13,7 +13,6 @@ window.addEventListener('beforeunload', function (event) {
 
 // Call functions on page exit
 window.addEventListener('beforeunload', function (event) {
-    staffInterfaceInvisible();
     logoutStaff();
     clearInterval(fetchRegularly); // stop updating comment list
 
@@ -296,7 +295,7 @@ function processLogout(results){
 }
 
 function logoutStaff(){
-    console.log("logoutStaff() called");
+    console.log("logoutStaff() called with token" + mytoken);
     fetch(baseUrl + '/stafflogout/' + mytoken, {
         method: 'get'
     })
@@ -307,6 +306,6 @@ function logoutStaff(){
             alert("Logout Error: Something went wrong in logoutStaff(): " + error);
         }
     })
-    // staffInterfaceInvisible()
+    staffInterfaceInvisible();
 }
 
