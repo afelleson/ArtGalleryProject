@@ -14,7 +14,7 @@ window.addEventListener('beforeunload', function (event) {
 // Call functions on page exit
 window.addEventListener('beforeunload', function (event) {
     staffInterfaceInvisible();
-    // logoutStaff();
+    logoutStaff();
     clearInterval(fetchRegularly); // stop updating member list
 
     // event.preventDefault() // these two lines cause a pop-up asking the user if they really want to close the tab
