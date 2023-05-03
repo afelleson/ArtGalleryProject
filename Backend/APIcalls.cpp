@@ -52,15 +52,27 @@ ofstream logfile;
 
 const string staffPassword = "GGstaff000K";
 
-string jsonResults(vector<commentEntry> pbList) {
+string jsonResults(vector<commentEntry> commentList) {
 	string res = "{\"results\":[";
-	for (int i = 0; i<pbList.size(); i++) {
-		res += pbList[i].jsonify();
-		if (i < pbList.size()-1) {
+	for (int i = 0; i<commentList.size(); i++) {
+		res += commentList[i].jsonify();
+		if (i < commentList.size()-1) {
 			res +=",";
 		}
 	}
 	res += "]}";
+	return res;
+}
+
+string jsonResultsArt(vector<artworkEntry> artworkList) {
+	string res = "\"results\":[";
+	for (int i = 0; i<artworkList.size(); i++) {
+		res += artworkList[i].jsonify();
+		if (i < artworkList.size()-1) {
+			res +=",";
+		}
+	}
+	res += "]";
 	return res;
 }
 
@@ -118,7 +130,6 @@ int main() {
     	res.status = 200;
   	});
   	  	
-  	
   	svr.Get(R"(/comment/add/(.*)/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
 		cout << "here1\n"; 
@@ -163,21 +174,62 @@ int main() {
     	res.status = 200;
   	});
 
-	// to add:
-    // void addArtwork(string title_input, string artist_input, string year_input, string path_input);
-    // void editArtwork(string artworkID, string title_input, string artist_input, string year_input, string path_input);
-    // void deleteArtwork(string artworkID);
-    // vector<artworkEntry> getAllArtworks();
+	// Staff abilities:
+	svr.Get(R"(/artwork/add/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
 
-	// probably use this as basis for deleteArtwork
-  	// svr.Get(R"(/comment/delete/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    // 	res.set_header("Access-Control-Allow-Origin","*");
+    	string title = req.matches[1];
+		string artist = req.matches[2];
+		string year = req.matches[3];
+		string path = req.matches[4];
+		string token = req.matches[5];
 
-    // 	string ID = req.matches[1];
-	// 	cdb.deleteEntry(ID);
-    // 	res.set_content("{\"status\":\"success\"}", "text/json");
-    // 	res.status = 200;
-  	// });  
+		bool tokenExists = cdb.checkForToken(token);
+		if (tokenExists) {
+			cdb.addArtwork(title, artist, year, path);
+			res.set_content("{\"status\":\"success\"}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
+		}
+    
+    	res.status = 200;
+  	});
+
+	svr.Get(R"(/artwork/delete/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string artworkID = req.matches[1];
+		string token = req.matches[2];
+
+		bool tokenExists = cdb.checkForToken(token);
+		if (tokenExists) {
+			cdb.deleteArtwork(artworkID);
+			res.set_content("{\"status\":\"success\"}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
+		}
+    
+    	res.status = 200;
+  	});
+
+	svr.Get(R"(/artwork/getall/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+		string token = req.matches[1];
+
+		vector<artworkEntry> allArtworks;
+
+		bool tokenExists = cdb.checkForToken(token);
+		if (tokenExists) {
+			allArtworks = cdb.getAllArtworks();
+			string json = jsonResultsArt(allArtworks);
+    		res.set_content("{\"status\":\"success\"," + json + "}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
+		}
+    
+    	res.status = 200;
+  	}); 
 
 
 	svr.Get(R"(/stafflogin/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
@@ -216,6 +268,43 @@ int main() {
 		res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
   	});
+
+
+	// Staff abilities
+	svr.Get(R"(/comment/delete/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string commentID = req.matches[1];
+		string token = req.matches[2];
+    
+		bool tokenExists = cdb.checkForToken(token);
+		if (tokenExists) {
+			cdb.deleteComment(commentID);
+			res.set_content("{\"status\":\"success\"}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
+		}
+    	
+    	res.status = 200;
+  	}); 
+
+	svr.Get(R"(/comment/togglepin/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string commentID = req.matches[1];
+		string token = req.matches[2];
+
+		bool tokenExists = cdb.checkForToken(token);
+		if (tokenExists) {
+			cdb.togglePinStatus(commentID);
+			res.set_content("{\"status\":\"success\"}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
+		}
+    
+    	res.status = 200;
+  	});
+
 
   	 
   	cout << "Server listening on port " << port << endl;
