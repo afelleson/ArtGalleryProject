@@ -208,7 +208,7 @@ int main() {
 
 	svr.Get(R"(/stafflogout/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
-
+		cout << "logout API called" << endl;
     	string token = req.matches[1];
     
 		cdb.removeToken(token);

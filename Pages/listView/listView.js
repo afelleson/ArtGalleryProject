@@ -295,7 +295,7 @@ function processLogout(results){
 }
 
 function logoutStaff(){
-    console.log("logoutStaff() called with token" + mytoken);
+    console.log("logoutStaff() called with token " + mytoken);
     fetch(baseUrl + '/stafflogout/' + mytoken, {
         method: 'get'
     })
