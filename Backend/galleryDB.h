@@ -25,7 +25,7 @@ public:
     void addComment(string name_input, string text_input, string artworkID, string x_input,string y_input, string width_input, string rating_input,string isPinned_input);
     void changeRating(string commentID, string vote); // vote must be an integer
     void deleteComment(string commentID);
-    void changePinStatus(string commentID);  
+    void togglePinStatus(string commentID);  
 
     artworkEntry findArtworkByID(string artworkID);
     void addArtwork(string title_input, string artist_input, string year_input, string path_input);

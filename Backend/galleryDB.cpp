@@ -118,7 +118,7 @@ void galleryDB::changeRating(string commentID, string vote){
 }
 
 
-void galleryDB::changePinStatus(string commentID){
+void galleryDB::togglePinStatus(string commentID){
     // Establish Connection
     std::unique_ptr<sql::Connection> conn(driver->connect(db_url, properties));
     if (!conn) {
