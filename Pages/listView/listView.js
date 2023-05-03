@@ -284,10 +284,11 @@ function loginStaff(){
     })
 }
 
-function processLogout(results){ // not really necessary
+function processLogout(results){
     if (results["status"]=="success"){
         console.log("logout successful")
-        
+
+        staffInterfaceInvisible();
     } else {
         alert(results["status"]);
     }
