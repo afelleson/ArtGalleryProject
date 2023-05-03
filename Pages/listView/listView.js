@@ -15,10 +15,10 @@ window.addEventListener('beforeunload', function (event) {
 window.addEventListener('beforeunload', function (event) {
     staffInterfaceInvisible();
     logoutStaff();
-    clearInterval(fetchRegularly); // stop updating member list
+    clearInterval(fetchRegularly); // stop updating comment list
 
-    event.preventDefault() // these two lines cause a pop-up asking the user if they really want to close the tab
-    event.returnValue = '' // these two lines cause a pop-up asking the user if they really want to close the tab
+    // event.preventDefault() // these two lines cause a pop-up asking the user if they really want to close the tab
+    // event.returnValue = '' // these two lines cause a pop-up asking the user if they really want to close the tab
   });
 
 document.getElementById('submit-comment').addEventListener("click", (e)=> {
