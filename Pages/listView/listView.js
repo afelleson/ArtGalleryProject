@@ -61,8 +61,14 @@ function formatComments(json) {
         result += "<button type='button' id='delete-" + entry['ID'] +"'class='btn staff-stuff btn-danger btn-sm' "
         result += "onclick='deleteComment(" + entry['ID'] + ")'>Delete</button>" 
         // pin comment button
-        result += "<button type='button' id='pin-" + entry['ID'] + "' class='btn staff-stuff btn-warning btn-sm' ";
-        result += "onclick=\"pinComment(" + entry['ID'] + ")\">Pin/Unpin</button></td>";
+        var pinColor = "warning";
+        var pinAct = "Pin"
+        if (entry['isPinned']) {
+            var pinColor = "secondary";
+            var pinAct = "Unpin"
+        }
+        result += "<button type='button' id='pin-" + entry['ID'] + "' class='btn staff-stuff btn-" + pinColor + "btn-sm' ";
+        result += "onclick=\"pinComment(" + entry['ID'] + ")\">" + pinAct + "</button></td>";
     });
     result += "</table>";
 
@@ -107,7 +113,7 @@ function incrementRating(commentID){
     })
 }
 
-function decrementRating(commentID){
+function changeRating(commentID, vote){
     fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
         method: 'get'
     })
