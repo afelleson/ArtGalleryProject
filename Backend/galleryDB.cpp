@@ -53,7 +53,7 @@ vector<commentEntry> galleryDB::findByArtworkAndSort(string artworkID, string so
     // Execute query
     sql::ResultSet *queryResults = stmt->executeQuery(
 			"SELECT * FROM Comments WHERE ArtworkID = '" + artworkID + "' " +
-            "ORDER BY " + sortParam + " DESC, isPinned DESC");
+            "ORDER BY isPinned DESC," + sortParam + " DESC");
     
     // Loop through results and push commentEntry object to a vector
     while (queryResults->next()) {
