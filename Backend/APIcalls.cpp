@@ -72,6 +72,29 @@ string jsonResult(artworkEntry work) {
 	return res;
 }
 
+// should ideally be added to CTokenGenerator.cpp, but we'd have to mess with the header to get the right stuff included, so this is easier rn
+string generateToken(CTokenGenerator* tokenGenerator){
+	int tokenLength = tokenGenerator->GetTokenLength();
+	cout << "Token length: " << tokenLength << "\n";
+	char* pToken = new char[tokenLength+1];
+	pToken[tokenLength] = 0; // add null terminator
+	bool goOn = false;
+	int safetyCounter = 0;
+	string token;
+	while (goOn==false && safetyCounter < 20){
+	if (tokenGenerator->GetNextToken(pToken)) { // attempt to generate new token
+		string tokenTemp = pToken; // on success, convert char array to string (via string constructor)
+		token = tokenTemp; // store token in string variable declared outside the if loop
+		goOn = true;
+	} else {
+		cout << "Error in token generation. Trying again.\n";
+		token = "***";
+	}
+	safetyCounter++;
+	}
+	return token;
+}
+
 int main() {
 	httplib::Server svr;
 
@@ -156,33 +179,11 @@ int main() {
   	// });  
 
 
-	// should ideally be added to CTokenGenerator.cpp, but we'd have to mess with the header to get the right stuff included, so this is easier rn
-	string generateToken(CTokenGenerator* tokenGenerator){
-		int tokenLength = tokenGenerator->GetTokenLength();
-		cout << "Token length: " << tokenLength << "\n";
-		char* pToken = new char[tokenLength+1];
-		pToken[tokenLength] = 0; // add null terminator
-		bool goOn = false;
-		int safetyCounter = 0;
-		string token;
-		while (goOn==false && safetyCounter < 20){
-		if (tokenGenerator->GetNextToken(pToken)) { // attempt to generate new token
-			string tokenTemp = pToken; // on success, convert char array to string (via string constructor)
-			token = tokenTemp; // store token in string variable declared outside the if loop
-			goOn = true;
-		} else {
-			cout << "Error in token generation. Trying again.\n";
-			token = "***";
-		}
-		safetyCounter++;
-		}
-		return token;
-	}
-
 	svr.Get(R"(/stafflogin/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
 
     	string inputPassword = req.matches[1];
+		string jsonToReturn = "";
     
 		if (inputPassword==staffPassword){
 			jsonToReturn = "{\"status\":\"success\",";
