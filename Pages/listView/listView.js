@@ -63,7 +63,7 @@ function formatComments(json) {
         // pin comment button
         var pinColor = "warning";
         var pinAct = "Pin"
-        if (entry['isPinned']) {
+        if (entry['isPinned'] == "1") {
             var pinColor = "secondary";
             var pinAct = "Unpin"
         }
