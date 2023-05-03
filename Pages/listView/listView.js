@@ -121,6 +121,7 @@ function decrementRating(commentID){
 }
 
 function deleteComment(commentID, token){
+    console.log(token);
     fetch(baseUrl + '/comment/delete/' + commentID + "/" + token, {
         method: 'get'
     })
