@@ -236,7 +236,7 @@ void galleryDB::addToken(string token){
    		exit (EXIT_FAILURE);
   	}
 
-  	std::unique_ptr<sql::Statement> stmnt(conn->createStatement());
+  	std::unique_ptr<sql::Statement> stmt(conn->createStatement());
   	stmt->executeQuery("INSERT INTO Tokens (ID, Token) VALUES (NULL, '" + token + "')");
   	
 }
