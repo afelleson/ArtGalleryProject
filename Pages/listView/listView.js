@@ -210,7 +210,7 @@ function addComment() {
 }
 
 // Staff login event listeners
-document.getElementById('login-go').addEventListener("click", loginStaff());
+document.getElementById('login-go').addEventListener("click", loginStaff);
 document.getElementById('StaffPW').addEventListener("keydown", (e)=> {
     if (e.code == "Enter") {
         event.preventDefault(); // prevent the enter key from actually inputting a new line in the input box
