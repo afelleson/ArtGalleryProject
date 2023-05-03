@@ -58,7 +58,7 @@ function formatComments(json) {
         result += "<button type='button' id='downvote-" + entry['ID'] + "' class='btn btn-downvote btn-sm' data-bs-toggle='button' aria-pressed='false' ";
         result += "onclick=\"downvote(this," + entry['ID'] + ")\">↓</button>";
         // delete comment button
-        result += "<button type='button' id='delete-" + entry['ID'] +"'class='btn staff-stuff btn-failure btn-sm' "
+        result += "<button type='button' id='delete-" + entry['ID'] +"'class='btn staff-stuff btn-danger btn-sm' "
         result += "onclick='deleteComment(" + entry['ID'] + "," + mytoken + ")'>Delete</button>" 
         // pin comment button
         result += "<button type='button' id='pin-" + entry['ID'] + "' class='btn staff-stuff btn-warning btn-sm' ";
