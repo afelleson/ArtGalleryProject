@@ -214,7 +214,8 @@ document.getElementById('login-go').addEventListener("click", loginStaff());
 document.getElementById('StaffPW').addEventListener("keydown", (e)=> {
     if (e.code == "Enter") {
         event.preventDefault(); // prevent the enter key from actually inputting a new line in the input box
-	    loginStaff();
+        console.log("Login enter detected");
+        loginStaff();
     }
 });
 
@@ -226,8 +227,6 @@ function staffInterfaceInvisible(){
     for (var i = 0; i < staffStuff.length; i ++) {
         staffStuff[i].style.display = 'none';
     }
-
-
 
 }
 
@@ -245,7 +244,7 @@ function staffInterfaceVisible(){
 
 
 function processLogin(results){
-    if (results[status]=="success"){
+    if (results["status"]=="success"){
         // close login modal
         const clickEvent = new MouseEvent('click');
         document.getElementById('login-close').dispatchEvent(clickEvent);
@@ -256,11 +255,12 @@ function processLogin(results){
 
         staffInterfaceVisible();
     } else {
-        alert(results[status]);
+        alert(results["status"]);
     }
 }
 
 function loginStaff(){
+    console.log("loginStaff() called");
     fetch(baseUrl + '/stafflogin/' + $('#StaffPW').val(), {
         method: 'get'
     })
