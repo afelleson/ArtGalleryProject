@@ -204,21 +204,16 @@ int main() {
 	// string token = req.matches[1];
     // bool tokenExists = cdb.checkForToken(token);
 
-	// to add: /stafflogout/(.*)
 
-	// cdb.removeToken(string token){
 
 	svr.Get(R"(/stafflogout/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
 
     	string token = req.matches[1];
     
-		if (inputPassword==staffPassword){
-			removeToken(token);
-			res.set_content("{\"status\":\"success\"}", "text/json");
-		} else {
-			res.set_content("{\"status\":\"Failed to remove token\"}");
-		}
+		cdb.removeToken(token);
+
+		res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
   	});
 
