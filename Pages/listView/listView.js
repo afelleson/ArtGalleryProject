@@ -17,8 +17,8 @@ window.addEventListener('beforeunload', function (event) {
     logoutStaff();
     clearInterval(fetchRegularly); // stop updating member list
 
-    // event.preventDefault() // these two lines cause a pop-up asking the user if they really want to close the tab
-    // event.returnValue = '' // these two lines cause a pop-up asking the user if they really want to close the tab
+    event.preventDefault() // these two lines cause a pop-up asking the user if they really want to close the tab
+    event.returnValue = '' // these two lines cause a pop-up asking the user if they really want to close the tab
   });
 
 document.getElementById('submit-comment').addEventListener("click", (e)=> {
@@ -295,6 +295,7 @@ function processLogout(results){
 }
 
 function logoutStaff(){
+    console.log("logoutStaff() called");
     fetch(baseUrl + '/stafflogout/' + mytoken, {
         method: 'get'
     })
