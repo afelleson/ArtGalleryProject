@@ -8,7 +8,17 @@ fetchRegularly=setInterval(fetchCommentsForArtwork,500);
 fetchArtwork(6);
 
 window.addEventListener('beforeunload', function (event) {
+    
+  });
+
+// Call functions on page exit
+window.addEventListener('beforeunload', function (event) {
+    staffInterfaceInvisible();
+    // logoutStaff();
     clearInterval(fetchRegularly); // stop updating member list
+
+    // event.preventDefault() // these two lines cause a pop-up asking the user if they really want to close the tab
+    // event.returnValue = '' // these two lines cause a pop-up asking the user if they really want to close the tab
   });
 
 document.getElementById('submit-comment').addEventListener("click", (e)=> {
