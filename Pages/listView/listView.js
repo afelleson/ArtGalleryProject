@@ -7,10 +7,6 @@ var mytoken = "";
 fetchRegularly=setInterval(fetchCommentsForArtwork,500);
 fetchArtwork(6);
 
-window.addEventListener('beforeunload', function (event) {
-    
-  });
-
 // Call functions on page exit
 window.addEventListener('beforeunload', function (event) {
     logoutStaff();
@@ -284,7 +280,7 @@ function loginStaff(){
 }
 
 function processLogout(results){
-    console.log("processLogout() called")
+    console.log("processLogout() called");
     if (results["status"]=="success"){
         console.log("logout successful")
 
