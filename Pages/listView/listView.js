@@ -53,7 +53,7 @@ function formatComments(json) {
         result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td ";
         // pinned icon
         if (entry['isPinned'] == "1") {
-            result += "<img src="tack.svg" class="pin-icon"/>";
+            result += "<img src='tack.svg' class='pin-color'/>";
         }
         result += "class='rating'>" + entry['rating'];
         // upvote button
