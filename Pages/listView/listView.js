@@ -75,15 +75,9 @@ function formatComments(json) {
     return result;
 }
 
-function completeUpvote(results){
+function completeVote(results){
     if (results["status"]=="success"){
-        console.log("success in upvote")
-    };
-}
-
-function completeDownvote(results){
-    if (results["status"]=="success"){
-        console.log("success in downvote")
+        console.log("success in vote")
     };
 }
 
@@ -99,29 +93,15 @@ function completePin(results){
     };
 }
 
-
-function incrementRating(commentID){
-    fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "1", {
-        method: 'get'
-    })
-    .then(response => response.json())
-    .then(json => completeUpvote(json))
-    .catch(error => {
-        {
-            alert("Increment Error: Something went wrong: " + error);
-        }
-    })
-}
-
 function changeRating(commentID, vote){
-    fetch(baseUrl + '/comment/changerating/' + commentID + "/" + "-1", {
+    fetch(baseUrl + '/comment/changerating/' + commentID + "/" + vote, {
         method: 'get'
     })
     .then(response => response.json())
-    .then(json => completeDownvote(json))
+    .then(json => completeVote(json))
     .catch(error => {
         {
-            alert("Decrement Error: Something went wrong: " + error);
+            alert("Vote Error: Something went wrong: " + error);
         }
     })
 }
@@ -155,9 +135,9 @@ function pinComment(commentID) {
 
 function toggleUpButton(buttonPressed, commentID){
     if (buttonPressed.classList.contains("active")) { // if green after click
-        incrementRating(commentID);
+        changeRating(commentID, "-1");
       } else { // if gray after click
-        decrementRating(commentID);
+        changeRating(commentID, "1");
       }
 }
 
@@ -170,9 +150,9 @@ function resetVoteButton(buttonToActOn){
 
 function toggleDownButton(buttonPressed, commentID){
     if (buttonPressed.classList.contains("active")) { // if red after click
-        decrementRating(commentID);
+        changeRating(commentID, "-1");
       } else { // if gray after click
-        incrementRating(commentID);
+        changeRating(commentID, "1");
       }
 }
 
