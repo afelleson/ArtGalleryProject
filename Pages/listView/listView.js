@@ -350,7 +350,8 @@ function processLogout(results){
 function logoutStaff(){
     console.log("logoutStaff() called with token " + mytoken);
     fetch(baseUrl + '/stafflogout/' + mytoken, {
-        method: 'get'
+        method: 'get',
+        keepalive: true // so the API call completes even when called on page unload
     })
     .then(response => response.json())
     .then(json => processLogout(json))
