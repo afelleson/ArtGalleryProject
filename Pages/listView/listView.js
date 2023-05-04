@@ -47,7 +47,7 @@ function fetchArtwork(artworkID) {
 // Build output table from comma delimited list
 function formatComments(json) {
 
-    var result = '<table class="table table-success table-striped"><tr><th>Username</th><th>Body</th><th>Image Coords</th><th>Rating</th><th> </th><tr>';
+    var result = '<table class="table"><tr><th>Username</th><th>Body</th><th>Image Coords</th><th>Rating</th><th> </th><tr>';
     json.forEach(function(entry, i) {
         result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['commentText'];
         result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td>";

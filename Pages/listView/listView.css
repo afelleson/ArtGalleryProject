@@ -1,6 +1,14 @@
+.table {
+    background-color: #fff;
+}
+
 .pin-icon{
     filter: invert(94%) sepia(92%) saturate(3203%) hue-rotate(320deg) brightness(92%) contrast(98%);
     width: 25px;
+    stroke: #646464;
+    stroke-width: 1px;
+    stroke-dasharray: 2,2;
+    stroke-linejoin: round;
 }
 
 .rating{
