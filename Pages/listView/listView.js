@@ -73,7 +73,7 @@ function formatComments(json) {
         // pinned icon
         result += "<td> ";
         if (entry['isPinned'] == "1") {
-            result += "<img src='tack.svg' class='pin-icon'/>";
+            result += "<img src='solid-tack.svg' class='pin-icon'/>";
         }
         result += "</td>";
     });

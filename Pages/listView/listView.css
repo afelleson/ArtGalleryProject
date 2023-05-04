@@ -3,6 +3,10 @@
     width: 25px;
 }
 
+.rating{
+    width: 7%;
+}
+
 .btn-downvote.active {
     background-color: red;
 }
