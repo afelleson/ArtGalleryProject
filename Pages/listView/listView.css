@@ -1,3 +1,7 @@
+.pin-color{
+    filter: invert(94%) sepia(92%) saturate(3203%) hue-rotate(320deg) brightness(92%) contrast(98%);
+}
+
 .btn-downvote.active {
     background-color: red;
 }

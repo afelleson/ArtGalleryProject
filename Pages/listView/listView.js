@@ -51,6 +51,10 @@ function formatComments(json) {
     json.forEach(function(entry, i) {
         result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['commentText'];
         result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td class='rating'>" + entry['rating'];
+        // pinned icon
+        if (entry['isPinned'] == "1") {
+            result += "<img src="tack.svg" class="pin-color"/>";
+        }
         // upvote button
         result += "<button type='button' id='upvote-" + entry['ID'] + "' class='btn btn-upvote btn-sm' data-bs-toggle='button' aria-pressed='false' ";
         result += "onclick=\"upvote(this," + entry['ID'] + ")\">↑</button>";
