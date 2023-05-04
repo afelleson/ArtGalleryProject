@@ -47,16 +47,10 @@ function fetchArtwork(artworkID) {
 // Build output table from comma delimited list
 function formatComments(json) {
 
-    var result = '<table class="table table-success table-striped"><tr><th>Username</th><th>Body</th><th>Image Coords</th><th>Rating</th><tr>';
+    var result = '<table class="table table-success table-striped"><tr><th>Username</th><th>Body</th><th>Image Coords</th><th>Rating</th><th> </th><tr>';
     json.forEach(function(entry, i) {
         result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['commentText'];
         result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td>";
-        // pinned icon
-        result += "<td>" 
-        if (entry['isPinned'] == "1") {
-            result += "<img src='tack.svg' class='pin-icon'/>";
-        }
-        result += "</td>"
         result += "<td class='rating'>" + entry['rating'];
         // upvote button
         result += "<button type='button' id='upvote-" + entry['ID'] + "' class='btn btn-upvote btn-sm' data-bs-toggle='button' aria-pressed='false' ";
@@ -76,6 +70,12 @@ function formatComments(json) {
         }
         result += "<button type='button' id='pin-" + entry['ID'] + "' class='btn staff-stuff btn-" + pinColor + " btn-sm' ";
         result += "onclick=\"pinComment(" + entry['ID'] + ")\">" + pinAct + "</button></td>";
+        // pinned icon
+        result += "<td> ";
+        if (entry['isPinned'] == "1") {
+            result += "<img src='tack.svg' class='pin-icon'/>";
+        }
+        result += "</td>";
     });
     result += "</table>";
 
