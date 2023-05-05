@@ -65,14 +65,14 @@ string jsonResults(vector<commentEntry> commentList) {
 }
 
 string jsonResultsArt(vector<artworkEntry> artworkList) {
-	string res = "\"results\":[";
+	string res = "{\"results\":[";
 	for (int i = 0; i<artworkList.size(); i++) {
 		res += artworkList[i].jsonify();
 		if (i < artworkList.size()-1) {
 			res +=",";
 		}
 	}
-	res += "]";
+	res += "]}";
 	return res;
 }
 
@@ -218,17 +218,11 @@ int main() {
 		vector<artworkEntry> allArtworks;
 
 		bool tokenExists = cdb.checkForToken(token);
-		if (tokenExists) {
-			allArtworks = cdb.getAllArtworks();
-			string json = jsonResultsArt(allArtworks);
-    		res.set_content("{\"status\":\"success\"," + json + "}", "text/json");
-		} else {
-			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
-		}
+		allArtworks = cdb.getAllArtworks();
+		string json = jsonResultsArt(allArtworks);
     
     	res.status = 200;
   	}); 
-
 
 	svr.Get(R"(/stafflogin/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
