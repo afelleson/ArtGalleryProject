@@ -219,9 +219,10 @@ int main() {
 
 		allArtworks = cdb.getAllArtworks();
 		string json = jsonResultsArt(allArtworks);
-
+		res.set_content(json, "text/json");
     	res.status = 200;
   	}); 
+
 
 	svr.Get(R"(/stafflogin/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
