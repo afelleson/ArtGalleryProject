@@ -44,7 +44,7 @@ function fetchArtList() {
     .then(json => displayArtList(json))
     .catch(error => {
         {
-            alert("Fetch Art Error: Something went wrong: " + error);
+            alert("Fetch Art Info Error: Something went wrong: " + error);
         }
     })
 }
