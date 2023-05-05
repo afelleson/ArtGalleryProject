@@ -79,7 +79,9 @@ function formatNavDropdown(json) {
         result += "</a></li>";
     })
 
-    result += "</ul></div>"
+    result += "</ul></div>";
+
+    return result;
 }
 
 // Build output table from comma delimited list
