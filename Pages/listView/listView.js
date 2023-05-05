@@ -3,10 +3,14 @@ var baseUrl = 'http://18.218.64.106:5001';
 
 var oldJson = "";
 var mytoken = "";
+var currentArtworkID = "6";
 
 fetchRegularly=setInterval(fetchCommentsForArtwork,500);
-fetchArtwork(6);
+fetchArtwork(currentArtworkID);
 
+function changeArtwork(ID) {
+    currentArtworkID = ID;
+}
 // Call functions on page exit
 window.addEventListener('beforeunload', function (event) {
     logoutStaff();
@@ -44,14 +48,33 @@ function fetchArtwork(artworkID) {
             }
         })
 }
+
+function formatNavDropdown(json) {
+    var result = "<div class='dropdown'><button class='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>";
+    result +=  "Artwork";
+    result += "</button><ul class='dropdown-menu'>";
+    json.forEach(function(entry, i){
+        result += "<li><button class='dropdown-item' onClick='changeArtwork(";
+        result += entry[ID];
+        result += ")>"
+        result += entry[title];
+        result += "</a></li>";
+    })
+
+    result += "</ul></div>"
+}
 // Build output table from comma delimited list
 function formatComments(json) {
 
     var result = '<table class="table"><tr><th>Username</th><th>Body</th><th>Image Coords</th><th>Rating</th><th> </th><tr>';
     json.forEach(function(entry, i) {
         result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['commentText'];
-        result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td>";
-        result += "<td class='rating'>" + entry['rating'];
+        result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td ";
+        // pinned icon
+        if (entry['isPinned'] == "1") {
+            result += "<img src='tack.svg' class='pin-icon'/>";
+        }
+        result += "class='rating'>" + entry['rating'];
         // upvote button
         result += "<button type='button' id='upvote-" + entry['ID'] + "' class='btn btn-upvote btn-sm' data-bs-toggle='button' aria-pressed='false' ";
         result += "onclick=\"upvote(this," + entry['ID'] + ")\">↑</button>";
@@ -202,11 +225,10 @@ function isJsonDifferent(newJson){
 
 function fetchCommentsForArtwork() {
 	// Temp Values
-    var artworkID = "0";
     var sortParam;
     sortParam = getSortMethod();
 	
-    fetch(baseUrl + '/comment/fetchforwork/' + artworkID + "/" + sortParam, {
+    fetch(baseUrl + '/comment/fetchforwork/' + currentArtworkID + "/" + sortParam, {
             method: 'get'
         })
         .then(response => response.json())
