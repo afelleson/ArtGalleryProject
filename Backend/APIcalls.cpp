@@ -217,10 +217,9 @@ int main() {
 
 		vector<artworkEntry> allArtworks;
 
-		bool tokenExists = cdb.checkForToken(token);
 		allArtworks = cdb.getAllArtworks();
 		string json = jsonResultsArt(allArtworks);
-    
+
     	res.status = 200;
   	}); 
 
