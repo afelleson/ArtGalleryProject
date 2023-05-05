@@ -7,6 +7,7 @@ var currentArtworkID = "6";
 
 fetchRegularly=setInterval(fetchCommentsForArtwork,500);
 fetchArtwork(currentArtworkID);
+fetchArtList();
 
 function changeArtwork(ID) {
     currentArtworkID = ID;
