@@ -44,7 +44,7 @@ function fetchArtList() {
     .then(json => displayArtList(json))
     .catch(error => {
         {
-            alert("Fetch Art Info Error: Something went wrong: " + error);
+            alert("Fetch Art Info Error: Something went wrong: \n" + error);
         }
     })
 }
@@ -62,7 +62,7 @@ function fetchArtwork(artworkID) {
         .then(json => displayArtInfo(json))
         .catch(error => {
             {
-                alert("Fetch Art Error: Something went wrong: " + error);
+                alert("Fetch Art Error: Something went wrong: \n" + error);
             }
         })
 }
@@ -73,9 +73,9 @@ function formatNavDropdown(json) {
     result += "</button><ul class='dropdown-menu'>";
     json.forEach(function(entry, i){
         result += "<li><button class='dropdown-item' onClick='changeArtwork(";
-        result += entry[ID];
+        result += entry["ID"];
         result += ")>"
-        result += entry[title];
+        result += entry["title"];
         result += "</a></li>";
     })
 
@@ -150,7 +150,7 @@ function changeRating(commentID, vote){
     .then(json => completeVote(json))
     .catch(error => {
         {
-            alert("Vote Error: Something went wrong: " + error);
+            alert("Vote Error: Something went wrong: \n" + error);
         }
     })
 }
@@ -163,7 +163,7 @@ function deleteComment(commentID) {
     .then(json => completeDelete(json))
     .catch(error => {
         {
-            alert("Deletion Error: Something went wrong: " + error);
+            alert("Deletion Error: Something went wrong: \n" + error);
         }
     })
 }
@@ -176,7 +176,7 @@ function pinComment(commentID) {
     .then(json => completePin(json))
     .catch(error => {
         {
-            alert("Pin Error: Something went wrong: " + error);
+            alert("Pin Error: Something went wrong: \n" + error);
         }
     })
 }
@@ -254,7 +254,7 @@ function fetchCommentsForArtwork() {
         .then(json => displayComments(isJsonDifferent(json),json))
         .catch(error => {
             {
-                alert("Fetch Comment Error: Something went wrong: " + error);
+                alert("Fetch Comment Error: Something went wrong: \n" + error);
             }
         })
 }
@@ -294,7 +294,7 @@ function addComment() {
         .then(json => processAdd(json))
         .catch(error => {
             {
-                alert("Add Error: Something went wrong: " + error);
+                alert("Add Error: Something went wrong: \n" + error);
             }
         })
 }
