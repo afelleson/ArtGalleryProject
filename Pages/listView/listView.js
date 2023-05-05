@@ -71,8 +71,8 @@ function formatNavDropdown(json) {
     result2 = "  <li class='nav-item dropdown'>";
     result2 += "  <a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
     result2 += "      Choose Artwork"
-    result2 += "    </a>"
-    result2 += "    <div class='dropdown-menu' aria-labelledby='navbarDropdown'>"
+    result2 += "  </a>"
+    result2 += "  <div class='dropdown-menu' aria-labelledby='navbarDropdown'>"
     json.forEach(function(entry, i){
         // <a class="dropdown-item" href="#">Action</a>
         result2 += "<li><button class='dropdown-item' onClick='changeArtwork(";
@@ -84,6 +84,7 @@ function formatNavDropdown(json) {
     result2 += "    </div>"
     result2 += "  </li>"
 
+    
     var result = "<div class='dropdown'><button class='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>";
     result +=  "Artwork";
     result += "</button><ul class='dropdown-menu'>";
