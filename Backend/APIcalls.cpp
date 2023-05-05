@@ -212,10 +212,8 @@ int main() {
     	res.status = 200;
   	});
 
-	svr.Get(R"(/artwork/getall/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get(R"(/artwork/getall)", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
-
-		string token = req.matches[1];
 
 		vector<artworkEntry> allArtworks;
 

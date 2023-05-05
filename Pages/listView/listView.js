@@ -81,18 +81,19 @@ function formatNavDropdown(json) {
 
     result += "</ul></div>"
 }
+
 // Build output table from comma delimited list
 function formatComments(json) {
 
     var result = '<table class="table"><tr><th>Username</th><th>Body</th><th>Image Coords</th><th>Rating</th><th> </th><tr>';
     json.forEach(function(entry, i) {
         result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['commentText'];
-        result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td ";
+        result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td class='rating'>";
         // pinned icon
         if (entry['isPinned'] == "1") {
             result += "<img src='tack.svg' class='pin-icon'/>";
         }
-        result += "class='rating'>" + entry['rating'];
+        result += entry['rating'];
         // upvote button
         result += "<button type='button' id='upvote-" + entry['ID'] + "' class='btn btn-upvote btn-sm' data-bs-toggle='button' aria-pressed='false' ";
         result += "onclick=\"upvote(this," + entry['ID'] + ")\">↑</button>";
