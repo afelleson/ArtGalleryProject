@@ -35,6 +35,23 @@ function displayArtInfo(results) {
     var artworkInfo = artworkList["title"] + "<br>" + artworkList["artist"] + "<br>" + artworkList["year"];
     document.getElementById("artwork-info").innerHTML = artworkInfo;
 }
+function fetchArtList() {
+    fetch(baseUrl + '/artwork/getall', {
+        method: 'get'
+    })
+    .then(response => response.json())
+    .then(json => displayArtList(json))
+    .catch(error => {
+        {
+            alert("Fetch Art Error: Something went wrong: " + error);
+        }
+    })
+}
+
+function displayArtList(results) {
+    artList = results["results"];
+    document.getElementById("navbarSupportedContent").innerHTML = formatComments(artList);
+}
 
 function fetchArtwork(artworkID) {
     fetch(baseUrl + '/artwork/getbyid/' + artworkID, {
