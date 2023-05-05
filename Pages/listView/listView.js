@@ -79,7 +79,7 @@ function formatNavDropdown(json) {
         result2 += entry["ID"];
         result2 += ")>"
         result2 += entry["title"];
-        result2 += "</a></li>";
+        result2 += "</button></li>";
     })
     result2 += "    </div>"
     result2 += "  </li>"
@@ -92,7 +92,7 @@ function formatNavDropdown(json) {
         result += entry["ID"];
         result += ")>"
         result += entry["title"];
-        result += "</a></li>";
+        result += "</button></li>";
     })
 
     result += "</ul></div>";
