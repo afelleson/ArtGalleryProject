@@ -89,11 +89,9 @@ function formatNavDropdown(json) {
     result +=  "Artwork";
     result += "</button><ul class='dropdown-menu'>";
     json.forEach(function(entry, i) {
-        console.log("Generating button for artwork");
-        result += "<li><button class='dropdown-item' onClick='changeArtwork(";
-        result += entry["ID"];
-        result += ")>";
-        result += entry["title"];
+        console.log(entry)
+        result += "<li><button class='dropdown-item' onClick='changeArtwork(" + entry['ID'] + ")'>";
+        result += entry['title'];
         result += "</button></li>";
     })
 
