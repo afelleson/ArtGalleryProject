@@ -10,7 +10,9 @@ fetchArtwork(currentArtworkID);
 fetchArtList();
 
 function changeArtwork(ID) {
+    console.log("changeArtwork(" + ID + ") called")
     currentArtworkID = ID;
+    fetchArtwork(ID);
 }
 // Call functions on page exit
 window.addEventListener('beforeunload', function (event) {
