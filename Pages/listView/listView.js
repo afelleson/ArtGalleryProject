@@ -34,7 +34,7 @@ document.getElementById('submit-comment').addEventListener("click", (e)=> {
 
 function displayArtInfo(results) {
     artDetails = results["result"];
-    document.getElementById("artwork").src.value = artDetails["path"];
+    document.getElementById("artwork").src = artDetails["path"];
     var artworkInfo = artDetails["title"] + "<br>" + artDetails["artist"] + "<br>" + artDetails["year"];
     document.getElementById("artwork-info").innerHTML = artworkInfo;
 }
