@@ -300,7 +300,7 @@ function addComment() {
 	
     console.log("Attempting to add an entry");
     console.log("Name:" + $('#addname').val());
-    fetch(baseUrl + '/comment/add/' + $('#addname').val() + "/" + $('#addbody').val() + "/" + "0" + "/" + x +"/" + y + "/" + width, {
+    fetch(baseUrl + '/comment/add/' + $('#addname').val() + "/" + $('#addbody').val() + "/" + currentArtworkID + "/" + x +"/" + y + "/" + width, {
             method: 'get'
             // to do: put artwork id in the place of "0" above
         })
