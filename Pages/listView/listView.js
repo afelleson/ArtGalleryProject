@@ -98,7 +98,7 @@ function formatNavDropdown(json) {
 
     result += "</ul></div>";
 
-    return result2;
+    return result;
 }
 
 // Build output table from comma delimited list
