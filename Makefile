@@ -44,7 +44,7 @@ PutHTML:
 	cp ./Pages/listView/listView.js /var/www/html/ArtworkComments/listView
 	cp ./Pages/listView/listView.css /var/www/html/ArtworkComments/listView
 	cp ./Pages/listView/solid-tack.svg /var/www/html/ArtworkComments/listView
-	cp ./favicon.ico /var/www/html/ArtworkComments
+	cp ./GGfavicon.ico /var/www/html/ArtworkComments
 
 
 	echo "Current contents of your HTML directory: "
