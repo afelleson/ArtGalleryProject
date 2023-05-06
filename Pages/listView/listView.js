@@ -50,7 +50,7 @@ function fetchArtList() {
 }
 
 function displayArtList(results) {
-    artList = results["result"];
+    artList = results["results"];
     document.getElementById("navbarSupportedContent").innerHTML += formatNavDropdown(artList);
 }
 
