@@ -51,7 +51,7 @@ function fetchArtList() {
 
 function displayArtList(results) {
     artList = results["results"];
-    document.getElementById("navbarSupportedContent").innerHTML = formatNavDropdown(artList);
+    document.getElementById("navbarSupportedContent").innerHTML += formatNavDropdown(artList);
 }
 
 function fetchArtwork(artworkID) {
