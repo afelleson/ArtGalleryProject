@@ -31,9 +31,9 @@ document.getElementById('submit-comment').addEventListener("click", (e)=> {
 
 
 function displayArtInfo(results) {
-    artworkList = results["result"];
-    document.getElementById("artwork").src.value = artworkList["path"];
-    var artworkInfo = artworkList["title"] + "<br>" + artworkList["artist"] + "<br>" + artworkList["year"];
+    artDetails = results["result"];
+    document.getElementById("artwork").src.value = artDetails["path"];
+    var artworkInfo = artDetails["title"] + "<br>" + artDetails["artist"] + "<br>" + artDetails["year"];
     document.getElementById("artwork-info").innerHTML = artworkInfo;
 }
 function fetchArtList() {
@@ -50,7 +50,7 @@ function fetchArtList() {
 }
 
 function displayArtList(results) {
-    artList = results["results"];
+    artList = results["result"];
     document.getElementById("navbarSupportedContent").innerHTML += formatNavDropdown(artList);
 }
 
@@ -68,21 +68,21 @@ function fetchArtwork(artworkID) {
 }
 
 function formatNavDropdown(json) {
-    result2 = "  <li class='nav-item dropdown'>";
-    result2 += "  <a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
-    result2 += "      Choose Artwork"
-    result2 += "  </a>"
-    result2 += "  <div class='dropdown-menu' aria-labelledby='navbarDropdown'>"
-    json.forEach(function(entry, i){
-        // <a class="dropdown-item" href="#">Action</a>
-        result2 += "<li><button class='dropdown-item' onClick='changeArtwork(";
-        result2 += entry["ID"];
-        result2 += ")>"
-        result2 += entry["title"];
-        result2 += "</button></li>";
-    })
-    result2 += "    </div>"
-    result2 += "  </li>"
+    // // result2 = "  <li class='nav-item dropdown'>";
+    // // result2 += "  <a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
+    // // result2 += "      Choose Artwork"
+    // // result2 += "  </a>"
+    // // result2 += "  <div class='dropdown-menu' aria-labelledby='navbarDropdown'>"
+    // json.forEach(function(entry, i){
+    //     // <a class="dropdown-item" href="#">Action</a>
+    //     result2 += "<li><button class='dropdown-item' onClick='changeArtwork(";
+    //     result2 += entry["ID"];
+    //     result2 += ")>"
+    //     result2 += entry["title"];
+    //     result2 += "</button></li>";
+    // })
+    // result2 += "    </div>"
+    // result2 += "  </li>"
 
     
     var result = "<div class='dropdown'><button class='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>";
