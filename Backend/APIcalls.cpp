@@ -142,10 +142,13 @@ int main() {
     	string name = req.matches[1];
 		boost::replace_all(name , subStringToRemove , subStringToReplace);
     	string body = req.matches[2];
+		cout<< body <<endl; 
 		boost::replace_all(body , subStringToRemove , subStringToReplace);
+		cout<< body <<endl; 
 		std::string toRemove = "\"";
 		std::string toReplaceWith = "\\\"";
 		boost::replace_all(body , toRemove , toReplaceWith);
+		cout<< body <<endl; 
 		string artworkID = req.matches[3];
     	string x = req.matches[4];
     	string y = req.matches[5];
