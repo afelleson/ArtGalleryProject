@@ -205,9 +205,9 @@ function pinComment(commentID) {
 
 function toggleUpButton(buttonPressed, commentID){
     if (buttonPressed.classList.contains("active")) { // if green after click
-        changeRating(commentID, "1");
-      } else { // if gray after click
         changeRating(commentID, "-1");
+      } else { // if gray after click
+        changeRating(commentID, "1");
       }
 }
 
@@ -328,16 +328,14 @@ function addComment() {
 }
 
 function encodeInput(inputText){
-    // var encodedText = encodeURIComponent(inputText)
-    // var encodedText = encodedText.replaceAll(".","%2E");
-    var encodedText = inputText.replaceAll("/","%");
+    var encodedText = encodeURIComponent(inputText)
+    var encodedText = encodedText.replaceAll("%2F","%%");
     return encodedText;
 }
 
 function decodeText(text){
-    // var decodedText = decodeURIComponent(text);
-    // var decodedText = decodedText.replaceAll("%2E", ".");
-    var decodedText = text.replaceAll("%", "/");
+    var decodedText = decodeURIComponent(text);
+    var decodedText = decodedText.replaceAll("%%", "/");
     return decodedText;
 }
 
