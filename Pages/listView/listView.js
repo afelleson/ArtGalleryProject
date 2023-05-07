@@ -40,7 +40,7 @@ document.getElementById('submit-artwork').addEventListener("click", (e)=> {
 function displayArtInfo(results) {
     artDetails = results["result"];
     document.getElementById("artwork").src = decodeText(artDetails["path"]);
-    var artworkInfo = escape(decodeText(artDetails["title"])) + "<br>" + escape(decodeText(artDetails["artist"])) + "<br>" + artDetails["year"];
+    var artworkInfo = decodeText(artDetails["title"]) + "<br>" + escape(decodeText(artDetails["artist"])) + "<br>" + artDetails["year"];
     document.getElementById("artwork-info").innerHTML = artworkInfo;
 }
 function fetchArtList() {
@@ -337,7 +337,6 @@ function encodeInput(inputText){
 }
 
 function decodeText(text){
-    var decodedText = text.replaceAll("%%", "%2F");
     var decodedText = decodeURIComponent(decodedText);
     return decodedText;
 }

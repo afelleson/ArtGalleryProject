@@ -136,8 +136,13 @@ int main() {
     	res.set_header("Access-Control-Allow-Origin","*");
 		cout << "here1\n"; 
 
+		string subStringToRemove = "%%";
+		string subStringToReplace = "/";
+
     	string name = req.matches[1];
+		boost::replace_all(name , subStringToRemove , subStringToReplace);
     	string body = req.matches[2];
+		boost::replace_all(body , subStringToRemove , subStringToReplace);
 		string artworkID = req.matches[3];
     	string x = req.matches[4];
     	string y = req.matches[5];
@@ -180,8 +185,8 @@ int main() {
 	svr.Get(R"(/artwork/add/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
 
-		std::string subStringToRemove = "%%";
-		std::string subStringToReplace = "/";
+		string subStringToRemove = "%%";
+		string subStringToReplace = "/";
 
     	string title = req.matches[1];
 		boost::replace_all(title , subStringToRemove , subStringToReplace);
