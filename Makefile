@@ -47,8 +47,8 @@ PutHTML:
 	cp ./GGfavicon.ico /var/www/html/ArtworkComments
 
 
-	echo "Current contents of your HTML directory: "
-	ls -l /var/www/html/ArtworkComments
+	# echo "Current contents of your HTML directory: "
+	# ls -l /var/www/html/ArtworkComments
 
 clean:
 	rm -f *.o  APIcalls testcomment
