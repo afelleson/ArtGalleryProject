@@ -40,7 +40,7 @@ document.getElementById('submit-artwork').addEventListener("click", (e)=> {
 function displayArtInfo(results) {
     artDetails = results["result"];
     document.getElementById("artwork").src = decodeText(artDetails["path"]);
-    var artworkInfo = escape(decodeText(artDetails["title"])) + "<br>" + escape(decodeText(artDetails["artist"])) + "<br>" + artDetails["year"];
+    var artworkInfo = decodeText(artDetails["title"]) + "<br>" + decodeText(artDetails["artist"]) + "<br>" + artDetails["year"];
     document.getElementById("artwork-info").innerHTML = artworkInfo;
 }
 function fetchArtList() {
@@ -112,7 +112,7 @@ function formatComments(json) {
 
     var result = '<table class="table"><tr><th>Username</th><th>Body</th><th>Image Coords</th><th>Rating</th><th> </th><tr>';
     json.forEach(function(entry, i) {
-        result += "<tr><td class='name'>" + escape(decodeText(entry['name'])) + "</td><td class='body'>" + escape(decodeText(entry['commentText']));
+        result += "<tr><td class='name'>" + decodeText(entry['name']) + "</td><td class='body'>" + decodeText(entry['commentText']);
         result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td class='rating'>";
         result += entry['rating'];
         // upvote button
