@@ -330,14 +330,14 @@ function addComment() {
 function encodeInput(inputText){
     // var encodedText = encodeURIComponent(inputText)
     // var encodedText = encodedText.replaceAll(".","%2E");
-    var encodedText = encodedText.replaceAll("/","%");
+    var encodedText = inputText.replaceAll("/","%");
     return encodedText;
 }
 
 function decodeText(text){
     // var decodedText = decodeURIComponent(text);
     // var decodedText = decodedText.replaceAll("%2E", ".");
-    var decodedText = decodedText.replaceAll("%", "/");
+    var decodedText = text.replaceAll("%", "/");
     return decodedText;
 }
 
