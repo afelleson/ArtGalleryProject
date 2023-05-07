@@ -317,7 +317,7 @@ function addComment() {
 	
     console.log("Attempting to add an entry");
     console.log("Name:" + $('#addname').val());
-    fetch(baseUrl + '/comment/add/' + encodeInput($('#addname').val()).replaceAll('\"', '\\"') + "/" + encodeInput($('#addbody').val()).replaceAll('\"', '\\"') + "/" + currentArtworkID + "/" + x +"/" + y + "/" + width, {
+    fetch(baseUrl + '/comment/add/' + encodeInput($('#addname').val()) + "/" + encodeInput($('#addbody').val()) + "/" + currentArtworkID + "/" + x +"/" + y + "/" + width, {
             method: 'get'
             // to do: put artwork id in the place of "0" above
         })
