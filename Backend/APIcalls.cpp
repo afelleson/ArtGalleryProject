@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 #include <map>
+#include <boost/algorithm/string.hpp>
+
 
 #include "../httplib.h"
 #include "galleryDB.h"
@@ -178,10 +180,17 @@ int main() {
 	svr.Get(R"(/artwork/add/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
 
+		std::string subStringToRemove = "%%";
+		std::string subStringToReplace = "/";
+
     	string title = req.matches[1];
+		boost::replace_all(title , subStringToRemove , subStringToReplace);
 		string artist = req.matches[2];
+		boost::replace_all(artist , subStringToRemove , subStringToReplace);
 		string year = req.matches[3];
+		boost::replace_all(year , subStringToRemove , subStringToReplace);
 		string path = req.matches[4];
+		boost::replace_all(path , subStringToRemove , subStringToReplace);
 		string token = req.matches[5];
 
 		bool tokenExists = cdb.checkForToken(token);
