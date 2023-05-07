@@ -305,6 +305,9 @@ function processAddArt(results) {
     document.getElementById("addyear").value = "";
     document.getElementById("addpath").value = "";
 }
+function processDelArt(results) {
+    console.log("Delete:", results["status"]);
+}
 
 function addComment() {
 	// Temp Values
@@ -354,6 +357,20 @@ function addArtwork() {
                 alert("Add Error: Something went wrong: \n" + error);
             }
         })
+}
+
+function delArtwork(id) {
+    fetch(baseUrl + '/artwork/delete/' + id + "/" + mytoken, {
+        method: 'get'
+        // to do: put artwork id in the place of "0" above
+    })
+    .then(response => response.json())
+    .then(json => processDelArt(json))
+    .catch(error => {
+        {
+            alert("Delete Error: Something went wrong: \n" + error);
+        }
+    })
 }
 // Staff login event listeners
 document.getElementById('login-go').addEventListener("click", loginStaff);
