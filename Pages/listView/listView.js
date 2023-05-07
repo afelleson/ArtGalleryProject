@@ -110,10 +110,10 @@ function formatNavDropdown(json) {
 // Build output table from comma delimited list
 function formatComments(json) {
 
-    var result = '<table class="table"><tr><th>Username</th><th>Body</th><th>Image Coords</th><th>Rating</th><th> </th><tr>';
+    var result = '<table class="table"><tr><th>Username</th><th>Body</th><th>Rating</th><th> </th><tr>';
     json.forEach(function(entry, i) {
         result += "<tr><td class='name'>" + decodeText(entry['name']) + "</td><td class='body'>" + decodeText(entry['commentText']);
-        result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td class='rating'>";
+        result += "</td><td class='rating'>";
         result += entry['rating'];
         // upvote button
         result += "<button type='button' id='upvote-" + entry['ID'] + "' class='btn btn-upvote btn-sm' data-bs-toggle='button' aria-pressed='false' ";
