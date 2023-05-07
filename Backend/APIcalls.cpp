@@ -146,7 +146,7 @@ int main() {
 		boost::replace_all(body , subStringToRemove , subStringToReplace);
 		cout<< body <<endl; 
 		std::string toRemove = "\"";
-		std::string toReplaceWith = "\\\"";
+		std::string toReplaceWith = "\\\\\\\"";
 		boost::replace_all(body , toRemove , toReplaceWith);
 		cout<< body <<endl; 
 		string artworkID = req.matches[3];
