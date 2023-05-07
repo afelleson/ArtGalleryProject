@@ -327,14 +327,14 @@ function addComment() {
         })
 }
 
-encodeInput(inputText){
+function encodeInput(inputText){
     var encodedText = encodeURIComponent(inputText)
     var encodedText = encodedText.replaceAll(".","%2E");
     var encodedText = $('#addfirst').val().replaceAll("/","%");
     return encodedText;
 }
 
-decodeText(text){
+function decodeText(text){
     var decodedText = decodeURIComponent(text);
     var decodedText = decodedText.replaceAll("%2E", ".");
     var decodedText = decodedText.replaceAll("%", "/");
