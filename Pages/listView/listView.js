@@ -31,6 +31,11 @@ document.getElementById('submit-comment').addEventListener("click", (e)=> {
 	addComment();
 });
 
+document.getElementById('submit-artwork').addEventListener("click", (e)=> {
+    event.preventDefault(); // prevent the enter key from actually inputting a new line in the input box
+	addArtwork();
+});
+
 
 function displayArtInfo(results) {
     artDetails = results["result"];
@@ -293,6 +298,13 @@ function processAdd(results) {
     document.getElementById("addbody").value = "";
 
 }
+function processAddArt(results) {
+    console.log("Add:", results["status"]);
+    document.getElementById("addtitle").value = "";
+    document.getElementById("addartist").value = "";
+    document.getElementById("addyear").value = "";
+    document.getElementById("addpath").value = "";
+}
 
 function addComment() {
 	// Temp Values
@@ -314,7 +326,22 @@ function addComment() {
             }
         })
 }
-
+function addArtwork() {
+	
+    console.log("Attempting to add artwork");
+    console.log("Name:" + $('#addname').val());
+    fetch(baseUrl + '/artwork/add/' + $('#addtitle').val() + "/" + $('#addartist').val() + "/" + $('#addyear').val() + "/" + $('#addpath').val() + "/" + mytoken, {
+            method: 'get'
+            // to do: put artwork id in the place of "0" above
+        })
+        .then(response => response.json())
+        .then(json => processAddArt(json))
+        .catch(error => {
+            {
+                alert("Add Error: Something went wrong: \n" + error);
+            }
+        })
+}
 // Staff login event listeners
 document.getElementById('login-go').addEventListener("click", loginStaff);
 document.getElementById('StaffPW').addEventListener("keydown", (e)=> {

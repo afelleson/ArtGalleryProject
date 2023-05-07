@@ -25,6 +25,7 @@
                </ul>
                <form class="d-flex">
                   <button type="button" class="btn btn-success btn-large" data-bs-toggle="modal" data-bs-target="#InputComment">Add Comment</button>
+                  <button type="button" class="btn btn-success btn-large staff-stuff" data-bs-toggle="modal" data-bs-target="#AddArtwork">Add Artwork</button>
                </form>
             </div>
          </div>
@@ -57,7 +58,7 @@
          Logged in as staff
          <button type="button" id="logout-button" class="btn btn-outline-success staff-stuff">Logout</button>
       </div>
-      <!-- Add Modal -->
+      <!-- Add Comment Modal -->
       <div class="modal fade" id="InputComment" tabindex="-1" aria-labelledby="InputComment" aria-hidden="true">
          <div class="modal-dialog d-flex justify-content-center">
             <div class="modal-content w-75">
@@ -80,6 +81,43 @@
                      <br>
                      <!-- Submit button -->
                      <button id="submit-comment" type="submit" class="btn btn-primary btn-block" data-bs-dismiss="modal">Submit</button>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="AddArtwork" tabindex="-1" aria-labelledby="AddArtwork" aria-hidden="true">
+         <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content w-75">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="AddComment">Add Artwork</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body p-4">
+                  <form>
+                     <!-- Title input -->
+                     <div class="form-outline mb-1">
+                        <input type="text" id="addtitle" class="form-control">
+                        <label class="form-label" for="addtitle">Artwork Title</label>
+                     </div>
+                     <!-- Artist Name input -->
+                     <div class="form-outline mb-1">
+                        <input type="text" id="addartist" class="form-control">
+                        <label class="form-label" for="addartist">Artist Name</label>
+                     </div>
+                     <!-- Year input -->
+                     <div class="form-outline mb-1">
+                        <input type="text" id="addyear" class="form-control">
+                        <label class="form-label" for="addyear">Year Published</label>
+                     </div>
+                     <!-- Path input -->
+                     <div class="form-outline mb-1">
+                        <input type="text" id="addpath" class="form-control">
+                        <label class="form-label" for="addpath">Image URL</label>
+                     </div>
+                     <br>
+                     <!-- Submit button -->
+                     <button id="submit-artwork" type="submit" class="btn btn-primary btn-block" data-bs-dismiss="modal">Submit</button>
                   </form>
                </div>
             </div>
