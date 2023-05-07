@@ -109,6 +109,15 @@ string generateToken(CTokenGenerator* tokenGenerator){
 	return token;
 }
 
+void makeReplacements(string& text){
+	std::string subStringToRemove = "%%";
+	std::string subStringToReplace = "/";
+	boost::replace_all(text , subStringToRemove , subStringToReplace);
+	std::string toRemove = "\"";
+	std::string toReplaceWith = "\\\\\\\"";
+	boost::replace_all(text , toRemove , toReplaceWith);
+}
+
 int main() {
 	httplib::Server svr;
 
@@ -134,21 +143,11 @@ int main() {
   	  	
   	svr.Get(R"(/comment/add/(.*)/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
-		cout << "here1\n"; 
-
-		std::string subStringToRemove = "%%";
-		std::string subStringToReplace = "/";
 		
     	string name = req.matches[1];
-		boost::replace_all(name , subStringToRemove , subStringToReplace);
+		makeReplacements(name);
     	string body = req.matches[2];
-		cout<< body <<endl; 
-		boost::replace_all(body , subStringToRemove , subStringToReplace);
-		cout<< body <<endl; 
-		std::string toRemove = "\"";
-		std::string toReplaceWith = "\\\\\\\"";
-		boost::replace_all(body , toRemove , toReplaceWith);
-		cout<< body <<endl; 
+		makeReplacements(body);
 		string artworkID = req.matches[3];
     	string x = req.matches[4];
     	string y = req.matches[5];
@@ -191,17 +190,13 @@ int main() {
 	svr.Get(R"(/artwork/add/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
 
-		std::string subStringToRemove = "%%";
-		std::string subStringToReplace = "/";
-
     	string title = req.matches[1];
-		boost::replace_all(title , subStringToRemove , subStringToReplace);
+		makeReplacements(title);
 		string artist = req.matches[2];
-		boost::replace_all(artist , subStringToRemove , subStringToReplace);
+		makeReplacements(artist);
 		string year = req.matches[3];
-		boost::replace_all(year , subStringToRemove , subStringToReplace);
 		string path = req.matches[4];
-		boost::replace_all(path , subStringToRemove , subStringToReplace);
+		makeReplacements(path);
 		string token = req.matches[5];
 
 		bool tokenExists = cdb.checkForToken(token);
