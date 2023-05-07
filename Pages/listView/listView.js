@@ -317,7 +317,7 @@ function addComment() {
 	
     console.log("Attempting to add an entry");
     console.log("Name:" + $('#addname').val());
-    fetch(baseUrl + '/comment/add/' + encodeInput($('#addname').val()) + "/" + encodeInput($('#addbody').val()) + "/" + currentArtworkID + "/" + x +"/" + y + "/" + width, {
+    fetch(baseUrl + '/comment/add/' + encodeInput($('#addname').val()).replace('"', '\"') + "/" + encodeInput($('#addbody').val()).replace('"', '\"') + "/" + currentArtworkID + "/" + x +"/" + y + "/" + width, {
             method: 'get'
             // to do: put artwork id in the place of "0" above
         })
@@ -346,7 +346,7 @@ function addArtwork() {
 	
     console.log("Attempting to add artwork");
     console.log("Name:" + $('#addname').val());
-    fetch(baseUrl + '/artwork/add/' + encodeInput($('#addtitle').val()) + "/" + encodeInput($('#addartist').val()) + "/" + $('#addyear').val() + "/" + encodeInput($('#addpath').val()) + "/" + mytoken, {
+    fetch(baseUrl + '/artwork/add/' + encodeInput($('#addtitle').val()).replace('"', '\"') + "/" + encodeInput($('#addartist').val()).replace('"', '\"') + "/" + $('#addyear').val() + "/" + encodeInput($('#addpath').val()) + "/" + mytoken, {
             method: 'get'
             // to do: put artwork id in the place of "0" above
         })
