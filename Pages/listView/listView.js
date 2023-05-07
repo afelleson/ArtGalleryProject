@@ -40,7 +40,7 @@ document.getElementById('submit-artwork').addEventListener("click", (e)=> {
 function displayArtInfo(results) {
     artDetails = results["result"];
     document.getElementById("artwork").src = decodeText(artDetails["path"]);
-    var artworkInfo = artDetails["title"] + "<br>" + artDetails["artist"] + "<br>" + artDetails["year"];
+    var artworkInfo = decodeText(artDetails["title"]) + "<br>" + decodeText(artDetails["artist"]) + "<br>" + artDetails["year"];
     document.getElementById("artwork-info").innerHTML = artworkInfo;
 }
 function fetchArtList() {
@@ -334,8 +334,8 @@ function encodeInput(inputText){
 }
 
 function decodeText(text){
-    var decodedText = decodeURIComponent(text);
     var decodedText = decodedText.replaceAll("%%", "/");
+    var decodedText = decodeURIComponent(text);
     return decodedText;
 }
 
@@ -343,7 +343,7 @@ function addArtwork() {
 	
     console.log("Attempting to add artwork");
     console.log("Name:" + $('#addname').val());
-    fetch(baseUrl + '/artwork/add/' + $('#addtitle').val() + "/" + $('#addartist').val() + "/" + $('#addyear').val() + "/" + encodeInput($('#addpath').val()) + "/" + mytoken, {
+    fetch(baseUrl + '/artwork/add/' + encodeInput($('#addtitle').val()) + "/" + encodeInput($('#addartist').val()) + "/" + $('#addyear').val() + "/" + encodeInput($('#addpath').val()) + "/" + mytoken, {
             method: 'get'
             // to do: put artwork id in the place of "0" above
         })
