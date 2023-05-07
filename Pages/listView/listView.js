@@ -39,7 +39,7 @@ document.getElementById('submit-artwork').addEventListener("click", (e)=> {
 
 function displayArtInfo(results) {
     artDetails = results["result"];
-    document.getElementById("artwork").src = artDetails["path"];
+    document.getElementById("artwork").src = decodeText(artDetails["path"]);
     var artworkInfo = artDetails["title"] + "<br>" + artDetails["artist"] + "<br>" + artDetails["year"];
     document.getElementById("artwork-info").innerHTML = artworkInfo;
 }
@@ -112,7 +112,7 @@ function formatComments(json) {
 
     var result = '<table class="table"><tr><th>Username</th><th>Body</th><th>Image Coords</th><th>Rating</th><th> </th><tr>';
     json.forEach(function(entry, i) {
-        result += "<tr><td class='name'>" + entry['name'] + "</td><td class='body'>" + entry['commentText'];
+        result += "<tr><td class='name'>" + decodeText(entry['name']) + "</td><td class='body'>" + decodeText(entry['commentText']);
         result += "</td><td class='imgloc'> (" + entry['x'] + "," + entry['y'] + "), w: " + entry['width'] + "</td><td class='rating'>";
         result += entry['rating'];
         // upvote button
@@ -314,7 +314,7 @@ function addComment() {
 	
     console.log("Attempting to add an entry");
     console.log("Name:" + $('#addname').val());
-    fetch(baseUrl + '/comment/add/' + $('#addname').val() + "/" + $('#addbody').val() + "/" + currentArtworkID + "/" + x +"/" + y + "/" + width, {
+    fetch(baseUrl + '/comment/add/' + encodeInput($('#addname').val()) + "/" + encodeInput($('#addbody').val()) + "/" + currentArtworkID + "/" + x +"/" + y + "/" + width, {
             method: 'get'
             // to do: put artwork id in the place of "0" above
         })
@@ -326,11 +326,26 @@ function addComment() {
             }
         })
 }
+
+encodeInput(inputText){
+    var encodedText = encodeURIComponent(inputText)
+    var encodedText = encodedText.replaceAll(".","%2E");
+    var encodedText = $('#addfirst').val().replaceAll("/","%");
+    return encodedText;
+}
+
+decodeText(text){
+    var decodedText = decodeURIComponent(text);
+    var decodedText = decodedText.replaceAll("%2E", ".");
+    var decodedText = decodedText.replaceAll("%", "/");
+    return decodedText;
+}
+
 function addArtwork() {
 	
     console.log("Attempting to add artwork");
     console.log("Name:" + $('#addname').val());
-    fetch(baseUrl + '/artwork/add/' + $('#addtitle').val() + "/" + $('#addartist').val() + "/" + $('#addyear').val() + "/" + $('#addpath').val() + "/" + mytoken, {
+    fetch(baseUrl + '/artwork/add/' + $('#addtitle').val() + "/" + $('#addartist').val() + "/" + $('#addyear').val() + "/" + encodeInput($('#addpath').val()) + "/" + mytoken, {
             method: 'get'
             // to do: put artwork id in the place of "0" above
         })
