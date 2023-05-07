@@ -205,9 +205,9 @@ function pinComment(commentID) {
 
 function toggleUpButton(buttonPressed, commentID){
     if (buttonPressed.classList.contains("active")) { // if green after click
-        changeRating(commentID, "-1");
-      } else { // if gray after click
         changeRating(commentID, "1");
+      } else { // if gray after click
+        changeRating(commentID, "-1");
       }
 }
 
