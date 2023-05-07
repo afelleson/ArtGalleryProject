@@ -334,8 +334,8 @@ function encodeInput(inputText){
 }
 
 function decodeText(text){
-    var decodedText = decodedText.replaceAll("%%", "/");
-    var decodedText = decodeURIComponent(text);
+    var decodedText = text.replaceAll("%%", "%2F");
+    var decodedText = decodeURIComponent(decodedText);
     return decodedText;
 }
 
