@@ -330,7 +330,7 @@ function addComment() {
 function encodeInput(inputText){
     var encodedText = encodeURIComponent(inputText)
     var encodedText = encodedText.replaceAll(".","%2E");
-    var encodedText = $('#addfirst').val().replaceAll("/","%");
+    var encodedText = encodedText.replaceAll("/","%");
     return encodedText;
 }
 
