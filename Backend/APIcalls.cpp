@@ -113,9 +113,14 @@ void makeReplacements(string& text){
 	std::string subStringToRemove = "%%";
 	std::string subStringToReplace = "/";
 	boost::replace_all(text , subStringToRemove , subStringToReplace);
+	
 	std::string toRemove = "\"";
 	std::string toReplaceWith = "\\\\\\\"";
 	boost::replace_all(text , toRemove , toReplaceWith);
+
+	std::string toRemove3 = "\'";
+	std::string toReplaceWith3 = "\\\\\\\'";
+	boost::replace_all(text , toRemove3 , toReplaceWith3);
 }
 
 int main() {
