@@ -119,7 +119,7 @@ void makeReplacements(string& text){
 	boost::replace_all(text , toRemove , toReplaceWith);
 
 	std::string toRemove3 = "\'";
-	std::string toReplaceWith3 = "\\\\\\\\\'";
+	std::string toReplaceWith3 = "\\\'";
 	boost::replace_all(text , toRemove3 , toReplaceWith3);
 }
 
