@@ -15,50 +15,21 @@
 #include "artworkEntry.h"
 #include "CTokenGenerator.h"
 
-// Call functions from the other C++ files to carry out
-// GET requests and return results in JSON format
-
-// (the javascript files will receive the JSON and create
-// basically identitical comment objects to the
-// ones defined in CommentClasses.cpp)
-
-
-// /fetchForArtwork/$artworkID$/sortby/$something$
-// Filter by artwork, sort by parameter
-
-
-// /fetchallworks/sortby/$something$
-// Get all comments, sort by parameter
-
-
-// /addcomment/
-
-
-// /removecomment/$commentID$
-
-
-// /pincomment/$commentID$
-
-
-// /unpincomment/$commentID$
-
-
-// /changerating/$commentID$/$vote$
-
 
 using namespace std;
 
 const int port = 5001;
+const string staffPassword = "GGstaff000K";
+
 
 ofstream logfile; 
 
-const string staffPassword = "GGstaff000K";
-
-string jsonResults(vector<commentEntry> commentList) {
+template <class myType>
+string jsonResults(vector<myType> list) {
 	string res = "{\"results\":[";
-	for (int i = 0; i<commentList.size(); i++) {
-		res += commentList[i].jsonify();
-		if (i < commentList.size()-1) {
+	for (int i = 0; i<list.size(); i++) {
+		res += list[i].jsonify();
+		if (i < list.size()-1) {
 			res +=",";
 		}
 	}
@@ -66,17 +37,17 @@ string jsonResults(vector<commentEntry> commentList) {
 	return res;
 }
 
-string jsonResultsArt(vector<artworkEntry> artworkList) {
-	string res = "{\"results\":[";
-	for (int i = 0; i<artworkList.size(); i++) {
-		res += artworkList[i].jsonify();
-		if (i < artworkList.size()-1) {
-			res +=",";
-		}
-	}
-	res += "]}";
-	return res;
-}
+// string jsonResultsArt(vector<artworkEntry> artworkList) {
+// 	string res = "{\"results\":[";
+// 	for (int i = 0; i<artworkList.size(); i++) {
+// 		res += artworkList[i].jsonify();
+// 		if (i < artworkList.size()-1) {
+// 			res +=",";
+// 		}
+// 	}
+// 	res += "]}";
+// 	return res;
+// }
 
 string jsonResult(artworkEntry work) {
 	string res = "{\"result\":";
@@ -127,6 +98,7 @@ int main() {
 	httplib::Server svr;
 
   	galleryDB cdb; // Comment List SQL Interface Object
+	srand((unsigned int)time(NULL));
 	CTokenGenerator *tokenGenerator = new CTokenGenerator(rand());
   
   	vector<commentEntry> results;
@@ -135,6 +107,75 @@ int main() {
     	res.set_header("Access-Control-Allow-Origin","*");
     	res.set_content("Comment API", "text/plain");
   	});
+
+
+	// Artwork API calls
+
+	svr.Get(R"(/artwork/getall)", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+		vector<artworkEntry> allArtworks;
+
+		allArtworks = cdb.getAllArtworks();
+		string json = jsonResults(allArtworks);
+		res.set_content(json, "text/json");
+    	res.status = 200;
+  	});
+
+	svr.Get(R"(/artwork/getbyid/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string artworkID = req.matches[1];
+    
+    	artworkEntry result = cdb.findArtworkByID(artworkID);
+    	string json = jsonResult(result);
+    	res.set_content(json, "text/json");
+    	res.status = 200;
+  	});
+
+	// Staff abilities:
+	svr.Get(R"(/artwork/add/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string title = req.matches[1];
+		makeReplacements(title);
+		string artist = req.matches[2];
+		makeReplacements(artist);
+		string year = req.matches[3];
+		string path = req.matches[4];
+		makeReplacements(path);
+		string token = req.matches[5];
+
+		bool tokenExists = cdb.checkForToken(token);
+		if (tokenExists) {
+			cdb.addArtwork(title, artist, year, path);
+			res.set_content("{\"status\":\"success\"}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
+		}
+    
+    	res.status = 200;
+  	});
+
+	svr.Get(R"(/artwork/delete/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string artworkID = req.matches[1];
+		string token = req.matches[2];
+
+		bool tokenExists = cdb.checkForToken(token);
+		if (tokenExists) {
+			cdb.deleteArtwork(artworkID);
+			res.set_content("{\"status\":\"success\"}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
+		}
+    
+    	res.status = 200;
+  	});
+
+
+	// Comment API calls
 
   	svr.Get(R"(/comment/fetchforwork/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
@@ -215,69 +256,7 @@ int main() {
 
 
 
-	svr.Get(R"(/artwork/getbyid/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    	res.set_header("Access-Control-Allow-Origin","*");
-
-    	string artworkID = req.matches[1];
-    
-    	artworkEntry result = cdb.findArtworkByID(artworkID);
-    	string json = jsonResult(result);
-    	res.set_content(json, "text/json");
-    	res.status = 200;
-  	});
-
-	// Staff abilities:
-	svr.Get(R"(/artwork/add/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    	res.set_header("Access-Control-Allow-Origin","*");
-
-    	string title = req.matches[1];
-		makeReplacements(title);
-		string artist = req.matches[2];
-		makeReplacements(artist);
-		string year = req.matches[3];
-		string path = req.matches[4];
-		makeReplacements(path);
-		string token = req.matches[5];
-
-		bool tokenExists = cdb.checkForToken(token);
-		if (tokenExists) {
-			cdb.addArtwork(title, artist, year, path);
-			res.set_content("{\"status\":\"success\"}", "text/json");
-		} else {
-			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
-		}
-    
-    	res.status = 200;
-  	});
-
-	svr.Get(R"(/artwork/delete/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    	res.set_header("Access-Control-Allow-Origin","*");
-
-    	string artworkID = req.matches[1];
-		string token = req.matches[2];
-
-		bool tokenExists = cdb.checkForToken(token);
-		if (tokenExists) {
-			cdb.deleteArtwork(artworkID);
-			res.set_content("{\"status\":\"success\"}", "text/json");
-		} else {
-			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
-		}
-    
-    	res.status = 200;
-  	});
-
-	svr.Get(R"(/artwork/getall)", [&](const httplib::Request& req, httplib::Response& res) {
-    	res.set_header("Access-Control-Allow-Origin","*");
-
-		vector<artworkEntry> allArtworks;
-
-		allArtworks = cdb.getAllArtworks();
-		string json = jsonResultsArt(allArtworks);
-		res.set_content(json, "text/json");
-    	res.status = 200;
-  	}); 
-
+	// Staff login/logout API calls
 
 	svr.Get(R"(/stafflogin/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
