@@ -40,7 +40,7 @@ CTokenGenerator.o: ./Backend/CTokenGenerator.cpp ./Backend/CTokenGenerator.h
 	$(CC) -c $(CFLAGS) ./Backend/CTokenGenerator.cpp
 
 PutHTML:
-	cp ./Pages/listView/listView.html /var/www/html/ArtworkComments/listView
+	cp ./Pages/listView/index.html /var/www/html/ArtworkComments/listView
 	cp ./Pages/listView/listView.js /var/www/html/ArtworkComments/listView
 	cp ./Pages/listView/listView.css /var/www/html/ArtworkComments/listView
 	cp ./Pages/listView/solid-tack.svg /var/www/html/ArtworkComments/listView
