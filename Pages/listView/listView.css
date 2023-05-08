@@ -15,6 +15,14 @@
     width:11%;
 }
 
+.username{
+    width:12%;
+}
+
+.body{
+    width:60%;
+}
+
 .btn-downvote.active {
     background-color: red;
 }
