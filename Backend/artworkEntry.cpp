@@ -1,14 +1,10 @@
-// Defines the artwork class in C++
-// Maybe the artwork class too
-
-
-// Defines functions that interact with the database:
+// This program defines the artworkEntry class, which stores all the information about an artwork pulled from the database
 
 #include <iostream>
 #include "artworkEntry.h"
 
 artworkEntry::artworkEntry(){
-    id = ""; // Q: what to do here?
+    id = ""; //(?)
     title = "";
     artist = "";
     year = "";

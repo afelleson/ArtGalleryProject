@@ -15,62 +15,23 @@
 #include "artworkEntry.h"
 #include "CTokenGenerator.h"
 
-// Call functions from the other C++ files to carry out
-// GET requests and return results in JSON format
-
-// (the javascript files will receive the JSON and create
-// basically identitical comment objects to the
-// ones defined in CommentClasses.cpp)
-
-
-// /fetchForArtwork/$artworkID$/sortby/$something$
-// Filter by artwork, sort by parameter
-
-
-// /fetchallworks/sortby/$something$
-// Get all comments, sort by parameter
-
-
-// /addcomment/
-
-
-// /removecomment/$commentID$
-
-
-// /pincomment/$commentID$
-
-
-// /unpincomment/$commentID$
-
-
-// /changerating/$commentID$/$vote$
-
 
 using namespace std;
 
 const int port = 5001;
+const string staffPassword = "GGstaff000K";
+
 
 ofstream logfile; 
 
-const string staffPassword = "GGstaff000K";
+template <class anEntry>
+string jsonResults(vector<anEntry> list) {
+	// Given a list of artworkEntries or commentEntries, convert to a list of json results.
 
-string jsonResults(vector<commentEntry> commentList) {
 	string res = "{\"results\":[";
-	for (int i = 0; i<commentList.size(); i++) {
-		res += commentList[i].jsonify();
-		if (i < commentList.size()-1) {
-			res +=",";
-		}
-	}
-	res += "]}";
-	return res;
-}
-
-string jsonResultsArt(vector<artworkEntry> artworkList) {
-	string res = "{\"results\":[";
-	for (int i = 0; i<artworkList.size(); i++) {
-		res += artworkList[i].jsonify();
-		if (i < artworkList.size()-1) {
+	for (int i = 0; i<list.size(); i++) {
+		res += list[i].jsonify();
+		if (i < list.size()-1) {
 			res +=",";
 		}
 	}
@@ -79,15 +40,16 @@ string jsonResultsArt(vector<artworkEntry> artworkList) {
 }
 
 string jsonResult(artworkEntry work) {
-	string res = "{\"result\":";
-	res += work.jsonify();
-	
-	res += "}";
+	// Return info for a single artwork
+
+	string res = "{\"result\":" + work.jsonify() + "}";
 	return res;
 }
 
-// should ideally be added to CTokenGenerator.cpp, but we'd have to mess with the header to get the right stuff included, so this is easier rn
 string generateToken(CTokenGenerator* tokenGenerator){
+	// Generate next token from the established token generator. On failure, retry a limited number of times. Return the token as a string.
+	// (Should ideally be added to CTokenGenerator.cpp, but we'd have to mess with the header to get the right stuff included, so this is easier rn)
+	
 	int tokenLength = tokenGenerator->GetTokenLength();
 	cout << "Token length: " << tokenLength << "\n";
 	char* pToken = new char[tokenLength+1];
@@ -110,6 +72,10 @@ string generateToken(CTokenGenerator* tokenGenerator){
 }
 
 void makeReplacements(string& text){
+	// Undo the / -> %% replacement from the javascript (necessary for API calls to work),
+	// and escape single and double quotation marks so they store in the database with the escape chars
+	// (necessary to avoid json parse errors).
+
 	std::string subStringToRemove = "%%";
 	std::string subStringToReplace = "/";
 	boost::replace_all(text , subStringToRemove , subStringToReplace);
@@ -126,7 +92,8 @@ void makeReplacements(string& text){
 int main() {
 	httplib::Server svr;
 
-  	galleryDB cdb; // Comment List SQL Interface Object
+  	galleryDB database; // Comment List SQL Interface Object
+	srand((unsigned int)time(NULL));
 	CTokenGenerator *tokenGenerator = new CTokenGenerator(rand());
   
   	vector<commentEntry> results;
@@ -136,11 +103,82 @@ int main() {
     	res.set_content("Comment API", "text/plain");
   	});
 
+
+	// Artwork API calls
+
+	svr.Get(R"(/artwork/getall)", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+		vector<artworkEntry> allArtworks;
+
+		allArtworks = database.getAllArtworks();
+		string json = jsonResults(allArtworks);
+		res.set_content(json, "text/json");
+    	res.status = 200;
+  	});
+
+	svr.Get(R"(/artwork/getbyid/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string artworkID = req.matches[1];
+    
+    	artworkEntry result = database.findArtworkByID(artworkID);
+    	string json = jsonResult(result);
+    	res.set_content(json, "text/json");
+    	res.status = 200;
+  	});
+
+	// Staff abilities:
+	svr.Get(R"(/artwork/add/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string title = req.matches[1];
+		makeReplacements(title);
+		string artist = req.matches[2];
+		makeReplacements(artist);
+		string year = req.matches[3];
+		string path = req.matches[4];
+		cout << path << endl;
+		makeReplacements(path);
+		cout << path << endl;
+		string token = req.matches[5];
+
+		bool tokenExists = database.checkForToken(token);
+		if (tokenExists) {
+			database.addArtwork(title, artist, year, path);
+			res.set_content("{\"status\":\"success\"}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
+		}
+    
+    	res.status = 200;
+  	});
+
+	svr.Get(R"(/artwork/delete/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string artworkID = req.matches[1];
+		string token = req.matches[2];
+
+		bool tokenExists = database.checkForToken(token);
+		if (tokenExists) {
+			database.deleteArtwork(artworkID);
+			res.set_content("{\"status\":\"success\"}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
+		}
+    
+    	res.status = 200;
+  	});
+
+
+	// Comment API calls
+
   	svr.Get(R"(/comment/fetchforwork/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
 		string work = req.matches[1];
 		string sortMethod = req.matches[2];
-    	results = cdb.findByArtworkAndSort(work, sortMethod);
+    	results = database.findByArtworkAndSort(work, sortMethod);
     	string json = jsonResults(results);
     	res.set_content(json, "text/json");
     	res.status = 200;
@@ -160,7 +198,7 @@ int main() {
 		cout << "here2\n"; 
 		// string rating = req.matches[7];
 		// string isPinned = req.matches[8];
-    	cdb.addComment(name,body,artworkID,x,y,width,"0","0"); // 0 for initial rating and isPinned status
+    	database.addComment(name,body,artworkID,x,y,width,"0","0"); // 0 for initial rating and isPinned status
 		cout << "here3\n"; 
     	res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
@@ -172,7 +210,7 @@ int main() {
     	string commentID = req.matches[1];
     	string vote = req.matches[2];
     
-    	cdb.changeRating(commentID, vote);
+    	database.changeRating(commentID, vote);
 
     	res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
@@ -185,9 +223,9 @@ int main() {
     	string commentID = req.matches[1];
 		string token = req.matches[2];
     
-		bool tokenExists = cdb.checkForToken(token);
+		bool tokenExists = database.checkForToken(token);
 		if (tokenExists) {
-			cdb.deleteComment(commentID);
+			database.deleteComment(commentID);
 			res.set_content("{\"status\":\"success\"}", "text/json");
 		} else {
 			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
@@ -202,9 +240,9 @@ int main() {
     	string commentID = req.matches[1];
 		string token = req.matches[2];
 
-		bool tokenExists = cdb.checkForToken(token);
+		bool tokenExists = database.checkForToken(token);
 		if (tokenExists) {
-			cdb.togglePinStatus(commentID);
+			database.togglePinStatus(commentID);
 			res.set_content("{\"status\":\"success\"}", "text/json");
 		} else {
 			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
@@ -215,69 +253,7 @@ int main() {
 
 
 
-	svr.Get(R"(/artwork/getbyid/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    	res.set_header("Access-Control-Allow-Origin","*");
-
-    	string artworkID = req.matches[1];
-    
-    	artworkEntry result = cdb.findArtworkByID(artworkID);
-    	string json = jsonResult(result);
-    	res.set_content(json, "text/json");
-    	res.status = 200;
-  	});
-
-	// Staff abilities:
-	svr.Get(R"(/artwork/add/(.*)/(.*)/(.*)/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    	res.set_header("Access-Control-Allow-Origin","*");
-
-    	string title = req.matches[1];
-		makeReplacements(title);
-		string artist = req.matches[2];
-		makeReplacements(artist);
-		string year = req.matches[3];
-		string path = req.matches[4];
-		makeReplacements(path);
-		string token = req.matches[5];
-
-		bool tokenExists = cdb.checkForToken(token);
-		if (tokenExists) {
-			cdb.addArtwork(title, artist, year, path);
-			res.set_content("{\"status\":\"success\"}", "text/json");
-		} else {
-			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
-		}
-    
-    	res.status = 200;
-  	});
-
-	svr.Get(R"(/artwork/delete/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    	res.set_header("Access-Control-Allow-Origin","*");
-
-    	string artworkID = req.matches[1];
-		string token = req.matches[2];
-
-		bool tokenExists = cdb.checkForToken(token);
-		if (tokenExists) {
-			cdb.deleteArtwork(artworkID);
-			res.set_content("{\"status\":\"success\"}", "text/json");
-		} else {
-			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
-		}
-    
-    	res.status = 200;
-  	});
-
-	svr.Get(R"(/artwork/getall)", [&](const httplib::Request& req, httplib::Response& res) {
-    	res.set_header("Access-Control-Allow-Origin","*");
-
-		vector<artworkEntry> allArtworks;
-
-		allArtworks = cdb.getAllArtworks();
-		string json = jsonResultsArt(allArtworks);
-		res.set_content(json, "text/json");
-    	res.status = 200;
-  	}); 
-
+	// Staff login/logout API calls
 
 	svr.Get(R"(/stafflogin/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
@@ -289,7 +265,7 @@ int main() {
 			jsonToReturn = "{\"status\":\"success\",";
 
 			string token = generateToken(tokenGenerator);  // Generate new token for this user's current session
-			cdb.addToken(token); // Add it to the DB
+			database.addToken(token); // Add it to the DB
 			jsonToReturn += "\"token\":\"" + token + "\"}"; // append token to json response
 		} else {
 			jsonToReturn = "{\"status\":\"Incorrect password\"}";
@@ -304,12 +280,13 @@ int main() {
 		cout << "logout API called" << endl;
     	string token = req.matches[1];
     
-		cdb.removeToken(token);
+		database.removeToken(token);
 
 		res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
   	});
   	 
+
   	cout << "Server listening on port " << port << endl;
   	svr.listen("0.0.0.0", port);
 

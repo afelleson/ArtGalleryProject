@@ -1,3 +1,5 @@
+// This program defines the commentEntry class, which stores all the information about a comment pulled from the database
+
 #include <mariadb/conncpp.hpp>
 #include <string>
 using namespace std;

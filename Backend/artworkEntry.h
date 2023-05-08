@@ -1,3 +1,5 @@
+// This program defines the artworkEntry class, which stores all the information about an artwork pulled from the database
+
 #include <mariadb/conncpp.hpp>
 #include <string>
 using namespace std;
