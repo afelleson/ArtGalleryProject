@@ -526,6 +526,7 @@ function processLogout(results){
     if (results["status"]=="success"){
         console.log("logout successful")
         staffInterfaceInvisible();
+        mytoken = "";
     } else {
         alert(results["status"]);
     }
