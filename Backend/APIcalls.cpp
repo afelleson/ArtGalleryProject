@@ -138,7 +138,9 @@ int main() {
 		makeReplacements(artist);
 		string year = req.matches[3];
 		string path = req.matches[4];
+		cout << path << endl;
 		makeReplacements(path);
+		cout << path << endl;
 		string token = req.matches[5];
 
 		bool tokenExists = database.checkForToken(token);
