@@ -62,13 +62,15 @@ window.addEventListener('beforeunload', function (event) {
 // Encode text so it can be safely put in the database
 function encodeInput(inputText){
     var encodedText = encodeURIComponent(inputText)
-    var encodedText = encodedText.replaceAll("%2F","%%");
+    var encodedText = encodeURIComponent(encodedText)
+    // var encodedText = encodedText.replaceAll("%2F","%%");
     return encodedText;
 }
 
 // Decode text that has been encoded
 function decodeText(text){
-    var decodedText = text.replaceAll("%%", "%2F");
+    // var decodedText = text.replaceAll("%%", "%2F");
+    var decodedText = decodeURIComponent(text);
     var decodedText = decodeURIComponent(decodedText);
     return decodedText;
 }
