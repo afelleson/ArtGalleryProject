@@ -159,7 +159,7 @@ function processAddArt(results) {
         document.getElementById("addyear").value = "";
         document.getElementById("addpath").value = "";
         fetchArtList(); // update dropdown appearance for the user who just added the piece so they have visual confirmation without having to reload
-        // alert("Artwork added. Reload the page to see changes.")
+        // alert("Artwork added.")
     } else {
         alert(results["status"]);
     }
@@ -188,7 +188,7 @@ function processDelArt(results) {
     console.log("Delete:", results["status"]);
     if (results["status"]=="success"){
         changeArtwork(defaultArtworkID); // Go to default artwork view. Also update dropdown appearance for the user who just deleted the piece so they have visual confirmation
-        // alert("Successful deletion. Reload page to see changes.");
+        // alert("Deletion successful.");
     }
     else {
         alert(results["status"]);
