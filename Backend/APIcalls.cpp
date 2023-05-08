@@ -92,7 +92,7 @@ void makeReplacements(string& text){
 int main() {
 	httplib::Server svr;
 
-  	galleryDB cdb; // Comment List SQL Interface Object
+  	galleryDB database; // Comment List SQL Interface Object
 	srand((unsigned int)time(NULL));
 	CTokenGenerator *tokenGenerator = new CTokenGenerator(rand());
   
@@ -111,7 +111,7 @@ int main() {
 
 		vector<artworkEntry> allArtworks;
 
-		allArtworks = cdb.getAllArtworks();
+		allArtworks = database.getAllArtworks();
 		string json = jsonResults(allArtworks);
 		res.set_content(json, "text/json");
     	res.status = 200;
@@ -122,7 +122,7 @@ int main() {
 
     	string artworkID = req.matches[1];
     
-    	artworkEntry result = cdb.findArtworkByID(artworkID);
+    	artworkEntry result = database.findArtworkByID(artworkID);
     	string json = jsonResult(result);
     	res.set_content(json, "text/json");
     	res.status = 200;
@@ -141,9 +141,9 @@ int main() {
 		makeReplacements(path);
 		string token = req.matches[5];
 
-		bool tokenExists = cdb.checkForToken(token);
+		bool tokenExists = database.checkForToken(token);
 		if (tokenExists) {
-			cdb.addArtwork(title, artist, year, path);
+			database.addArtwork(title, artist, year, path);
 			res.set_content("{\"status\":\"success\"}", "text/json");
 		} else {
 			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
@@ -158,9 +158,9 @@ int main() {
     	string artworkID = req.matches[1];
 		string token = req.matches[2];
 
-		bool tokenExists = cdb.checkForToken(token);
+		bool tokenExists = database.checkForToken(token);
 		if (tokenExists) {
-			cdb.deleteArtwork(artworkID);
+			database.deleteArtwork(artworkID);
 			res.set_content("{\"status\":\"success\"}", "text/json");
 		} else {
 			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
@@ -176,7 +176,7 @@ int main() {
     	res.set_header("Access-Control-Allow-Origin","*");
 		string work = req.matches[1];
 		string sortMethod = req.matches[2];
-    	results = cdb.findByArtworkAndSort(work, sortMethod);
+    	results = database.findByArtworkAndSort(work, sortMethod);
     	string json = jsonResults(results);
     	res.set_content(json, "text/json");
     	res.status = 200;
@@ -196,7 +196,7 @@ int main() {
 		cout << "here2\n"; 
 		// string rating = req.matches[7];
 		// string isPinned = req.matches[8];
-    	cdb.addComment(name,body,artworkID,x,y,width,"0","0"); // 0 for initial rating and isPinned status
+    	database.addComment(name,body,artworkID,x,y,width,"0","0"); // 0 for initial rating and isPinned status
 		cout << "here3\n"; 
     	res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
@@ -208,7 +208,7 @@ int main() {
     	string commentID = req.matches[1];
     	string vote = req.matches[2];
     
-    	cdb.changeRating(commentID, vote);
+    	database.changeRating(commentID, vote);
 
     	res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
@@ -221,9 +221,9 @@ int main() {
     	string commentID = req.matches[1];
 		string token = req.matches[2];
     
-		bool tokenExists = cdb.checkForToken(token);
+		bool tokenExists = database.checkForToken(token);
 		if (tokenExists) {
-			cdb.deleteComment(commentID);
+			database.deleteComment(commentID);
 			res.set_content("{\"status\":\"success\"}", "text/json");
 		} else {
 			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
@@ -238,9 +238,9 @@ int main() {
     	string commentID = req.matches[1];
 		string token = req.matches[2];
 
-		bool tokenExists = cdb.checkForToken(token);
+		bool tokenExists = database.checkForToken(token);
 		if (tokenExists) {
-			cdb.togglePinStatus(commentID);
+			database.togglePinStatus(commentID);
 			res.set_content("{\"status\":\"success\"}", "text/json");
 		} else {
 			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
@@ -263,7 +263,7 @@ int main() {
 			jsonToReturn = "{\"status\":\"success\",";
 
 			string token = generateToken(tokenGenerator);  // Generate new token for this user's current session
-			cdb.addToken(token); // Add it to the DB
+			database.addToken(token); // Add it to the DB
 			jsonToReturn += "\"token\":\"" + token + "\"}"; // append token to json response
 		} else {
 			jsonToReturn = "{\"status\":\"Incorrect password\"}";
@@ -278,13 +278,13 @@ int main() {
 		cout << "logout API called" << endl;
     	string token = req.matches[1];
     
-		cdb.removeToken(token);
+		database.removeToken(token);
 
 		res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
   	});
   	 
-	 
+
   	cout << "Server listening on port " << port << endl;
   	svr.listen("0.0.0.0", port);
 
