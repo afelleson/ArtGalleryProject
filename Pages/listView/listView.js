@@ -216,7 +216,7 @@ function delArtwork(id) {
 // Formats Comment list into html
 function formatComments(json) {
 
-    var result = '<table class="table"><tr><th>Username</th><th>Body</th><th>Rating</th><th> </th><tr>';
+    var result = '<table class="table"><tr><th>Name</th><th>Comment</th><th>Rating</th><th> </th><tr>';
     json.forEach(function(entry, i) {
         result += "<tr><td class='name'>" + decodeText(entry['name']) + "</td><td class='body'>" + decodeText(entry['commentText']);
         result += "</td><td class='rating'>";
