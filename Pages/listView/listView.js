@@ -3,7 +3,8 @@ var baseUrl = 'http://18.218.64.106:5001';
 
 var oldJson = "";
 var mytoken = "";
-var currentArtworkID = "8";
+var defaultArtworkID = "8"
+var currentArtworkID = defaultArtworkID;
 
 fetchRegularly=setInterval(fetchCommentsForArtwork,500);
 fetchArtwork(currentArtworkID);
@@ -82,7 +83,8 @@ function decodeText(text){
 function changeArtwork(ID) {
     console.log("changeArtwork(" + ID + ") called")
     currentArtworkID = ID;
-    fetchArtwork(ID);
+    fetchArtwork(ID); 
+    fetchArtList(); // Also update the dropdown in case the art list has changed in the backend recently
 }
 
 // Formats Art list into html for dropdown
@@ -156,7 +158,8 @@ function processAddArt(results) {
         document.getElementById("addartist").value = "";
         document.getElementById("addyear").value = "";
         document.getElementById("addpath").value = "";
-        alert("Artwork added. Reload the page to see changes.")
+        fetchArtList(); // update dropdown appearance for the user who just added the piece so they have visual confirmation without having to reload
+        // alert("Artwork added. Reload the page to see changes.")
     } else {
         alert(results["status"]);
     }
@@ -184,7 +187,9 @@ function addArtwork() {
 function processDelArt(results) {
     console.log("Delete:", results["status"]);
     if (results["status"]=="success"){
-        alert("Successful deletion. Reload page to see changes.");
+        fetchArtList(); // update dropdown appearance for the user who just deleted the piece so they have visual confirmation
+        currentArtworkID = defaultArtworkID;
+        // alert("Successful deletion. Reload page to see changes.");
     }
     else {
         alert(results["status"]);
@@ -195,7 +200,6 @@ function processDelArt(results) {
 function delArtwork(id) {
     fetch(baseUrl + '/artwork/delete/' + id + "/" + mytoken, {
         method: 'get'
-        // to do: put artwork id in the place of "0" above
     })
     .then(response => response.json())
     .then(json => processDelArt(json))
