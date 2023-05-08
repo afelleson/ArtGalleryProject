@@ -105,13 +105,13 @@ function formatNavDropdown(json) {
     return result;
 }
 
-// Displays Art list in dropdown
+// Displays art list in dropdown
 function displayArtList(results) {
     artList = results["results"];
-    document.getElementById("navbarSupportedContent").innerHTML += formatNavDropdown(artList);
+    document.getElementById("art-dropdown").innerHTML = formatNavDropdown(artList);
 }
 
-// Gets Art list
+// Gets art list to fill the dropdown menu
 function fetchArtList() {
     fetch(baseUrl + '/artwork/getall', {
         method: 'get'
@@ -187,8 +187,7 @@ function addArtwork() {
 function processDelArt(results) {
     console.log("Delete:", results["status"]);
     if (results["status"]=="success"){
-        fetchArtList(); // update dropdown appearance for the user who just deleted the piece so they have visual confirmation
-        currentArtworkID = defaultArtworkID;
+        changeArtwork(defaultArtworkID); // Go to default artwork view. Also update dropdown appearance for the user who just deleted the piece so they have visual confirmation
         // alert("Successful deletion. Reload page to see changes.");
     }
     else {
