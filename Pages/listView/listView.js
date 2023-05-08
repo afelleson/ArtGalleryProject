@@ -96,7 +96,7 @@ function formatNavDropdown(json) {
     json.forEach(function(entry, i) {
         console.log(entry)
         result += "<li><button class='dropdown-item' onClick='changeArtwork(" + entry['ID'] + ")'>";
-        result += entry['title'];
+        result += decodeText(entry['title']);
         result += "</button></li>";
     })
 
