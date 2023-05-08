@@ -72,3 +72,7 @@
 .staff-stuff {
     display: none;
 }
+
+#login-button{
+    margin: 10px;
+}
