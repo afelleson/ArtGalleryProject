@@ -81,7 +81,7 @@ void makeReplacements(string& text){
 
 	std::string toRemove2 = "\'";
 	std::string toReplaceWith2 = "\\\'";
-	boost::replace_all(text , toRemove3 , toReplaceWith3);
+	boost::replace_all(text , toRemove2 , toReplaceWith2);
 }
 
 int main() {
@@ -133,9 +133,7 @@ int main() {
 		makeReplacements(artist);
 		string year = req.matches[3];
 		string path = req.matches[4];
-		cout << path << endl;
 		makeReplacements(path);
-		cout << path << endl;
 		string token = req.matches[5];
 
 		bool tokenExists = database.checkForToken(token);
@@ -190,11 +188,9 @@ int main() {
     	string x = req.matches[4];
     	string y = req.matches[5];
 		string width = req.matches[6];
-		cout << "here2\n"; 
 		// string rating = req.matches[7];
 		// string isPinned = req.matches[8];
     	database.addComment(name,body,artworkID,x,y,width,"0","0"); // 0 for initial rating and isPinned status
-		cout << "here3\n"; 
     	res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
   	});
