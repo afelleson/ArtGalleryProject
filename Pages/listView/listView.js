@@ -75,23 +75,7 @@ function fetchArtwork(artworkID) {
 }
 
 function formatNavDropdown(json) {
-    // // result2 = "  <li class='nav-item dropdown'>";
-    // // result2 += "  <a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
-    // // result2 += "      Choose Artwork"
-    // // result2 += "  </a>"
-    // // result2 += "  <div class='dropdown-menu' aria-labelledby='navbarDropdown'>"
-    // json.forEach(function(entry, i){
-    //     // <a class="dropdown-item" href="#">Action</a>
-    //     result2 += "<li><button class='dropdown-item' onClick='changeArtwork(";
-    //     result2 += entry["ID"];
-    //     result2 += ")>"
-    //     result2 += entry["title"];
-    //     result2 += "</button></li>";
-    // })
-    // result2 += "    </div>"
-    // result2 += "  </li>"
 
-    
     var result = "<div class='dropdown'><button class='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>";
     result +=  "Artwork";
     result += "</button><ul class='dropdown-menu'>";
@@ -291,22 +275,32 @@ function getSortMethod() {
     return resultMethod
 }
 
-/* Add contact functions */
 function processAdd(results) {
     console.log("Add:", results["status"]);
-    document.getElementById("addname").value = "";
-    document.getElementById("addbody").value = "";
+    if (results["status"]=="success"){
+        document.getElementById("addname").value = "";
+        document.getElementById("addbody").value = "";
+    } else {
+        alert(results["status"]);
+    }
 
 }
 function processAddArt(results) {
     console.log("Add:", results["status"]);
-    document.getElementById("addtitle").value = "";
-    document.getElementById("addartist").value = "";
-    document.getElementById("addyear").value = "";
-    document.getElementById("addpath").value = "";
+    if (results["status"]=="success"){
+        document.getElementById("addtitle").value = "";
+        document.getElementById("addartist").value = "";
+        document.getElementById("addyear").value = "";
+        document.getElementById("addpath").value = "";
+    } else {
+        alert(results["status"]);
+    }
 }
 function processDelArt(results) {
     console.log("Delete:", results["status"]);
+    if (results["status"]!="success"){
+        alert(results["status"]);
+    }
 }
 
 function addComment() {
@@ -441,7 +435,6 @@ function processLogout(results){
     console.log("processLogout() called");
     if (results["status"]=="success"){
         console.log("logout successful")
-
         staffInterfaceInvisible();
     } else {
         alert(results["status"]);
@@ -452,7 +445,7 @@ function logoutStaff(){
     console.log("logoutStaff() called with token " + mytoken);
     fetch(baseUrl + '/stafflogout/' + mytoken, {
         method: 'get',
-        keepalive: true // so the API call completes even when called on page unload
+        keepalive: true // so the API call completes even when called on page unload. Not working as expected right now.
     })
     .then(response => response.json())
     .then(json => processLogout(json))
