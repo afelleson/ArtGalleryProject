@@ -491,15 +491,17 @@ function staffInterfaceVisible(){
 // Close login modal, apply staff token, unhide staff UI, check success
 function processLogin(results){
     if (results["status"]=="success"){
+
+        document.getElementById('StaffPW').value = "" // clear password field
+
         // close login modal
         const clickEvent = new MouseEvent('click');
         document.getElementById('login-close').dispatchEvent(clickEvent);
 
         mytoken = results['token'];
-
-        console.log("login successful")
-
         staffInterfaceVisible();
+        
+        console.log("login successful")
     } else {
         alert(results["status"]);
     }
