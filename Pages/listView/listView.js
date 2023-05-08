@@ -9,11 +9,36 @@ fetchRegularly=setInterval(fetchCommentsForArtwork,500);
 fetchArtwork(currentArtworkID);
 fetchArtList();
 
-function changeArtwork(ID) {
-    console.log("changeArtwork(" + ID + ") called")
-    currentArtworkID = ID;
-    fetchArtwork(ID);
-}
+
+
+/////////////////////
+// EVENT LISTENERS //
+/////////////////////
+
+// Event listeners for submission buttons
+document.getElementById('submit-comment').addEventListener("click", (e)=> {
+    event.preventDefault(); // prevent the enter key from actually inputting a new line in the input box
+	addComment();
+});
+
+document.getElementById('submit-artwork').addEventListener("click", (e)=> {
+    event.preventDefault(); // prevent the enter key from actually inputting a new line in the input box
+	addArtwork();
+});
+
+// Staff login event listeners
+document.getElementById('login-go').addEventListener("click", loginStaff);
+
+document.getElementById('StaffPW').addEventListener("keydown", (e)=> {
+    if (e.code == "Enter") {
+        event.preventDefault(); // prevent the enter key from actually inputting a new line in the input box
+        console.log("Login enter detected");
+        loginStaff();
+    }
+});
+
+document.getElementById('logout-button').addEventListener("click", logoutStaff);
+
 // Call functions on page exit
 window.addEventListener('beforeunload', function (event) {
     logoutStaff();
@@ -26,41 +51,49 @@ window.addEventListener('beforeunload', function (event) {
     // event.returnValue = '' // these two lines cause a pop-up asking the user if they really want to close the tab
   });
 
-document.getElementById('submit-comment').addEventListener("click", (e)=> {
-    event.preventDefault(); // prevent the enter key from actually inputting a new line in the input box
-	addComment();
-});
-
-document.getElementById('submit-artwork').addEventListener("click", (e)=> {
-    event.preventDefault(); // prevent the enter key from actually inputting a new line in the input box
-	addArtwork();
-});
+  
+///////////////
+// FUNCTIONS //
+///////////////
 
 
+/* General Functions */
+
+// Encode text so it can be safely put in the database
+function encodeInput(inputText){
+    var encodedText = encodeURIComponent(inputText)
+    var encodedText = encodedText.replaceAll("%2F","%%");
+    return encodedText;
+}
+
+// Decode text that has been encoded
+function decodeText(text){
+    var decodedText = text.replaceAll("%%", "%2F");
+    var decodedText = decodeURIComponent(decodedText);
+    return decodedText;
+}
+
+
+/* Artwork Functions */
+
+//// Normal Functions ////
+
+// Changes the "page," showing a new artwork
+function changeArtwork(ID) {
+    console.log("changeArtwork(" + ID + ") called")
+    currentArtworkID = ID;
+    fetchArtwork(ID);
+}
+
+// Displays the current artwork's Title, Author, and Date published
 function displayArtInfo(results) {
     artDetails = results["result"];
     document.getElementById("artwork").src = decodeText(artDetails["path"]);
     var artworkInfo = decodeText(artDetails["title"]) + "<br>" + decodeText(artDetails["artist"]) + "<br>" + artDetails["year"];
     document.getElementById("artwork-info").innerHTML = artworkInfo;
 }
-function fetchArtList() {
-    fetch(baseUrl + '/artwork/getall', {
-        method: 'get'
-    })
-    .then(response => response.json())
-    .then(json => displayArtList(json))
-    .catch(error => {
-        {
-            alert("Fetch Art List Error: Something went wrong: \n" + error);
-        }
-    })
-}
 
-function displayArtList(results) {
-    artList = results["results"];
-    document.getElementById("navbarSupportedContent").innerHTML += formatNavDropdown(artList);
-}
-
+// Gets the info for a specific artwork, and displays the image for that artwork.
 function fetchArtwork(artworkID) {
     fetch(baseUrl + '/artwork/getbyid/' + artworkID, {
             method: 'get'
@@ -74,6 +107,7 @@ function fetchArtwork(artworkID) {
         })
 }
 
+// Formats Art list into html for dropdown
 function formatNavDropdown(json) {
 
     var result = "<div class='dropdown'><button class='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>";
@@ -91,7 +125,92 @@ function formatNavDropdown(json) {
     return result;
 }
 
-// Build output table from comma delimited list
+// Displays Art list in dropdown
+function displayArtList(results) {
+    artList = results["results"];
+    document.getElementById("navbarSupportedContent").innerHTML += formatNavDropdown(artList);
+}
+
+// Gets Art list
+function fetchArtList() {
+    fetch(baseUrl + '/artwork/getall', {
+        method: 'get'
+    })
+    .then(response => response.json())
+    .then(json => displayArtList(json))
+    .catch(error => {
+        {
+            alert("Fetch Art List Error: Something went wrong: \n" + error);
+        }
+    })
+}
+
+
+
+//// Staff functions ////
+
+// For adding artwork, clear fields and confirm success
+function processAddArt(results) {
+    console.log("Add:", results["status"]);
+    if (results["status"]=="success"){
+        document.getElementById("addtitle").value = "";
+        document.getElementById("addartist").value = "";
+        document.getElementById("addyear").value = "";
+        document.getElementById("addpath").value = "";
+    } else {
+        alert(results["status"]);
+    }
+}
+
+// Add new artwork to the database
+function addArtwork() {
+	
+    console.log("Attempting to add artwork");
+    console.log("Name:" + $('#addname').val());
+    fetch(baseUrl + '/artwork/add/' + encodeInput($('#addtitle').val()) + "/" + encodeInput($('#addartist').val()) + "/" + $('#addyear').val() + "/" + encodeInput($('#addpath').val()) + "/" + mytoken, {
+            method: 'get'
+            // to do: put artwork id in the place of "0" above
+        })
+        .then(response => response.json())
+        .then(json => processAddArt(json))
+        .catch(error => {
+            {
+                alert("Add Error: Something went wrong: \n" + error);
+            }
+        })
+}
+
+// For deleting artwork, confirm success
+function processDelArt(results) {
+    console.log("Delete:", results["status"]);
+    if (results["status"]=="success"){
+        alert("Successful deletion, reload page to see changes");
+    }
+    else {
+        alert(results["status"]);
+    }
+}
+
+// Delete artwork from the database by id
+function delArtwork(id) {
+    fetch(baseUrl + '/artwork/delete/' + id + "/" + mytoken, {
+        method: 'get'
+        // to do: put artwork id in the place of "0" above
+    })
+    .then(response => response.json())
+    .then(json => processDelArt(json))
+    .catch(error => {
+        {
+            alert("Delete Error: Something went wrong: \n" + error);
+        }
+    })
+}
+
+/* Comment Functions */
+
+//// Normal Functions ////
+
+// Formats Comment list into html
 function formatComments(json) {
 
     var result = '<table class="table"><tr><th>Username</th><th>Body</th><th>Rating</th><th> </th><tr>';
@@ -129,104 +248,7 @@ function formatComments(json) {
     return result;
 }
 
-function completeVote(results){
-    if (results["status"]=="success"){
-        console.log("success in vote")
-    };
-}
-
-function completeDelete(results){
-    if (results["status"]=="success"){
-        console.log("success in deletion")
-    };
-}
-
-function completePin(results){
-    if (results["status"]=="success"){
-        console.log("success in pin")
-    };
-}
-
-function changeRating(commentID, vote){
-    fetch(baseUrl + '/comment/changerating/' + commentID + "/" + vote, {
-        method: 'get'
-    })
-    .then(response => response.json())
-    .then(json => completeVote(json))
-    .catch(error => {
-        {
-            alert("Vote Error: Something went wrong: \n" + error);
-        }
-    })
-}
-
-function deleteComment(commentID) {
-    fetch(baseUrl + '/comment/delete/' + commentID + "/" + mytoken, {
-        method: 'get'
-    })
-    .then(response => response.json())
-    .then(json => completeDelete(json))
-    .catch(error => {
-        {
-            alert("Deletion Error: Something went wrong: \n" + error);
-        }
-    })
-}
-
-function pinComment(commentID) {
-    fetch(baseUrl + '/comment/togglepin/' + commentID + "/" + mytoken, {
-        method: 'get'
-    })
-    .then(response => response.json())
-    .then(json => completePin(json))
-    .catch(error => {
-        {
-            alert("Pin Error: Something went wrong: \n" + error);
-        }
-    })
-}
-
-
-function toggleUpButton(buttonPressed, commentID){
-    if (buttonPressed.classList.contains("active")) { // if green after click
-        changeRating(commentID, "1");
-      } else { // if gray after click
-        changeRating(commentID, "-1");
-      }
-}
-
-
-function resetVoteButton(buttonToActOn){
-    // turn it gray
-    console.log("attempting to reset button with id " + buttonToActOn.id)
-    buttonToActOn.classList.remove('active');
-}
-
-function toggleDownButton(buttonPressed, commentID){
-    if (buttonPressed.classList.contains("active")) { // if red after click
-        changeRating(commentID, "-1");
-      } else { // if gray after click
-        changeRating(commentID, "1");
-      }
-}
-
-
-function upvote(buttonPressed, commentID){
-    console.log("upvoting comment with ID = " + commentID);
-    // turn button green or gray, whichever one it wasn't before
-    toggleUpButton(buttonPressed, commentID);
-    // reset downvote button, which has an element id based on the ID of the comment these buttons apply to
-    resetVoteButton(document.getElementById("downvote-" + commentID));
-}
-
-function downvote(buttonPressed, commentID){
-    console.log("downvoting comment with ID = " + commentID);
-    // turn button green or gray, whichever one it wasn't before
-    toggleDownButton(buttonPressed, commentID);
-    // reset downvote button, which has an element id based on the ID of the comment these buttons apply to
-    resetVoteButton(document.getElementById("upvote-" + commentID));
-}
-
+// Displays Comment list
 function displayComments(isJsonDiff, results) {
     if (isJsonDiff){
         commentList = results["results"];
@@ -238,6 +260,7 @@ function displayComments(isJsonDiff, results) {
     }
 }
 
+// Checks if comment list has changed
 function isJsonDifferent(newJson){
     if (JSON.stringify(oldJson)===JSON.stringify(newJson)){
         return false;
@@ -247,6 +270,19 @@ function isJsonDifferent(newJson){
     }
 }
 
+// Checks what comment sorting method is currently selected
+function getSortMethod() {
+    const sortMethods = document.querySelectorAll('input[name="sortbtns"]');
+    var resultMethod = null;
+    sortMethods.forEach((button) => {
+        if (button.checked) {
+            resultMethod = button.value;
+        }
+    });
+    return resultMethod
+}
+
+// Gets Comment list for the current artwork
 function fetchCommentsForArtwork() {
 	// Temp Values
     var sortParam;
@@ -264,17 +300,9 @@ function fetchCommentsForArtwork() {
         })
 }
 
-function getSortMethod() {
-    const sortMethods = document.querySelectorAll('input[name="sortbtns"]');
-    var resultMethod = null;
-    sortMethods.forEach((button) => {
-        if (button.checked) {
-            resultMethod = button.value;
-        }
-    });
-    return resultMethod
-}
 
+
+// For adding comments, clear fields and confirm success
 function processAdd(results) {
     console.log("Add:", results["status"]);
     if (results["status"]=="success"){
@@ -285,24 +313,8 @@ function processAdd(results) {
     }
 
 }
-function processAddArt(results) {
-    console.log("Add:", results["status"]);
-    if (results["status"]=="success"){
-        document.getElementById("addtitle").value = "";
-        document.getElementById("addartist").value = "";
-        document.getElementById("addyear").value = "";
-        document.getElementById("addpath").value = "";
-    } else {
-        alert(results["status"]);
-    }
-}
-function processDelArt(results) {
-    console.log("Delete:", results["status"]);
-    if (results["status"]!="success"){
-        alert(results["status"]);
-    }
-}
 
+// Adds comment to database
 function addComment() {
 	// Temp Values
 	x = "1"
@@ -324,59 +336,129 @@ function addComment() {
         })
 }
 
-function encodeInput(inputText){
-    var encodedText = encodeURIComponent(inputText)
-    var encodedText = encodedText.replaceAll("%2F","%%");
-    return encodedText;
+
+
+
+// Check for success in voting
+function completeVote(results){
+    if (results["status"]=="success"){
+        console.log("success in vote")
+    };
 }
 
-function decodeText(text){
-    var decodedText = text.replaceAll("%%", "%2F");
-    var decodedText = decodeURIComponent(decodedText);
-    return decodedText;
-}
-
-function addArtwork() {
-	
-    console.log("Attempting to add artwork");
-    console.log("Name:" + $('#addname').val());
-    fetch(baseUrl + '/artwork/add/' + encodeInput($('#addtitle').val()) + "/" + encodeInput($('#addartist').val()) + "/" + $('#addyear').val() + "/" + encodeInput($('#addpath').val()) + "/" + mytoken, {
-            method: 'get'
-            // to do: put artwork id in the place of "0" above
-        })
-        .then(response => response.json())
-        .then(json => processAddArt(json))
-        .catch(error => {
-            {
-                alert("Add Error: Something went wrong: \n" + error);
-            }
-        })
-}
-
-function delArtwork(id) {
-    fetch(baseUrl + '/artwork/delete/' + id + "/" + mytoken, {
+// Vote on specific comment by 1 or -1
+function changeRating(commentID, vote){
+    fetch(baseUrl + '/comment/changerating/' + commentID + "/" + vote, {
         method: 'get'
-        // to do: put artwork id in the place of "0" above
     })
     .then(response => response.json())
-    .then(json => processDelArt(json))
+    .then(json => completeVote(json))
     .catch(error => {
         {
-            alert("Delete Error: Something went wrong: \n" + error);
+            alert("Vote Error: Something went wrong: \n" + error);
         }
     })
 }
-// Staff login event listeners
-document.getElementById('login-go').addEventListener("click", loginStaff);
-document.getElementById('StaffPW').addEventListener("keydown", (e)=> {
-    if (e.code == "Enter") {
-        event.preventDefault(); // prevent the enter key from actually inputting a new line in the input box
-        console.log("Login enter detected");
-        loginStaff();
-    }
-});
-document.getElementById('logout-button').addEventListener("click", logoutStaff);
 
+// Resets specific vote toggle to "inactive"
+function resetVoteButton(buttonToActOn){
+    // turn it gray
+    console.log("attempting to reset button with id " + buttonToActOn.id)
+    buttonToActOn.classList.remove('active');
+}
+
+// Defines upvote as vote +1
+function toggleUpButton(buttonPressed, commentID){
+    if (buttonPressed.classList.contains("active")) { // if green after click
+        changeRating(commentID, "1");
+      } else { // if gray after click
+        changeRating(commentID, "-1");
+      }
+}
+
+// Upvotes comment, undoes downvote if there is one
+function upvote(buttonPressed, commentID){
+    console.log("upvoting comment with ID = " + commentID);
+    // turn button green or gray, whichever one it wasn't before
+    toggleUpButton(buttonPressed, commentID);
+    // reset downvote button, which has an element id based on the ID of the comment these buttons apply to
+    resetVoteButton(document.getElementById("downvote-" + commentID));
+}
+
+// Defines downvote as vote -1
+function toggleDownButton(buttonPressed, commentID){
+    if (buttonPressed.classList.contains("active")) { // if red after click
+        changeRating(commentID, "-1");
+      } else { // if gray after click
+        changeRating(commentID, "1");
+      }
+}
+
+// Downvotes comment, undoes upvote if there is one
+function downvote(buttonPressed, commentID){
+    console.log("downvoting comment with ID = " + commentID);
+    // turn button green or gray, whichever one it wasn't before
+    toggleDownButton(buttonPressed, commentID);
+    // reset downvote button, which has an element id based on the ID of the comment these buttons apply to
+    resetVoteButton(document.getElementById("upvote-" + commentID));
+}
+
+
+
+
+
+
+
+
+
+
+//// Staff functions ////
+
+// Check for success in deleting comment
+function completeDelete(results){
+    if (results["status"]=="success"){
+        console.log("success in deletion")
+    };
+}
+
+// Delete comment
+function deleteComment(commentID) {
+    fetch(baseUrl + '/comment/delete/' + commentID + "/" + mytoken, {
+        method: 'get'
+    })
+    .then(response => response.json())
+    .then(json => completeDelete(json))
+    .catch(error => {
+        {
+            alert("Deletion Error: Something went wrong: \n" + error);
+        }
+    })
+}
+
+// Check for success in pinning comment
+function completePin(results){
+    if (results["status"]=="success"){
+        console.log("success in pin")
+    };
+}
+
+// Toggles pin state for specific comment
+function pinComment(commentID) {
+    fetch(baseUrl + '/comment/togglepin/' + commentID + "/" + mytoken, {
+        method: 'get'
+    })
+    .then(response => response.json())
+    .then(json => completePin(json))
+    .catch(error => {
+        {
+            alert("Pin Error: Something went wrong: \n" + error);
+        }
+    })
+}
+
+/* Staff interface functions */
+
+// Make staff interface invisible
 function staffInterfaceInvisible(){
     console.log("staffInterfaceInvisible() called");
     document.getElementById('login-button').style.display = 'block';
@@ -388,6 +470,7 @@ function staffInterfaceInvisible(){
 
 }
 
+// Make staff interface visible
 function staffInterfaceVisible(){
     console.log("staffInterfaceVisible() called");
     document.getElementById('login-button').style.display = 'none';
@@ -400,7 +483,7 @@ function staffInterfaceVisible(){
 
 }
 
-
+// Close login modal, apply staff token, unhide staff ui, check success
 function processLogin(results){
     if (results["status"]=="success"){
         // close login modal
@@ -417,6 +500,7 @@ function processLogin(results){
     }
 }
 
+// Login as staff thru database
 function loginStaff(){
     console.log("loginStaff() called");
     fetch(baseUrl + '/stafflogin/' + $('#StaffPW').val(), {
@@ -431,6 +515,7 @@ function loginStaff(){
     })
 }
 
+// Check success, hide staff ui
 function processLogout(results){
     console.log("processLogout() called");
     if (results["status"]=="success"){
@@ -441,6 +526,7 @@ function processLogout(results){
     }
 }
 
+// Logout thru database, delete token from database
 function logoutStaff(){
     console.log("logoutStaff() called with token " + mytoken);
     fetch(baseUrl + '/stafflogout/' + mytoken, {
