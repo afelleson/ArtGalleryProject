@@ -78,33 +78,11 @@ function decodeText(text){
 
 //// Normal Functions ////
 
-// Changes the "page," showing a new artwork
+// Changes the page view, showing a new artwork
 function changeArtwork(ID) {
     console.log("changeArtwork(" + ID + ") called")
     currentArtworkID = ID;
     fetchArtwork(ID);
-}
-
-// Displays the current artwork's Title, Author, and Date published
-function displayArtInfo(results) {
-    artDetails = results["result"];
-    document.getElementById("artwork").src = decodeText(artDetails["path"]);
-    var artworkInfo = decodeText(artDetails["title"]) + "<br>" + decodeText(artDetails["artist"]) + "<br>" + artDetails["year"];
-    document.getElementById("artwork-info").innerHTML = artworkInfo;
-}
-
-// Gets the info for a specific artwork, and displays the image for that artwork.
-function fetchArtwork(artworkID) {
-    fetch(baseUrl + '/artwork/getbyid/' + artworkID, {
-            method: 'get'
-        })
-        .then(response => response.json())
-        .then(json => displayArtInfo(json))
-        .catch(error => {
-            {
-                alert("Fetch Art Error: Something went wrong: \n" + error);
-            }
-        })
 }
 
 // Formats Art list into html for dropdown
@@ -145,6 +123,27 @@ function fetchArtList() {
     })
 }
 
+// Displays the current artwork's Title, Author, and Date published
+function displayArtInfo(results) {
+    artDetails = results["result"];
+    document.getElementById("artwork").src = decodeText(artDetails["path"]);
+    var artworkInfo = decodeText(artDetails["title"]) + "<br>" + decodeText(artDetails["artist"]) + "<br>" + artDetails["year"];
+    document.getElementById("artwork-info").innerHTML = artworkInfo;
+}
+
+// Gets the info for a specific artwork, and displays the image for that artwork.
+function fetchArtwork(artworkID) {
+    fetch(baseUrl + '/artwork/getbyid/' + artworkID, {
+            method: 'get'
+        })
+        .then(response => response.json())
+        .then(json => displayArtInfo(json))
+        .catch(error => {
+            {
+                alert("Fetch Art Error: Something went wrong: \n" + error);
+            }
+        })
+}
 
 
 //// Staff functions ////
@@ -157,6 +156,7 @@ function processAddArt(results) {
         document.getElementById("addartist").value = "";
         document.getElementById("addyear").value = "";
         document.getElementById("addpath").value = "";
+        alert("Artwork added. Reload the page to see changes.")
     } else {
         alert(results["status"]);
     }
@@ -184,7 +184,7 @@ function addArtwork() {
 function processDelArt(results) {
     console.log("Delete:", results["status"]);
     if (results["status"]=="success"){
-        alert("Successful deletion, reload page to see changes");
+        alert("Successful deletion. Reload page to see changes.");
     }
     else {
         alert(results["status"]);
@@ -260,7 +260,7 @@ function displayComments(isJsonDiff, results) {
     }
 }
 
-// Checks if comment list has changed
+// Checks if any comment info in the database has changed
 function isJsonDifferent(newJson){
     if (JSON.stringify(oldJson)===JSON.stringify(newJson)){
         return false;
@@ -403,7 +403,9 @@ function downvote(buttonPressed, commentID){
     resetVoteButton(document.getElementById("upvote-" + commentID));
 }
 
-
+// Note: Upvote and downvote toggles only hold their state for half a second before the whole comments table is reloaded.
+// In the future, it would be nice to not remake those buttons when the rest of the table remakes itself, 
+// and have them reset after 20 seconds or so (for the next user, if this is on an iPad on the wall in the gallery)
 
 
 
@@ -483,7 +485,7 @@ function staffInterfaceVisible(){
 
 }
 
-// Close login modal, apply staff token, unhide staff ui, check success
+// Close login modal, apply staff token, unhide staff UI, check success
 function processLogin(results){
     if (results["status"]=="success"){
         // close login modal
@@ -500,7 +502,7 @@ function processLogin(results){
     }
 }
 
-// Login as staff thru database
+// Login as staff. Backend generates a token and adds it to the database.
 function loginStaff(){
     console.log("loginStaff() called");
     fetch(baseUrl + '/stafflogin/' + $('#StaffPW').val(), {
@@ -515,7 +517,7 @@ function loginStaff(){
     })
 }
 
-// Check success, hide staff ui
+// Check logout success, hide staff UI
 function processLogout(results){
     console.log("processLogout() called");
     if (results["status"]=="success"){
@@ -526,7 +528,7 @@ function processLogout(results){
     }
 }
 
-// Logout thru database, delete token from database
+// Logout staff, delete the session's token from the database
 function logoutStaff(){
     console.log("logoutStaff() called with token " + mytoken);
     fetch(baseUrl + '/stafflogout/' + mytoken, {
