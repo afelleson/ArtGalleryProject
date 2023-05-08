@@ -24,8 +24,10 @@ const string staffPassword = "GGstaff000K";
 
 ofstream logfile; 
 
-template <class myType>
-string jsonResults(vector<myType> list) {
+template <class anEntry>
+string jsonResults(vector<anEntry> list) {
+	// Given a list of artworkEntries or commentEntries, convert to a list of json results.
+
 	string res = "{\"results\":[";
 	for (int i = 0; i<list.size(); i++) {
 		res += list[i].jsonify();
@@ -37,28 +39,17 @@ string jsonResults(vector<myType> list) {
 	return res;
 }
 
-// string jsonResultsArt(vector<artworkEntry> artworkList) {
-// 	string res = "{\"results\":[";
-// 	for (int i = 0; i<artworkList.size(); i++) {
-// 		res += artworkList[i].jsonify();
-// 		if (i < artworkList.size()-1) {
-// 			res +=",";
-// 		}
-// 	}
-// 	res += "]}";
-// 	return res;
-// }
-
 string jsonResult(artworkEntry work) {
-	string res = "{\"result\":";
-	res += work.jsonify();
-	
-	res += "}";
+	// Return info for a single artwork
+
+	string res = "{\"result\":" + work.jsonify() + "}";
 	return res;
 }
 
-// should ideally be added to CTokenGenerator.cpp, but we'd have to mess with the header to get the right stuff included, so this is easier rn
 string generateToken(CTokenGenerator* tokenGenerator){
+	// Generate next token from the established token generator. On failure, retry a limited number of times. Return the token as a string.
+	// (Should ideally be added to CTokenGenerator.cpp, but we'd have to mess with the header to get the right stuff included, so this is easier rn)
+	
 	int tokenLength = tokenGenerator->GetTokenLength();
 	cout << "Token length: " << tokenLength << "\n";
 	char* pToken = new char[tokenLength+1];
@@ -81,6 +72,10 @@ string generateToken(CTokenGenerator* tokenGenerator){
 }
 
 void makeReplacements(string& text){
+	// Undo the / -> %% replacement from the javascript (necessary for API calls to work),
+	// and escape single and double quotation marks so they store in the database with the escape chars
+	// (necessary to avoid json parse errors).
+
 	std::string subStringToRemove = "%%";
 	std::string subStringToReplace = "/";
 	boost::replace_all(text , subStringToRemove , subStringToReplace);
@@ -289,6 +284,7 @@ int main() {
     	res.status = 200;
   	});
   	 
+	 
   	cout << "Server listening on port " << port << endl;
   	svr.listen("0.0.0.0", port);
 
