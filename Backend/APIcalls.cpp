@@ -178,6 +178,41 @@ int main() {
     	res.status = 200;
   	}); 
 
+	// Staff abilities
+	svr.Get(R"(/comment/delete/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string commentID = req.matches[1];
+		string token = req.matches[2];
+    
+		bool tokenExists = cdb.checkForToken(token);
+		if (tokenExists) {
+			cdb.deleteComment(commentID);
+			res.set_content("{\"status\":\"success\"}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
+		}
+    	
+    	res.status = 200;
+  	}); 
+
+	svr.Get(R"(/comment/togglepin/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
+    	res.set_header("Access-Control-Allow-Origin","*");
+
+    	string commentID = req.matches[1];
+		string token = req.matches[2];
+
+		bool tokenExists = cdb.checkForToken(token);
+		if (tokenExists) {
+			cdb.togglePinStatus(commentID);
+			res.set_content("{\"status\":\"success\"}", "text/json");
+		} else {
+			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
+		}
+    
+    	res.status = 200;
+  	});
+
 
 
 	svr.Get(R"(/artwork/getbyid/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
@@ -264,12 +299,6 @@ int main() {
     	res.status = 200;
   	});
 
-	// to be used in API calls implementing things only staff can do:
-	// string token = req.matches[1];
-    // bool tokenExists = cdb.checkForToken(token);
-
-
-
 	svr.Get(R"(/stafflogout/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
     	res.set_header("Access-Control-Allow-Origin","*");
 		cout << "logout API called" << endl;
@@ -280,44 +309,6 @@ int main() {
 		res.set_content("{\"status\":\"success\"}", "text/json");
     	res.status = 200;
   	});
-
-
-	// Staff abilities
-	svr.Get(R"(/comment/delete/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    	res.set_header("Access-Control-Allow-Origin","*");
-
-    	string commentID = req.matches[1];
-		string token = req.matches[2];
-    
-		bool tokenExists = cdb.checkForToken(token);
-		if (tokenExists) {
-			cdb.deleteComment(commentID);
-			res.set_content("{\"status\":\"success\"}", "text/json");
-		} else {
-			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
-		}
-    	
-    	res.status = 200;
-  	}); 
-
-	svr.Get(R"(/comment/togglepin/(.*)/(.*))", [&](const httplib::Request& req, httplib::Response& res) {
-    	res.set_header("Access-Control-Allow-Origin","*");
-
-    	string commentID = req.matches[1];
-		string token = req.matches[2];
-
-		bool tokenExists = cdb.checkForToken(token);
-		if (tokenExists) {
-			cdb.togglePinStatus(commentID);
-			res.set_content("{\"status\":\"success\"}", "text/json");
-		} else {
-			res.set_content("{\"status\":\"Invalid token. Try logging in again.\"}", "text/json");
-		}
-    
-    	res.status = 200;
-  	});
-
-
   	 
   	cout << "Server listening on port " << port << endl;
   	svr.listen("0.0.0.0", port);
