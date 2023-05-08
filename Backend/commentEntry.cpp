@@ -4,7 +4,7 @@
 #include "commentEntry.h"
 
 commentEntry::commentEntry(){
-    id = NULL; //(?)
+    id = ""; //(?)
     name = "";
     text = "";
     artworkID = "";

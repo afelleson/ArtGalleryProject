@@ -4,7 +4,7 @@
 #include "artworkEntry.h"
 
 artworkEntry::artworkEntry(){
-    id = NULL; //(?)
+    id = ""; //(?)
     title = "";
     artist = "";
     year = "";
