@@ -62,14 +62,14 @@ window.addEventListener('beforeunload', function (event) {
 // Encode text so it can be safely put in the database
 function encodeInput(inputText){
     var encodedText = encodeURIComponent(inputText)
-    var encodedText = encodeURIComponent(encodedText)
+    var encodedText = encodeURIComponent(encodedText) // Double-encode so it stays encoded after being passed to the database
+        // E.g.:  / --> %2F --> %252F --> API --> %2F in database (& returned json)
     return encodedText;
 }
 
 // Decode text that has been encoded
 function decodeText(text){
     var decodedText = decodeURIComponent(text);
-    var decodedText = decodeURIComponent(decodedText);
     return decodedText;
 }
 
