@@ -72,20 +72,15 @@ string generateToken(CTokenGenerator* tokenGenerator){
 }
 
 void makeReplacements(string& text){
-	// Undo the / -> %% replacement from the javascript (necessary for API calls to work),
-	// and escape single and double quotation marks so they store in the database with the escape chars
+	// Escape single and double quotation marks so they store in the database with the escape chars
 	// (necessary to avoid json parse errors).
-
-	std::string subStringToRemove = "%%";
-	std::string subStringToReplace = "/";
-	boost::replace_all(text , subStringToRemove , subStringToReplace);
 	
 	std::string toRemove = "\"";
 	std::string toReplaceWith = "\\\\\\\"";
 	boost::replace_all(text , toRemove , toReplaceWith);
 
-	std::string toRemove3 = "\'";
-	std::string toReplaceWith3 = "\\\'";
+	std::string toRemove2 = "\'";
+	std::string toReplaceWith2 = "\\\'";
 	boost::replace_all(text , toRemove3 , toReplaceWith3);
 }
 
