@@ -3,7 +3,7 @@ var baseUrl = 'http://18.218.64.106:5001';
 
 var oldJson = "";
 var mytoken = "";
-var defaultArtworkID = "8"
+var defaultArtworkID = "23"
 var currentArtworkID = defaultArtworkID;
 
 fetchRegularly=setInterval(fetchCommentsForArtwork,500);
