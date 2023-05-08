@@ -1,3 +1,5 @@
+// This program tests a couple key functions for interacting with the database.
+
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
