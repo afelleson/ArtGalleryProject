@@ -35,15 +35,15 @@ make
 This will terminate after a certain amount of time.
 
 To run the program indefinitely:
-Log in via ```ssh [user]@[host]```.  
-Start the process by running ```./APIcalls```.  
-Type Ctrl+Z to pause the process.  
+Log in via ```ssh [user]@[host]```  
+Start the process by running ```./APIcalls```  
+Type Ctrl+Z to pause the process. Then run:  
 ```
 bg  
-disown (can add the process ID on the end after a space; that's optional because it defaults to last process)  
+disown [PID optional]
 logout  
 ```
-These commands put the paused process in the background and resume it, disown the process, and then exit the SSH connection
+These commands put the paused process in the background and resume it, disown the process, and then exit the SSH connection. Process ID is optional on the disown command because it default to act on the last process.
 
 If you have multiple versions of the program running indefinitely at the same time, you may experience weird results.  
 To check for existing, indefinitely running versions of the program:
