@@ -46,7 +46,7 @@ window.addEventListener('beforeunload', function (event) {
     // So, instead of automatically logging out on unload, prompt user to log out before leaving (if they're logged in)
     if (mytoken!=""){
         return "Please logout before leaving the site!";
-        event.preventDefault(); // this line causes a pop-up asking the user if they really want to close the tab
+        // event.preventDefault(); // this line causes a pop-up asking the user if they really want to close the tab
     }
     clearInterval(fetchRegularly); // stop updating comment list
   });
