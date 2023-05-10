@@ -42,14 +42,13 @@ document.getElementById('logout-button').addEventListener("click", logoutStaff);
 
 // Call functions on page exit
 window.addEventListener('beforeunload', function (event) {
-    logoutStaff();
-    setTimeout(function(){ // close registration model after half a second
-        console.log("waiting .5 sec");
-    }, 500);
+    // logoutStaff(); // doesn't work (looks like it just doesn't have time to complete before unload. adding a short timeout after this line doesn't help)
+    // So, instead of automatically logging out on unload, prompt user to log out before leaving (if they're logged in)
+    if (mytoken!=""){
+        event.preventDefault() // these two lines cause a pop-up asking the user if they really want to close the tab
+        event.returnValue = 'Please log out before leaving!' // these two lines cause a pop-up asking the user if they really want to close the tab
+    }
     clearInterval(fetchRegularly); // stop updating comment list
-
-    // event.preventDefault() // these two lines cause a pop-up asking the user if they really want to close the tab
-    // event.returnValue = '' // these two lines cause a pop-up asking the user if they really want to close the tab
   });
 
   
@@ -500,7 +499,7 @@ function processLogin(results){
 
         mytoken = results['token'];
         staffInterfaceVisible();
-        
+
         console.log("login successful")
     } else {
         alert(results["status"]);
