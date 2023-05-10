@@ -1,5 +1,6 @@
 # ArtGalleryProject
- A interface for leaving and viewing comments on select artworks at the Gund Gallery. Includes an admin login for moderating comments and editing the list of available artworks.  
+ A interface for leaving and viewing comments on select artworks at the Gund Gallery. Includes an admin login for moderating comments and editing the list of available artworks. 
+  
  The admin password is GGstaff000K. This can be changed on line 22 of APIcalls.cpp.
 
 ## Database setup
