@@ -34,7 +34,7 @@ make
 ```
 This will terminate after a certain amount of time.
 
-To run the program indefinitely:
+###To run the program indefinitely:###  
 Log in via ```ssh [user]@[host]```  
 Start the process by running ```./APIcalls```  
 Type Ctrl+Z to pause the process. Then run:  
