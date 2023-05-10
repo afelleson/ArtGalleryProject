@@ -45,8 +45,8 @@ window.addEventListener('beforeunload', function (event) {
     // logoutStaff(); // doesn't work (looks like it just doesn't have time to complete before unload. adding a short timeout after this line doesn't help)
     // So, instead of automatically logging out on unload, prompt user to log out before leaving (if they're logged in)
     if (mytoken!=""){
+        alert('Please log out before leaving!');
         event.preventDefault(); // these two lines cause a pop-up asking the user if they really want to close the tab
-       alert('Please log out before leaving!'); // these two lines cause a pop-up asking the user if they really want to close the tab
     }
     clearInterval(fetchRegularly); // stop updating comment list
   });
