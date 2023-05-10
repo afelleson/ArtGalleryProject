@@ -44,10 +44,10 @@ document.getElementById('logout-button').addEventListener("click", logoutStaff);
 window.addEventListener('beforeunload', function (event) {
     // logoutStaff(); // doesn't work (looks like it just doesn't have time to complete before unload. adding a short timeout after this line doesn't help)
     // So, instead of automatically logging out on unload, prompt user to log out before leaving (if they're logged in)
-    if (mytoken!=""){
-        return "Please logout before leaving the site!";
-        // event.preventDefault(); // this line causes a pop-up asking the user if they really want to close the tab
-    }
+        // Note: decided to remove this because browsers no longer allow custom messages on page reload confirmation popups, so it could be unclear why we were telling the user not to leave
+    // if (mytoken!=""){
+    //     // event.preventDefault(); // this line causes a pop-up asking the user if they really want to close the tab
+    // }
     clearInterval(fetchRegularly); // stop updating comment list
   });
 
