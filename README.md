@@ -56,4 +56,4 @@ There will always be one process listed, but its Process ID will change every ti
 ```
 kill ######
 ```
-where ##### is the process ID.
+where ##### is the process ID (found in the second column of the ps command output).
